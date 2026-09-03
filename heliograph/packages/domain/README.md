@@ -8,6 +8,8 @@ Saf TypeScript iş kuralları. **Framework importu yok** (Nest, Drizzle, Tempora
 src/
   shared/    Result, DomainError, Clock/Rng portları, Id
   persona/   Persona aggregate (durum makinesi, ısınma), PostingPolicy (günlük slot planlama)
+  config/    PolicyEntry (sürümlü dinamik yapılandırma), staleness, ConfigReader/PolicyRepository portları (ADR-0011)
+  billing/   Entitlement kontrolü, kredi defteri (ADR-0012)
 ```
 
 Her bounded context kendi klasöründe; public API yalnızca `src/index.ts`.

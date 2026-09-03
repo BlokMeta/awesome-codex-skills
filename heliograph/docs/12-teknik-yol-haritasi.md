@@ -18,10 +18,10 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [ ] **M0.8 Auth** — operatör kayıt/giriş, passkey + TOTP, oturum rotasyonu, RLS; e2e "giriş".
 - [ ] **M0.9 Gözlemlenebilirlik temeli** — pino + OTel + requestId; Grafana panosu boş ama bağlı.
 - [x] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).
-- [ ] **M0.11 Config modülü (ADR-0011)** — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
+- [~] **M0.11 Config modülü (ADR-0011)** (domain: PolicyEntry, resolveEffective, staleness, reverify + seed hazır; DB/servis/cron M1'de) — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
   - KK: `verified_at` eşiği aşınca alarm testi (FakeClock); Instagram limit doğrulayıcı fixture testi.
 - [ ] **M0.12 Kiracı modeli (ADR-0012)** — `memberships`, davet akışı, RLS politikaları, süper yönetici rolü; çapraz kiracı erişim testleri.
-- [ ] **M0.13 Billing çekirdeği** — `plans`, `plan_entitlements`, `EntitlementService.assert`, `credit_ledger`, `usage_records` → kredi düşümü; sağlayıcı yok (manual plan ile başlar).
+- [~] **M0.13 Billing çekirdeği** (domain: assertEntitlement, credit ledger hazır) — `plans`, `plan_entitlements`, `EntitlementService.assert`, `credit_ledger`, `usage_records` → kredi düşümü; sağlayıcı yok (manual plan ile başlar).
 - [ ] **M0.14 Privacy çekirdeği** — `consent_records` (metin sürümü kabulü), hesap silme (30 gün), veri dışa aktarma, Meta Data Deletion Callback uç noktası + onay kodu sayfası.
 
 ## M1 — Persona ve kanal (Hafta 3–4)

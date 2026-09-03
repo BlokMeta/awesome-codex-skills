@@ -1,3 +1,6 @@
+export * from './billing/entitlement.js';
+export * from './config/policy-entry.js';
+export * from './config/ports.js';
 export * from './persona/persona.js';
 export * from './persona/posting-policy.js';
 export * from './shared/domain-error.js';
