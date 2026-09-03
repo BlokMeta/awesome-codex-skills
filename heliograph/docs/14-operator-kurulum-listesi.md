@@ -167,7 +167,9 @@ Isınma: ilk 7 gün düşük hacim otomatik; sen bir şey yapmazsın.
 | G9 | **Google OAuth doğrulaması** | A5 madde 6 | 2–6 hafta | Search Console alan adı doğrulaması senin |
 | G10 | **TikTok audit** (üçüncü taraf kullanıcı) | A4 | 2–4 hafta | – |
 | G11 | **Mağaza hesapları** | A8; ayrıca App Privacy / Data Safety formları (envanterden ben doldururum, sen onaylarsın); demo hesap | – | Uygulama içi hesap silme zorunlu (kodda var) |
-| G12 | **AB/UK temsilcisi** (AB müşterisi olursa) | GDPR md. 27 temsilci servisi (ör. DataRep, EDPO) ⚠ | ~100–300 €/yıl ⚠ | docs/16 §3 |
+| G12 | **AB/UK temsilcisi** | GDPR md. 27 temsilci servisi (DataRep, EDPO, GDPR Local) — AB'ye aktif satış yapıyorsak büyük olasılıkla zorunlu | ⚠ ~1.500–5.000 €/yıl (temel 1.500–2.500 €) | docs/16 §3 |
+| G18 | **KVKK standart sözleşme bildirimleri** | Her yabancı alt işleyenle Kurul şablonu imzala → **5 iş günü içinde** Standart Sözleşme Bildirim Modülü'nden bildir (ceza 90.308–1.806.377 ₺) | – | docs/16 §2.5 |
+| G19 | **KEP adresi + MERSİS** | ETBİS ve 6563 tanıtıcı bilgiler için; Ltd kuruluşunda alınır | ~300–500 ₺/yıl ⚠ | docs/16 §4 |
 | G13 | **Alt işleyici sözleşmeleri** | Anthropic, Google, ElevenLabs, fal, Cloudflare, Paddle, Resend, Sentry'nin DPA/SCC sayfalarını kabul et, PDF'leri `legal/dpa/` klasörüne koy | Ücretsiz | KVKK standart sözleşme bildirimi gerekirse 5 iş günü ⚠ |
 | G14 | **Affiliate programı** (lansman) | Rewardful veya Tolt hesabı ⚠ | ~49–99 $/ay | docs/15 §5.2 |
 | G16 | **Hizmet İhracatı Destekleri (10962 sayılı Karar)** | Ticaret Bakanlığı → hosting, platform komisyonu, onaylı SaaS, pazarlama giderlerinin %50'si (yılda 5 M ₺'ye kadar) ⚠; SMMM/danışmanla başvuru | Ücretsiz; aylık raporlama | docs/15 §2.4 |

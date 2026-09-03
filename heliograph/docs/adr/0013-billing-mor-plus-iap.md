@@ -4,10 +4,10 @@
 - **Tarih:** 2026-09-03
 
 ## Bağlam
-Şirket Türkiye'de; Stripe Türkiye'de kurulu işletmelere hesap açmıyor (stripe.com/global). Küresel KDV/satış vergisi yükü bir Merchant of Record ile çözülmeli. Apple 3.1.3(b) uyarınca web'de satın alınan hakların uygulamada kullanılabilmesi için aynı planların uygulama içi satın alma olarak da sunulması gerekiyor; Google Play 30 Haz 2026'dan itibaren ABD/AEA/İngiltere'de web link-out'a %10 ile izin veriyor. Türkiye'deki tüketiciye TRY fiyat gerekiyor.
+Şirket Türkiye'de; Stripe Türkiye'de kurulu işletmelere hesap açmıyor (stripe.com/global). Küresel KDV/satış vergisi yükü bir Merchant of Record ile çözülmeli. Apple 3.1.3(b) uyarınca web'de satın alınan hakların uygulamada kullanılabilmesi için aynı planların uygulama içi satın alma olarak da sunulması gerekiyor; Google Play 30 Haz 2026'dan itibaren ABD/AEA/İngiltere'de web link-out'a %10 ile izin veriyor. Türkiye'de yerleşik müşteriye TL fiyat zorunlu (32 sayılı Karar Tebliği md. 8).
 
 ## Karar
-1. `PaymentProvider` portu; adaptörler: **Paddle** (canlıya çıkış), **Polar** (ikinci MoR, kredi/kullanım faturalama; 6 ay sonra birincil yeniden değerlendirilir), **iyzico Abonelik** (faz 2, TRY), **RevenueCat** (App Store + Play IAP).
+1. `PaymentProvider` portu; adaptörler: **Paddle** (canlıya çıkış), **Polar** (ikinci MoR, kredi/kullanım faturalama; 6 ay sonra birincil yeniden değerlendirilir), **iyzico Abonelik** (TRY; MoR TRY satamıyorsa lansmanda, aksi hâlde faz 2), **RevenueCat** (App Store + Play IAP).
 2. Haklar tek kaynaktan: `subscriptions` + `plan_entitlements` + `credit_ledger`; sağlayıcı webhook'ları yalnızca bu tabloları günceller; uygulamalar `GET /v1/billing/entitlements` okur.
 3. Mobilde aynı planlar IAP olarak listelenir (Small Business Program %15). ABD vitrininde web link-out gösterilir; diğer vitrinlerde web fiyatı anılmaz (Apple kuralı). Android'de ABD/AEA/İngiltere'de web link-out %10 ile açılır. Ülke bazlı davranış `config`'te (`billing.store_policy.<country>`).
 4. Faturalar: MoR satışlarında MoR düzenler; iyzico satışlarında e-Arşiv bizden; MoR'a aylık toplu fatura (SMMM ile).

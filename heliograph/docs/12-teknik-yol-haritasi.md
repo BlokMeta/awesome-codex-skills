@@ -20,9 +20,9 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [x] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).
 - [~] **M0.11 Config modülü (ADR-0011)** (domain: PolicyEntry, resolveEffective, staleness, reverify + seed hazır; DB/servis/cron M1'de) — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
   - KK: `verified_at` eşiği aşınca alarm testi (FakeClock); Instagram limit doğrulayıcı fixture testi.
-- [ ] **M0.12 Kiracı modeli (ADR-0012)** — `memberships`, davet akışı, RLS politikaları, süper yönetici rolü; çapraz kiracı erişim testleri.
 - [~] **M0.13 Billing çekirdeği** (domain: assertEntitlement, credit ledger hazır) — `plans`, `plan_entitlements`, `EntitlementService.assert`, `credit_ledger`, `usage_records` → kredi düşümü; sağlayıcı yok (manual plan ile başlar).
-- [ ] **M0.14 Privacy çekirdeği** — `consent_records` (metin sürümü kabulü), hesap silme (30 gün), veri dışa aktarma, Meta Data Deletion Callback uç noktası + onay kodu sayfası.
+- [~] **M0.14 Privacy çekirdeği** (domain: consent modeli hazır — `ai_processing` dahil) — `consent_records` (metin sürümü kabulü), hesap silme (30 gün), veri dışa aktarma, Meta Data Deletion Callback uç noktası + onay kodu sayfası, herkese açık silme web sayfası (Play).
+- [~] **M0.12 Kiracı modeli** (domain: rol/izin matrisi, authorize, changeRole hazır)
 
 ## M1 — Persona ve kanal (Hafta 3–4)
 
@@ -48,6 +48,7 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [ ] **M2.4 Publishing modülü** — zamanlayıcı (pencere + jitter), `PublishPost` workflow, idempotency, kota bütçeleyici, etiket alanları (ad/aiDisclosed/automated).
 - [ ] **M2.5 Web: Trendler, Kuyruk, Takvim ekranları** — HorizonStrip, TrendHeat, GateReport, sürükle-bırak; SSE.
 - [ ] **M2.6 Mobil: Bugün + Kuyruk** — kaydırarak onay, GateReport sheet, offline karar kuyruğu.
+- [ ] **M2.8 Platform veri hijyeni** — YouTube API verisi 30 günde tazeleme/silme ❓, X'te silinen içeriği yansıtma, Meta/TikTok deauthorization webhook'ları → `erasure_requests`.
 - [ ] **M2.7 Analytics v1** — 1s/24s/7g metrik toplama, post_features etiketleme.
 - **Çıktı:** 1 persona, Telegram + Threads + X, günde 5 metin post, insan onaylı, mobilden onay.
 
@@ -59,13 +60,13 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [ ] **M3.3 `ProduceShortVideo` workflow** — script JSON → TTS → görsel malzeme (paralel child activity'ler) → montaj → K6/K7 kapıları.
 - [ ] **M3.4 Adaptörler v2** — YouTube (Shorts, `containsSyntheticMedia`), Instagram (Reels/carousel, IPTC AI işareti), TikTok (SELF_ONLY sandbox), X medya v2.
 - [ ] **M3.5 Web: Kütüphane + Şablonlar** — Remotion canlı önizleme, gün aşırı plan kurucu.
-- [ ] **M3.6 Mobil: medya önizleme** — 9:16 oynatıcı, carousel; kütüphaneye fotoğraf yükleme (kamera rulosu).
+- [ ] **M3.6 Mobil: medya önizleme** — 9:16 oynatıcı, carousel; kütüphaneye fotoğraf yükleme (kamera rulosu); **"içeriği bildir"** düğmesi (Google Play AI-Generated Content policy).
 - [ ] **M3.7 Cost modülü** — usage_records, bütçe, kesici; panel maliyet sayacı.
 - **Çıktı:** günde 2 video, 5 kanal.
 
 ## M4 — Etkileşim ve fırsatlar (Hafta 13–16)
 
-- [ ] **M4.1 Engagement modülü** — `EngagementSweep`, sınıflandırma, politika motoru, yanıt üretimi + kapı, gecikme dağılımı, X insan-taslak modu.
+- [ ] **M4.1 Engagement modülü** — `EngagementSweep`, sınıflandırma, politika motoru (Meta 24 saat penceresi zorlaması), yanıt üretimi + kapı, gecikme dağılımı, X insan-taslak modu, X compliance stream tüketicisi (24 saat silme SLA).
   - KK: prompt injection test seti (yorumda "ignore instructions" → politika motoru geçmez).
 - [ ] **M4.2 E-posta gelen kutusu** — inbound webhook, aynı sınıflandırma.
 - [ ] **M4.3 Deals modülü** — lead/deal, medya kiti üretimi (haftalık), rate card, MoneyLine alarmı.

@@ -26,13 +26,13 @@ This policy explains what personal data we process through {{ALAN_ADI}}, the Hel
 Providing the Service (contract); security, abuse prevention, debugging (legitimate interest); billing and legal obligations; product analytics in aggregate (legitimate interest); marketing messages (consent, always revocable); voice clone and likeness model (explicit consent).
 
 ## 3. Artificial intelligence
-We use AI models, including third-party providers listed on our Sub-processors page, to draft content, suggest replies and classify interactions. Data sent to providers is used only to provide the Service to you; our agreements prohibit use of your data for model training. AI-generated images, audio and video carry machine-readable provenance marks. See our AI Disclosure.
+During sign-up you give explicit permission for your content and the interactions you choose to manage to be processed by third-party AI providers on our behalf (you can review the list on the Sub-processors page and withdraw by deleting your account). We use AI models, including third-party providers listed on our Sub-processors page, to draft content, suggest replies and classify interactions. Data sent to providers is used only to provide the Service to you; our agreements prohibit use of your data for model training. AI-generated images, audio and video carry machine-readable provenance marks. See our AI Disclosure.
 
 ## 4. Third parties' data (comment and message authors)
 We process comments and messages received by your connected accounts on your instructions and on your behalf; you are the controller of that data and we act as processor. Such texts are anonymised after 90 days and are used solely to generate replies and classifications, never for advertising or profiling.
 
 ## 5. Google API Services — Limited Use disclosure
-Heliograph's use and transfer of information received from Google APIs adheres to the **Google API Services User Data Policy**, including the **Limited Use** requirements. Google user data is used only to provide user-facing features, is never used for advertising, is never sold, and is not read by humans except for security, legal compliance or with your consent.
+Heliograph's use and transfer to any other app of information received from Google APIs will adhere to [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements. Google user data is used only to provide user-facing features, is never used for advertising, is never sold, and is not read by humans except for security, legal compliance or with your consent.
 
 ## 6. Sharing and international transfers
 We do not sell personal data. We share it only as needed with: social media platforms (to publish and manage interactions, on your authorization), sub-processors (hosting, AI, voice, email, payments, error tracking — see Sub-processors), and authorities where legally required. Some sub-processors are outside Türkiye/the EEA; transfers rely on standard contractual clauses or adequacy decisions.

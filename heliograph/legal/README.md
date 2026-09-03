@@ -24,3 +24,6 @@ en/  privacy-policy.md · terms-of-service.md · acceptable-use-policy.md · dat
 ```
 
 İngilizce metinler platform inceleyicileri (Meta, Google, TikTok, Apple) ve yurt dışı müşteriler içindir; Türkçe metinler Türkiye hukuku (KVKK, mesafeli satış) için birincildir. Çelişkide, Türkiye'deki tüketici için Türkçe metin geçerlidir.
+
+## Eksik metinler (M1.8'de yazılacak; docs/16 §8)
+`tr/veri-isleme-sozlesmesi-dpa.md` (+ SCC Modül 2 ve Kurul standart sözleşme ekleri), `tr/saklama-ve-imha-politikasi.md`, `tr/veri-sorumlusu-basvuru-formu.md`, `tr/takipci-aydinlatma-ornegi.md` (kiracının takipçilerine yönelik örnek), `tr/iys-onay-metni.md`, `tr/etbis-tanitici-bilgiler.md`, `tr/yas-politikasi.md`, `en/cookie-policy.md`, `en/refund-policy.md`, `en/security.md`, `en/dpa.md`.

@@ -33,7 +33,7 @@ Bu politika, {{ALAN_ADI}} web sitesi, Heliograph web uygulaması ve iOS/Android 
 
 ## 3. Yapay zekâ kullanımı
 
-Hizmet, içerik taslakları, yanıt önerileri ve sınıflandırma için yapay zekâ modelleri (üçüncü taraf sağlayıcılar dahil, bkz. Alt İşleyiciler) kullanır. Modellere gönderilen veriler yalnızca size hizmet üretmek için kullanılır; sağlayıcılarla yaptığımız sözleşmeler verilerinizin **model eğitiminde kullanılmamasını** şart koşar. AI ile üretilen görsel/ses/video çıktılarına makine tarafından okunabilir işaret eklenir. Ayrıntı: AI Kullanım Beyanı.
+Kayıt sırasında, içeriklerinizin ve yönetmeyi seçtiğiniz etkileşimlerin bizim adımıza üçüncü taraf yapay zekâ sağlayıcıları tarafından işlenmesine açıkça izin verirsiniz (liste: Alt İşleyiciler; izni hesabınızı silerek geri alabilirsiniz). Hizmet, içerik taslakları, yanıt önerileri ve sınıflandırma için yapay zekâ modelleri (üçüncü taraf sağlayıcılar dahil, bkz. Alt İşleyiciler) kullanır. Modellere gönderilen veriler yalnızca size hizmet üretmek için kullanılır; sağlayıcılarla yaptığımız sözleşmeler verilerinizin **model eğitiminde kullanılmamasını** şart koşar. AI ile üretilen görsel/ses/video çıktılarına makine tarafından okunabilir işaret eklenir. Ayrıntı: AI Kullanım Beyanı.
 
 ## 4. Üçüncü kişilerin verileri (yorum ve mesaj yazarları)
 
