@@ -1,14 +1,20 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "workspaces": {
-    "packages/domain": { "project": ["src/**/*.ts"] },
-    "tooling/seed": { "entry": ["config.ts"] },
+    "packages/domain": {
+      "project": ["src/**/*.ts"]
+    },
+    "tooling/seed": {
+      "entry": ["config.ts"]
+    },
     "packages/tokens": {
       "entry": ["scripts/*.ts", "src/index.ts"],
-      "project": ["src/**/*.ts", "scripts/**/*.ts"],
-      "ignoreDependencies": ["style-dictionary"]
+      "project": ["src/**/*.ts", "scripts/**/*.ts"]
     },
-    "packages/i18n": { "entry": ["scripts/*.ts"], "project": ["src/**/*.ts", "scripts/**/*.ts"] },
+    "packages/i18n": {
+      "entry": ["scripts/*.ts"],
+      "project": ["src/**/*.ts", "scripts/**/*.ts"]
+    },
     "packages/contracts": {
       "entry": ["src/index.ts", "scripts/*.ts"],
       "project": ["src/**/*.ts", "scripts/**/*.ts"]
