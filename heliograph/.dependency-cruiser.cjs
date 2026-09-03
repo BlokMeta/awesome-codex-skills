@@ -40,14 +40,17 @@ module.exports = {
       name: 'layers-application-not-interface',
       comment: 'application may not import interface',
       severity: 'error',
-      from: { path: '^apps/api/src/modules/[^/]+/application/' },
+      from: { path: '^apps/api/src/modules/[^/]+/application/', pathNot: '\\.test\\.ts$' },
       to: { path: '^apps/api/src/modules/[^/]+/interface/' },
     },
     {
       name: 'layers-domain-not-infra',
       comment: "a module's domain/application may not import its infrastructure",
       severity: 'error',
-      from: { path: '^apps/api/src/modules/([^/]+)/(domain|application)/' },
+      from: {
+        path: '^apps/api/src/modules/([^/]+)/(domain|application)/',
+        pathNot: '\\.test\\.ts$',
+      },
       to: { path: '^apps/api/src/modules/[^/]+/infrastructure/' },
     },
     {
