@@ -18,7 +18,6 @@
     "@nestjs/core": "catalog:",
     "@nestjs/platform-fastify": "catalog:",
     "@orpc/nest": "catalog:",
-    "@orpc/server": "catalog:",
     "fastify": "catalog:",
     "nestjs-pino": "catalog:",
     "pino": "catalog:",
