@@ -5,6 +5,7 @@
     { "path": "packages/contracts" },
     { "path": "packages/i18n" },
     { "path": "packages/tokens" },
+    { "path": "apps/api" },
     { "path": "tooling/scripts" },
     { "path": "tooling/seed" }
   ]

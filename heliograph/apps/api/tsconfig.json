@@ -1,0 +1,26 @@
+{
+  "extends": "@heliograph/config/tsconfig.node.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2023"
+  },
+  "include": ["src"],
+  "references": [
+    {
+      "path": "../../packages/domain"
+    },
+    {
+      "path": "../../packages/contracts"
+    },
+    {
+      "path": "../../tooling/seed"
+    }
+  ],
+  "exclude": ["src/**/*.test.ts"]
+}

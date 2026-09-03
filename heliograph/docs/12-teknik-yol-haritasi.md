@@ -8,7 +8,7 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 
 - [x] **M0.1 Monorepo iskeleti** — pnpm workspaces + Turborepo; `packages/config` (tsconfig, biome, dependency-cruiser, vitest); `pnpm check` yeşil boş projede.
   - KK: `pnpm i && pnpm check` < 2 dk; boundaries kuralı örnek ihlalde kırılıyor.
-- [~] **M0.2 Yerel ortam** (compose hazır; `pnpm dev` M1'de) — docker-compose: postgres+pgvector, redis, temporal (dev server), otel-collector, grafana, minio; `pnpm dev` tek komut.
+- [~] **M0.2 Yerel ortam** (compose hazır; `pnpm dev` api'yi başlatıyor; web/mobil M1'de) — docker-compose: postgres+pgvector, redis, temporal (dev server), otel-collector, grafana, minio; `pnpm dev` tek komut.
 - [~] **M0.3 CI `pr-check`** (lint/typecheck/test/boundaries/knip/openapi-diff/gitleaks canlı; e2e, a11y, perf, güvenlik taramaları uygulamalarla birlikte) — 17 kapının iskeleti (bazıları boş geçer); Turborepo remote cache.
 - [x] **M0.4 Contracts paketi** (oRPC + Zod 4 → `openapi.json`; Prism/Spectral M0.3'te) — Zod → OpenAPI 3.1 → tipli istemci üretimi; Spectral; Prism mock sunucusu.
   - KK: `pnpm contracts:gen` deterministik (diff yok); örnek `GET /v1/health`.
@@ -16,9 +16,9 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [x] **M0.6 i18n paketi** (Lingui runtime, elle id'li mesajlar, Intl biçimleyiciler, pseudo, .po codec, `i18n:check`; SWC/Metro entegrasyonu uygulamalarla) — `tr`, `en`, `en-x-pseudo`; extract/check betikleri; lint kuralı ham string.
 - [~] **M0.7 UI paketi çekirdeği** (token'lar: DTCG JSON → CSS değişkenleri + TS teması, WCAG kontrast testleri hazır; bileşenler ve Storybook sırada) — token'lar (Style Dictionary), yazı tipleri, `Button/Input/List/Sheet` web + RN; Storybook (web + RN); axe.
 - [ ] **M0.8 Auth** — operatör kayıt/giriş, passkey + TOTP, oturum rotasyonu, RLS; e2e "giriş".
-- [ ] **M0.9 Gözlemlenebilirlik temeli** — pino + OTel + requestId; Grafana panosu boş ama bağlı.
+- [~] **M0.9 Gözlemlenebilirlik temeli** (pino + requestId + redact hazır; OTel ve Grafana panosu sırada) — pino + OTel + requestId; Grafana panosu boş ama bağlı.
 - [x] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).
-- [~] **M0.11 Config modülü (ADR-0011)** (domain: PolicyEntry, resolveEffective, staleness, reverify + seed hazır; DB/servis/cron M1'de) — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
+- [~] **M0.11 Config modülü (ADR-0011)** (domain + ConfigService (TTL önbellek, invalidate) + bellek içi depo + seed + `/v1/health/config` hazır; Drizzle deposu ve bayatlık cron'u M1'de) — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
   - KK: `verified_at` eşiği aşınca alarm testi (FakeClock); Instagram limit doğrulayıcı fixture testi.
 - [~] **M0.13 Billing çekirdeği** (domain: assertEntitlement, credit ledger hazır) — `plans`, `plan_entitlements`, `EntitlementService.assert`, `credit_ledger`, `usage_records` → kredi düşümü; sağlayıcı yok (manual plan ile başlar).
 - [~] **M0.14 Privacy çekirdeği** (domain: consent modeli hazır — `ai_processing` dahil) — `consent_records` (metin sürümü kabulü), hesap silme (30 gün), veri dışa aktarma, Meta Data Deletion Callback uç noktası + onay kodu sayfası, herkese açık silme web sayfası (Play).

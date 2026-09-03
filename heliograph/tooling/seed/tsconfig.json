@@ -3,11 +3,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
-    "noEmit": true,
-    "composite": false,
-    "incremental": false,
-    "declaration": false,
-    "declarationMap": false
+    "types": ["node"]
   },
-  "include": ["*.ts"]
+  "include": ["config.ts"]
 }

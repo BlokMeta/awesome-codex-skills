@@ -1,0 +1,40 @@
+{
+  "name": "@heliograph/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "test": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@heliograph/contracts": "workspace:*",
+    "@heliograph/domain": "workspace:*",
+    "@heliograph/seed": "workspace:*",
+    "@nestjs/common": "catalog:",
+    "@nestjs/core": "catalog:",
+    "@nestjs/platform-fastify": "catalog:",
+    "@orpc/nest": "catalog:",
+    "@orpc/server": "catalog:",
+    "fastify": "catalog:",
+    "nestjs-pino": "catalog:",
+    "pino": "catalog:",
+    "pino-http": "catalog:",
+    "reflect-metadata": "catalog:",
+    "rxjs": "catalog:",
+    "ulid": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@heliograph/config": "workspace:*",
+    "@nestjs/testing": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "^3.2.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -4,11 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@heliograph/config": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js"
+    }
   }
 }
