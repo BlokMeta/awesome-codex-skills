@@ -9,7 +9,7 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [x] **M0.1 Monorepo iskeleti** — pnpm workspaces + Turborepo; `packages/config` (tsconfig, biome, dependency-cruiser, vitest); `pnpm check` yeşil boş projede.
   - KK: `pnpm i && pnpm check` < 2 dk; boundaries kuralı örnek ihlalde kırılıyor.
 - [~] **M0.2 Yerel ortam** (compose hazır; `pnpm dev` M1'de) — docker-compose: postgres+pgvector, redis, temporal (dev server), otel-collector, grafana, minio; `pnpm dev` tek komut.
-- [ ] **M0.3 CI `pr-check`** — 17 kapının iskeleti (bazıları boş geçer); Turborepo remote cache.
+- [~] **M0.3 CI `pr-check`** (lint/typecheck/test/boundaries/knip/openapi-diff/gitleaks canlı; e2e, a11y, perf, güvenlik taramaları uygulamalarla birlikte) — 17 kapının iskeleti (bazıları boş geçer); Turborepo remote cache.
 - [x] **M0.4 Contracts paketi** (oRPC + Zod 4 → `openapi.json`; Prism/Spectral M0.3'te) — Zod → OpenAPI 3.1 → tipli istemci üretimi; Spectral; Prism mock sunucusu.
   - KK: `pnpm contracts:gen` deterministik (diff yok); örnek `GET /v1/health`.
 - [x] **M0.5 Domain paketi iskeleti** — `Result`, `DomainError`, `Clock`, `Rng`, `Id` yardımcıları; ilk aggregate (`Persona`) + property-based test.

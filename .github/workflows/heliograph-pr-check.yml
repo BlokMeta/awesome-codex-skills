@@ -1,0 +1,63 @@
+name: heliograph pr-check
+
+on:
+  pull_request:
+    paths: ['heliograph/**', '.github/workflows/heliograph-pr-check.yml']
+  push:
+    branches: [master]
+    paths: ['heliograph/**']
+
+concurrency:
+  group: heliograph-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: heliograph
+
+jobs:
+  check:
+    name: lint · typecheck · test · boundaries · knip · contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: pnpm/action-setup@v4
+        with: { package_json_file: heliograph/package.json }
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: heliograph/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Lint (Biome)
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit + property tests (coverage thresholds enforced)
+        run: pnpm test
+      - name: Module boundaries (dependency-cruiser)
+        run: pnpm boundaries
+      - name: Dead code and dependencies (knip)
+        run: pnpm knip
+      - name: OpenAPI is up to date
+        run: |
+          pnpm --filter @heliograph/contracts gen
+          git diff --exit-code -- packages/contracts/openapi.json
+      - name: Env example is doctor-parsable
+        run: pnpm doctor || true
+
+  secrets:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
