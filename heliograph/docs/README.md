@@ -18,6 +18,7 @@ Bu klasör projenin **kalıcı hafızası**dır. Ajan (Claude/Codex) ve insanlar
 | 11 | [Veri modeli](11-veri-modeli.md) | Modül başına tablolar, indeksler, saklama süreleri |
 | 12 | [Teknik yol haritası](12-teknik-yol-haritasi.md) | M0–M6 epikler, hikâyeler, kabul kriterleri (canlı) |
 | 13 | [Referanslar ve skill'ler](13-referanslar-ve-skills.md) | Kullanılacak skill'ler, örnek repolar, ajan hafızası düzeni |
+| 14 | [Operatör kurulum listesi](14-operator-kurulum-listesi.md) | Senin yapacakların: hesaplar, anahtarlar, başvurular, env eşlemesi (`.env.example`) |
 | adr | [`adr/`](adr/) | Mimari karar kayıtları (MADR) |
 | – | [Ürün araştırması](../../research/sosyal-medya-otomasyon-yol-haritasi.md) | Fizibilite, platform kuralları, fiyatlar, hukuk |
 

@@ -1,0 +1,17 @@
+packages:
+  - apps/*
+  - packages/*
+  - tooling/*
+
+catalog:
+  "@biomejs/biome": ^2.5.0
+  "@types/node": ^22.15.0
+  dependency-cruiser: ^17.0.0
+  fast-check: ^4.1.0
+  knip: ^5.60.0
+  tsx: ^4.20.0
+  turbo: ^2.5.0
+  typescript: ^5.9.0
+  vitest: ^3.2.0
+  zod: ^4.0.0
+  ulid: ^3.0.0

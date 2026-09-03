@@ -1,0 +1,20 @@
+{
+  "name": "@heliograph/config",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "files": [
+    "tsconfig.base.json",
+    "tsconfig.node.json",
+    "tsconfig.react.json",
+    "vitest.base.ts"
+  ],
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./tsconfig.node.json": "./tsconfig.node.json",
+    "./vitest.base": "./vitest.base.ts"
+  },
+  "devDependencies": {
+    "vitest": "catalog:"
+  }
+}

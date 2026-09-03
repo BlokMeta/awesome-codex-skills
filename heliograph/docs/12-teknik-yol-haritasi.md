@@ -6,18 +6,18 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 
 ## M0 — Temel (Hafta 1–2)
 
-- [ ] **M0.1 Monorepo iskeleti** — pnpm workspaces + Turborepo; `packages/config` (tsconfig, biome, dependency-cruiser, vitest); `pnpm check` yeşil boş projede.
+- [x] **M0.1 Monorepo iskeleti** — pnpm workspaces + Turborepo; `packages/config` (tsconfig, biome, dependency-cruiser, vitest); `pnpm check` yeşil boş projede.
   - KK: `pnpm i && pnpm check` < 2 dk; boundaries kuralı örnek ihlalde kırılıyor.
-- [ ] **M0.2 Yerel ortam** — docker-compose: postgres+pgvector, redis, temporal (dev server), otel-collector, grafana, minio; `pnpm dev` tek komut.
+- [~] **M0.2 Yerel ortam** (compose hazır; `pnpm dev` M1'de) — docker-compose: postgres+pgvector, redis, temporal (dev server), otel-collector, grafana, minio; `pnpm dev` tek komut.
 - [ ] **M0.3 CI `pr-check`** — 17 kapının iskeleti (bazıları boş geçer); Turborepo remote cache.
 - [ ] **M0.4 Contracts paketi** — Zod → OpenAPI 3.1 → tipli istemci üretimi; Spectral; Prism mock sunucusu.
   - KK: `pnpm contracts:gen` deterministik (diff yok); örnek `GET /v1/health`.
-- [ ] **M0.5 Domain paketi iskeleti** — `Result`, `DomainError`, `Clock`, `Rng`, `Id` yardımcıları; ilk aggregate (`Persona`) + property-based test.
+- [x] **M0.5 Domain paketi iskeleti** — `Result`, `DomainError`, `Clock`, `Rng`, `Id` yardımcıları; ilk aggregate (`Persona`) + property-based test.
 - [ ] **M0.6 i18n paketi** — `tr`, `en`, `en-x-pseudo`; extract/check betikleri; lint kuralı ham string.
 - [ ] **M0.7 UI paketi çekirdeği** — token'lar (Style Dictionary), yazı tipleri, `Button/Input/List/Sheet` web + RN; Storybook (web + RN); axe.
 - [ ] **M0.8 Auth** — operatör kayıt/giriş, passkey + TOTP, oturum rotasyonu, RLS; e2e "giriş".
 - [ ] **M0.9 Gözlemlenebilirlik temeli** — pino + OTel + requestId; Grafana panosu boş ama bağlı.
-- [ ] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).
+- [x] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).
 
 ## M1 — Persona ve kanal (Hafta 3–4)
 
