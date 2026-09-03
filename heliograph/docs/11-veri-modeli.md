@@ -131,6 +131,49 @@ audit_log (id, workspace_id, actor_type, actor_id, action, resource_type, resour
 outbox (id, aggregate_type, aggregate_id, event_type, payload JSONB, created_at, published_at NULL)
 ```
 
+## 12a. identity (çok kiracılı ek)
+
+```sql
+memberships (id, operator_id, workspace_id, role ENUM('owner','admin','editor','viewer'), invited_by, accepted_at, UNIQUE(operator_id, workspace_id))
+invitations (id, workspace_id, email, role, token_hash, expires_at, accepted_at)
+operators.is_superadmin BOOL DEFAULT false
+operators.deleted_at TIMESTAMPTZ NULL      -- hesap silme (30 gün sonra hard delete)
+```
+
+## 12b. config (ADR-0011)
+
+```sql
+policy_entries (id, key, scope ENUM('global','platform','workspace'), scope_id NULL, value JSONB, version INT,
+  effective_from, verified_at, verified_by, source_url, max_age_days, notes,
+  UNIQUE(key, scope, scope_id, version))
+feature_flags (id, key, description, default_on BOOL, rules JSONB, updated_at)
+```
+
+Tohum anahtarları (`tooling/seed/config.ts`): platform limitleri, kabiliyet matrisi, fiyatlar, model adları, saklama süreleri, yasal metin sürümleri, trend kaynakları.
+
+## 12c. billing
+
+```sql
+plans (id, code UNIQUE, name, interval ENUM('month','year'), price_minor INT, currency, active BOOL, sort, public BOOL)
+plan_entitlements (plan_id, feature, limit_value NUMERIC, PRIMARY KEY(plan_id, feature))
+  -- feature: connected_accounts, personas, daily_posts, daily_videos, ai_credits_month, team_members, manual_library, priority_support...
+subscriptions (id, workspace_id, plan_id, provider ENUM('paddle','iyzico','apple','google','manual'), provider_ref,
+  status ENUM('trialing','active','past_due','paused','cancelled','expired'), current_period_start, current_period_end,
+  cancel_at_period_end BOOL, trial_ends_at, seats INT, extra_accounts INT)
+credit_ledger (id, workspace_id, delta INT, reason ENUM('plan_grant','purchase','usage','refund','bonus','expiry'), ref_type, ref_id, balance_after INT, at)
+invoices (id, workspace_id, provider, provider_ref, number, amount_minor, currency, tax_minor, status, issued_at, pdf_key, efatura_ref NULL)
+payment_events (id, provider, event_id UNIQUE, payload JSONB, processed_at)
+coupons (id, code UNIQUE, kind, value, max_redemptions, expires_at)
+```
+
+## 12d. privacy
+
+```sql
+consent_records (id, operator_id, workspace_id NULL, document ENUM('terms','privacy','kvkk_aydinlatma','kvkk_acik_riza','cookies','marketing_iys','distance_sale'), version, accepted_at, ip, user_agent)
+erasure_requests (id, workspace_id NULL, operator_id NULL, channel_id NULL, source ENUM('user','meta_callback','support'), requested_at, due_at, completed_at, confirmation_code)
+data_exports (id, operator_id, requested_at, ready_at, storage_key, expires_at)
+```
+
 ## 13. Sayfalama anahtarları (indeks garantisi)
 
 | Liste | Sıralama anahtarı | İndeks |

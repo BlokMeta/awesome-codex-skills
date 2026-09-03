@@ -1,0 +1,128 @@
+{
+  "info": {
+    "title": "Heliograph API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.1",
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "operationId": "system.health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "checkedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "dependencies": {
+                      "items": {
+                        "properties": {
+                          "detail": {
+                            "type": "string"
+                          },
+                          "latencyMs": {
+                            "maximum": 9007199254740991,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "enum": ["ok", "degraded", "down"],
+                            "type": "string"
+                          }
+                        },
+                        "required": ["name", "status"],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "staleConfigKeys": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "status": {
+                      "enum": ["ok", "degraded", "down"],
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "version", "checkedAt", "dependencies", "staleConfigKeys"],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Liveness + dependency health",
+        "tags": ["system"]
+      }
+    },
+    "/v1/health/config": {
+      "get": {
+        "operationId": "system.configHealth",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "checkedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "stale": {
+                      "items": {
+                        "properties": {
+                          "key": {
+                            "type": "string"
+                          },
+                          "maxAgeDays": {
+                            "maximum": 9007199254740991,
+                            "minimum": -9007199254740991,
+                            "type": "integer"
+                          },
+                          "overdueDays": {
+                            "maximum": 9007199254740991,
+                            "minimum": -9007199254740991,
+                            "type": "integer"
+                          },
+                          "verifiedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          }
+                        },
+                        "required": ["key", "verifiedAt", "maxAgeDays", "overdueDays"],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": ["checkedAt", "stale"],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Stale dynamic-config keys (ADR-0011)",
+        "tags": ["system"]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Heliograph — Proje Hafızası ve Ana Kurallar
 
-> Heliograph: ışıkla sinyal veren aynalı cihaz. Bu projede: trendi ilk yakalayıp 20 personadan 6 platforma sinyal gönderen, web + mobil yönetim uygulamalı, tam otomatik sosyal medya sistemi.
+> Heliograph: ışıkla sinyal veren aynalı cihaz. Bu projede: **çok kiracılı, ücretli bir SaaS**. Her kullanıcı (web veya mobil) kaydolur, kendi sosyal medya hesaplarını bağlar (token'lar bizde, şifreli), persona/tema seçer; sistem trendi yakalayıp içerik üretir, kalite kapısından geçirir, yayınlar, etkileşimi yönetir. Tam otomatik AI modu da, kullanıcının kendi fotoğraflarını temaya göre düzenli paylaştıran manuel mod da aynı altyapıdır. Ücretlendirme: bağlı hesap sayısı + aylık plan + AI kredisi (bkz. `docs/15`). İlk müşteri biziz (kendi hesaplarımız), ardından davetli kullanıcılar, ardından herkese açık.
 
 Bu dosya her oturumda **önce** okunur. Buradaki kurallar, `docs/` altındaki ayrıntılı dokümanların özetidir; çelişki hâlinde `docs/` kazanır, `docs/` içinde çelişki varsa en yüksek numaralı ADR kazanır.
 
@@ -20,6 +20,9 @@ Bu dosya her oturumda **önce** okunur. Buradaki kurallar, `docs/` altındaki ay
 | Pipeline, dağıtım, mağaza | `docs/10-ci-cd-ve-dagitim.md` |
 | Şema / migration | `docs/11-veri-modeli.md` |
 | Sıradaki iş ne | `docs/12-teknik-yol-haritasi.md` |
+| Fiyatlandırma, ödeme, plan hakları, pazarlama | `docs/15-is-modeli-ve-monetizasyon.md` |
+| KVKK, GDPR, platform politikaları, hukuki metinler | `docs/16-hukuk-ve-uyum.md`, `legal/` |
+| Operatörün (sahip) yapacakları | `docs/14-operator-kurulum-listesi.md` |
 | Ürün gerekçesi, platform kuralları, fiyatlar | `../research/sosyal-medya-otomasyon-yol-haritasi.md` |
 
 ## 1. Değişmez kurallar (Non-negotiables)
@@ -36,6 +39,9 @@ Bu dosya her oturumda **önce** okunur. Buradaki kurallar, `docs/` altındaki ay
 10. **Kalite kapısı olmadan yayın yok.** İçerik üretim hattı `quality` modülünün kapısını geçmeden `publish` çağrılamaz; bu, tip düzeyinde zorlanır (`ApprovedContent` markalı tip).
 11. **Şeffaflık.** Reklam/iş birliği içeriklerinde etiket zorunlu alan; sentetik yüz/ses içeren varlıklarda AI beyanı otomatik. Bu alanlar kullanıcı tarafından kapatılamaz.
 12. **Kararlar yazılır.** Mimari veya teknoloji kararı = `docs/adr/NNNN-baslik.md`. Kod yorumu ile karar verilmez.
+13. **Bayat veri yok; her şey dinamik.** Platform limitleri, fiyatlar, model adları, kota kuralları, yasal metin sürümleri, trend kaynakları, şablonlar **koda gömülmez**; `config` modülünde sürümlü, `verified_at` ve `source_url` alanlı kayıtlar olarak yaşar ve panelden değiştirilir. Her önbelleğin TTL'i ve geçersizleştirme olayı vardır; "sonsuza kadar geçerli" veri yoktur. Bayatlık gözcüsü, `verified_at` eşiği aşılan her kaydı alarm eder. Trend/metrik gibi zamanla değeri düşen verinin skoru zaman sönümlüdür ve saklama süresi sonunda silinir/anonimleşir. Ayrıntı: ADR-0011.
+14. **Kiracı izolasyonu ve ölçüm.** Her satır `workspace_id` taşır, RLS zorunlu, çapraz kiracı erişimi testle kanıtlanır. Dış maliyet üreten her işlem (LLM, TTS, render, platform API) `usage_records`'a yazılır ve plan hakları (`entitlements`) üzerinden **önce** kontrol edilir; hak yoksa iş başlamaz. Ayrıntı: ADR-0012, `docs/15`.
+15. **Hukuk ürünün parçasıdır.** KVKK/GDPR aydınlatma, açık rıza, çerez, mesafeli satış, veri silme (Meta Data Deletion callback dahil), hesap silme (uygulama içinden), İYS izinleri kod düzeyinde uygulanır; metin sürümleri `legal/` altında, kullanıcı hangi sürümü kabul etti kayıtlıdır. Ayrıntı: `docs/16`.
 
 ## 2. Çalışma protokolü (ajan için)
 

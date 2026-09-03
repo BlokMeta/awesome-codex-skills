@@ -10,7 +10,7 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
   - KK: `pnpm i && pnpm check` < 2 dk; boundaries kuralı örnek ihlalde kırılıyor.
 - [~] **M0.2 Yerel ortam** (compose hazır; `pnpm dev` M1'de) — docker-compose: postgres+pgvector, redis, temporal (dev server), otel-collector, grafana, minio; `pnpm dev` tek komut.
 - [ ] **M0.3 CI `pr-check`** — 17 kapının iskeleti (bazıları boş geçer); Turborepo remote cache.
-- [ ] **M0.4 Contracts paketi** — Zod → OpenAPI 3.1 → tipli istemci üretimi; Spectral; Prism mock sunucusu.
+- [x] **M0.4 Contracts paketi** (oRPC + Zod 4 → `openapi.json`; Prism/Spectral M0.3'te) — Zod → OpenAPI 3.1 → tipli istemci üretimi; Spectral; Prism mock sunucusu.
   - KK: `pnpm contracts:gen` deterministik (diff yok); örnek `GET /v1/health`.
 - [x] **M0.5 Domain paketi iskeleti** — `Result`, `DomainError`, `Clock`, `Rng`, `Id` yardımcıları; ilk aggregate (`Persona`) + property-based test.
 - [ ] **M0.6 i18n paketi** — `tr`, `en`, `en-x-pseudo`; extract/check betikleri; lint kuralı ham string.
@@ -18,6 +18,11 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [ ] **M0.8 Auth** — operatör kayıt/giriş, passkey + TOTP, oturum rotasyonu, RLS; e2e "giriş".
 - [ ] **M0.9 Gözlemlenebilirlik temeli** — pino + OTel + requestId; Grafana panosu boş ama bağlı.
 - [x] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).
+- [ ] **M0.11 Config modülü (ADR-0011)** — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
+  - KK: `verified_at` eşiği aşınca alarm testi (FakeClock); Instagram limit doğrulayıcı fixture testi.
+- [ ] **M0.12 Kiracı modeli (ADR-0012)** — `memberships`, davet akışı, RLS politikaları, süper yönetici rolü; çapraz kiracı erişim testleri.
+- [ ] **M0.13 Billing çekirdeği** — `plans`, `plan_entitlements`, `EntitlementService.assert`, `credit_ledger`, `usage_records` → kredi düşümü; sağlayıcı yok (manual plan ile başlar).
+- [ ] **M0.14 Privacy çekirdeği** — `consent_records` (metin sürümü kabulü), hesap silme (30 gün), veri dışa aktarma, Meta Data Deletion Callback uç noktası + onay kodu sayfası.
 
 ## M1 — Persona ve kanal (Hafta 3–4)
 
@@ -28,6 +33,10 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [ ] **M1.3 Platform adaptörleri v1** — `PlatformAdapter` arayüzü; Telegram (tam), Threads (metin/görsel), X (metin/görsel, "Automated" etiketi kontrol listesi) ; fixture tabanlı contract testleri.
 - [ ] **M1.4 Notification modülü** — alert tablosu, Telegram bot bildirimi, e-posta (Resend), panel rozeti; alarm yorgunluğu kuralı.
 - [ ] **M1.5 Mobil iskelet** — Expo Router, sekmeler, auth, TanStack Query persist, push kaydı; Maestro "giriş" akışı.
+- [ ] **M1.6 Ödeme sağlayıcısı (ADR-0013)** — MoR entegrasyonu (checkout, webhook → `subscriptions`, fatura PDF), deneme süresi, plan yükseltme/düşürme, iptal (tek tıkla, yasal gereklilik), mobilde hak okuma + mağaza kuralına uygun satın alma yönlendirmesi.
+- [ ] **M1.7 Onboarding** — kayıt → e-posta doğrulama → workspace → ilk kanal bağlama → mod seçimi (tam otomatik / manuel kütüphane) → ilk plan; hukuki metin kabulleri (`consent_records`).
+- [ ] **M1.8 Pazarlama sitesi + hukuki sayfalar** — `apps/site` (statik): fiyatlandırma (config'ten), gizlilik, şartlar, KVKK, çerez, veri silme talimatı (Meta), iletişim; `legal/` sürümleri.
+- [ ] **M1.9 Platform app review paketi** — Meta App Review + Business Verification, Google OAuth doğrulaması, TikTok audit için demo videoları ve ekran görüntüleri; staging ortamında kayıt.
 
 ## M2 — Trend ve metin içerik (Hafta 5–7)
 

@@ -61,6 +61,17 @@ Her modül `packages/domain/<context>` (saf) + `apps/api/src/modules/<context>` 
 | `analytics` | MetricSnapshot, Experiment (bandit), WeeklyReport | `ReportReady` | `PostPublished`, `InteractionReceived` |
 | `notification` | Alert, DeliveryChannel, Digest | – | Tüm `*Raised`, `*Failed`, `QuotaNearLimit` |
 | `cost` | UsageRecord, Budget, Cutoff | `BudgetExceeded` | Tüm üretim olayları (kullanım kaydı) |
+| `config` | PolicyEntry (sürümlü, `verified_at`, `source_url`), StalenessRule, FeatureFlag | `ConfigChanged`, `ConfigStale` | – (ADR-0011) |
+| `billing` | Plan, Entitlement, Subscription, Invoice, PaymentEvent, Credit (AI kredisi), Coupon | `SubscriptionActivated`, `SubscriptionLapsed`, `CreditsLow` | `UsageRecorded` (kredi düşümü), `WorkspaceDeleted` |
+| `admin` | Süper yönetici görünümleri: kiracı listesi, sağlık, gelir, abuse bayrakları, config doğrulama | – | Tüm olaylar (salt okunur projeksiyonlar) |
+| `privacy` | ConsentRecord (hangi metin sürümü, ne zaman), ErasureRequest, DataExport, DeletionCallback (Meta) | `ErasureCompleted` | `WorkspaceDeleted`, `ChannelDisconnected` |
+
+### 4.1 Kiracı modeli (ADR-0012)
+
+- `workspace` = müşteri (bireysel kullanıcı veya ekip). `operator` = giriş yapan kişi; `memberships(operator_id, workspace_id, role)`.
+- Sahibin kendi hesapları da sıradan bir workspace'tir (`plan = internal`). Süper yönetici yetkisi `operators.is_superadmin` ile ve ayrı panelde.
+- Platform geliştirici uygulamaları (Meta, TikTok, Google, X) **tek ve bize ait**; her workspace kendi hesaplarını OAuth ile bağlar. Telegram'da her workspace kendi bot token'ını girer.
+- Her maliyetli use-case sırası: `Entitlement.assert` → iş → `UsageRecorded` → kredi düşümü. Hak yoksa iş başlamaz, kullanıcıya `billing.entitlement_exceeded` (Problem Details) döner ve panelde yükseltme önerisi görünür.
 
 Kural: Bir modül başka bir modülün verisine ihtiyaç duyarsa (a) olayla kendi kopyasını tutar (denormalize, eventual consistency) veya (b) o modülün **public application service**'ini çağırır. Repository'ler modül-private.
 

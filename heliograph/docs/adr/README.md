@@ -14,3 +14,6 @@ Yeni karar: `NNNN-kebab-baslik.md`, şablon: Bağlam / Karar / Sonuçlar (altern
 | 0008 | Opaque cursor sayfalama |
 | 0009 | Kalite kapısı tip düzeyinde |
 | 0010 | Yalnızca resmi API'ler |
+| 0011 | Dinamik yapılandırma ve bayat veri yok |
+| 0012 | Çok kiracılı SaaS, paylaşımlı platform uygulamaları, token emaneti |
+| 0013 | Faturalama: web-öncelikli MoR + mağaza hak okuma (araştırma sonrası) |

@@ -28,7 +28,8 @@ Sıra önemli: **A → B → C** en uzun süren inceleme süreçlerini erkenden 
 4. **Threads ürünü ekle** → ayrı Threads App ID / Secret verir.
 5. Geri dönüş URL'leri: `https://api.<alan>/v1/channels/oauth/instagram/callback` ve `.../threads/callback` (yerel için `http://localhost:4000/...` da ekle).
 6. İzinler (scopes): Instagram: `instagram_business_basic, instagram_business_content_publish, instagram_business_manage_comments, instagram_business_manage_messages`. Threads: `threads_basic, threads_content_publish, threads_manage_replies, threads_read_replies, threads_manage_insights`.
-7. **Kendi hesapların için:** App Dashboard → Roles → "Instagram Testers" / "Threads Testers" olarak her persona hesabını ekle; hesaptan daveti kabul et. App Review **gerekmez**.
+7. **Kendi hesapların için (başlangıç):** App Dashboard → Roles → "Instagram Testers" / "Threads Testers" olarak her persona hesabını ekle; hesaptan daveti kabul et. Bu aşamada App Review gerekmez.
+7b. **Başka kullanıcılara hizmet için (SaaS, M1.9):** **Advanced Access** → App Review (her izin için ekran kaydı + kullanım açıklaması) + **Business Verification** (şirket belgeleri: vergi levhası/ticaret sicil, adres kanıtı, alan adı e-postası). Uygulama ayarlarında **Privacy Policy URL**, **Terms URL**, **Data Deletion Callback URL** (`https://api.<alan>/webhooks/meta/data-deletion`) zorunlu. Yıllık **Data Protection Assessment** anketi gelir; runbook'u ben hazırlarım, sen cevaplarsın. Süre: 2–6 hafta.
 8. Webhook (yorum/DM için): `https://api.<alan>/webhooks/meta`, doğrulama token'ını sen belirle.
 - **Env 🔐:** `HG_META_APP_ID`, `HG_META_APP_SECRET`, `HG_THREADS_APP_ID`, `HG_THREADS_APP_SECRET`, `HG_META_WEBHOOK_VERIFY_TOKEN` (rastgele 32 karakter, sen üret)
 - **Süre:** 1 saat. Ücret: yok.
@@ -50,7 +51,7 @@ Sıra önemli: **A → B → C** en uzun süren inceleme süreçlerini erkenden 
 3. **OAuth consent screen**: External, uygulama adı, destek e-postası, gizlilik/şart URL'leri, scope'lar: `https://www.googleapis.com/auth/youtube.upload`, `youtube.force-ssl` (yorumlar), `yt-analytics.readonly`. Test kullanıcıları: persona Google hesapları.
 4. **Credentials → OAuth client ID (Web)**: redirect `https://api.<alan>/v1/channels/oauth/youtube/callback`.
 5. **Compliance audit / quota**: https://developers.google.com/youtube/v3/guides/quota_and_compliance_audits → "YouTube API Services – Audit and Quota Extension Form". Bu yapılmadan yüklenen videolar **özel** kalır. Formda uygulamanın amacını, ekran görüntülerini, gizlilik politikasını istiyor. Süre: 1–4 hafta.
-6. OAuth "Verification" (Google logosu uyarısını kaldırmak için) ayrıca yapılabilir; kendi hesapların "test kullanıcısı" iken şart değil.
+6. OAuth "Verification": kendi hesapların "test kullanıcısı" iken şart değil; **başka kullanıcılara hizmet için zorunlu** (M1.9). Gerekenler: alan adı sahipliği (Search Console), marka doğrulama (logo, ana sayfa), gizlilik politikasında **Limited Use** beyanı (`legal/en/privacy-policy.md` §5 hazır), her hassas kapsam için gerekçe ve demo videosu. YouTube kapsamları "hassas" sınıfındadır; "kısıtlı" sınıfa girseydi CASA güvenlik değerlendirmesi gerekirdi ⚠ (teyit edilecek). Süre: 2–6 hafta.
 - **Env 🔐:** `HG_GOOGLE_CLIENT_ID`, `HG_GOOGLE_CLIENT_SECRET`
 - **Ayrıca (isteğe bağlı, Gemini/Imagen/Veo için):** https://aistudio.google.com → API key → `HG_GOOGLE_AI_API_KEY`. Ücret: kullanım başına, kart gerekir.
 
@@ -147,6 +148,26 @@ Isınma: ilk 7 gün düşük hacim otomatik; sen bir şey yapmazsın.
 - **Kendi medyan** (bireysel influencer modu): 50–100 fotoğraf, dikey öncelikli; ses klonu için 30 dk temiz kayıt; yüz LoRA istersen 20–30 çeşitli fotoğraf + yazılı onayın (sistemde saklanır).
 
 ---
+
+## G. SaaS'a geçişle eklenen işler (ücretli ürün, başka kullanıcılar)
+
+| # | İş | Nereden / nasıl | Ücret / süre | Not |
+|---|---|---|---|---|
+| G1 | **Şirket** | Mali müşavir ile: şahıs şirketi (hızlı) veya Ltd. Şti.; vergi levhası, e-imza, e-Arşiv/e-Fatura başvurusu; ETBİS kaydı (kendi sitenden satış) | Şahıs: birkaç gün; Ltd: 1–2 hafta ⚠ | Business Verification'lar bu belgeleri ister |
+| G2 | **Mali müşavir** | Aylık; MoR faturalaması, ihracat KDV istisnası, e-Arşiv | ⚠ ~3–6 bin TL/ay | docs/15 §2.3 |
+| G3 | **Avukat incelemesi** | `legal/` taslakları (KVKK + tüketici + AI) | Tek seferlik ⚠ | Yayın öncesi zorunlu |
+| G4 | **Paddle (MoR)** | https://paddle.com → satıcı başvurusu: şirket bilgileri, web sitesi, hukuki sayfalar canlı, ürün açıklaması; onay sonrası API key + webhook secret | 3–10 gün ⚠; ~%5 + 0,50 $ | `HG_PADDLE_API_KEY`, `HG_PADDLE_WEBHOOK_SECRET`, `HG_PADDLE_CLIENT_TOKEN` |
+| G5 | **iyzico** (faz 2, TRY) | https://www.iyzico.com → üye işyeri başvurusu (şirket belgeleri) | 1–2 hafta ⚠ | `HG_IYZICO_API_KEY`, `HG_IYZICO_SECRET` |
+| G6 | **İYS** (pazarlama e-postası/SMS için) | https://iys.org.tr → marka kaydı (MERSİS ile) | Ücretsiz; birkaç gün | Onaylar İYS'ye aktarılır |
+| G7 | **VERBİS değerlendirmesi** | Avukat/mali müşavir ile eşik kontrolü; gerekirse https://verbis.kvkk.gov.tr kayıt | – | docs/16 §2.5 |
+| G8 | **Meta Business Verification + App Review** | A3 madde 7b | 2–6 hafta | Demo videoları ben hazırlarım |
+| G9 | **Google OAuth doğrulaması** | A5 madde 6 | 2–6 hafta | Search Console alan adı doğrulaması senin |
+| G10 | **TikTok audit** (üçüncü taraf kullanıcı) | A4 | 2–4 hafta | – |
+| G11 | **Mağaza hesapları** | A8; ayrıca App Privacy / Data Safety formları (envanterden ben doldururum, sen onaylarsın); demo hesap | – | Uygulama içi hesap silme zorunlu (kodda var) |
+| G12 | **AB/UK temsilcisi** (AB müşterisi olursa) | GDPR md. 27 temsilci servisi (ör. DataRep, EDPO) ⚠ | ~100–300 €/yıl ⚠ | docs/16 §3 |
+| G13 | **Alt işleyici sözleşmeleri** | Anthropic, Google, ElevenLabs, fal, Cloudflare, Paddle, Resend, Sentry'nin DPA/SCC sayfalarını kabul et, PDF'leri `legal/dpa/` klasörüne koy | Ücretsiz | KVKK standart sözleşme bildirimi gerekirse 5 iş günü ⚠ |
+| G14 | **Affiliate programı** (lansman) | Rewardful veya Tolt hesabı ⚠ | ~49–99 $/ay | docs/15 §5.2 |
+| G15 | **Destek kanalı** | destek@<alan> (Resend inbound) + yardım merkezi sayfası | – | – |
 
 ## F. Kontrol listesi (kısa)
 
