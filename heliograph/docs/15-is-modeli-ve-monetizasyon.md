@@ -1,6 +1,6 @@
 # 15 — İş Modeli ve Monetizasyon Raporu
 
-> Durum: İlk sürüm, 3 Eylül 2026. Rakamların bir kısmı Haziran 2026 bilgisine dayanır ve ⚠ ile işaretlidir; `config` tablosuna girilmeden önce kaynak sayfadan doğrulanır (ADR-0011). Bu doküman canlıdır; fiyat/plan değişiklikleri buraya ve `policy_entries`'e birlikte işlenir.
+> Sürüm 2, 3 Eylül 2026. Rakamlar araştırma raporundan (resmi sayfa ✅, güvenilir ikincil kaynak ⚠, çelişkili/doğrulanmamış ❓). Bu doküman canlıdır; fiyat/plan değişiklikleri buraya ve `policy_entries`'e birlikte işlenir (ADR-0011). Rakip fiyatları lansman öncesi resmi sayfalardan tekrar okunur.
 
 ## 1. Özet
 
@@ -8,143 +8,178 @@ Heliograph, iki müşteri tipine satılan tek bir üründür:
 
 | Segment | Kim | Ne ister | Nasıl öder |
 |---|---|---|---|
-| **Yaratıcı / bireysel** | Tek kişi, 1–6 hesap; DevOps/AI içerik üreticisi veya "kendi fotoğraflarımı düzenli paylaşsın" diyen kişi | Az girdi, çok etkileşim; mobil onay | Aylık plan, kartla, web'den |
-| **Ajans / çoklu hesap** | 5–50+ hesap yöneten kişi veya ekip (bizim kendi kullanımımız bu segmenttedir) | Persona başına kontrol, ekip, raporlama, marka anlaşmaları | Aylık plan + hesap başına ek ücret; yıllık indirim; fatura |
+| **Yaratıcı / bireysel** | Tek kişi, 1–6 hesap; DevOps/AI içerik üreticisi veya "kendi fotoğraflarımı düzenli paylaşsın" diyen kişi | Az girdi, çok etkileşim; mobil onay | Aylık plan, kartla, web'den (mobilde IAP) |
+| **Ajans / çoklu hesap** | 5–50+ hesap yöneten kişi veya ekip (kendi kullanımımız bu segmenttedir) | Persona başına kontrol, ekip, raporlama, marka anlaşmaları | Aylık/yıllık plan + hesap başına ek ücret; fatura |
 
-Gelir kalemleri: (1) abonelik, (2) hesap başına ek ücret, (3) AI kredi paketleri, (4) ajans/white-label, (5) kendi hesaplarımızdan sponsorluk ve platform gelir paylaşımı, (6) ileride pazar yeri komisyonu (marka ↔ yaratıcı).
+Gelir kalemleri: (1) abonelik, (2) hesap başına ek ücret, (3) AI kredi paketleri (yalnızca medya üretimi için; metin sınırsız), (4) ajans/white-label, (5) kendi hesaplarımızdan sponsorluk ve platform gelir paylaşımı, (6) ileride marka ↔ yaratıcı pazar yeri komisyonu.
 
-Hedef marj: brüt %70+ (AI ve platform API maliyeti dahil). Bu, fiyatların **maliyet tabanlı alt sınırla** kurulmasını gerektirir (Bölüm 4).
+Hedef brüt marj %65+ (AI, platform API ve ödeme komisyonu dahil).
 
 ## 2. Ödeme rayları
 
 ### 2.1 Kısıt: Türkiye'de kurulu şirket
 
-- **Stripe** Türkiye'de kurulu işletmelere doğrudan hesap açmıyor ⚠ (Haziran 2026 bilgisi). Yaygın yol: **Stripe Atlas ile ABD (Delaware) LLC** kurup Stripe kullanmak; ek maliyet (Atlas ~500 $ ⚠ + yıllık eyalet ücretleri + ABD vergi beyanı) ve iki şirketli yapı.
-- **Merchant of Record (MoR)** sağlayıcıları Türkiye'deki satıcıları kabul ediyor ve KDV/satış vergisini dünya genelinde kendileri topluyor: **Paddle** (⚠ ~%5 + 0,50 $), **Lemon Squeezy** (⚠ ~%5 + 0,50 $, 2024'te Stripe satın aldı; Türk satıcı kabulü ve gelecek durumu doğrulanmalı), FastSpring, Polar. MoR = fatura, vergi, iade, chargeback yönetimi onlarda; bize net ödeme (payout) gelir.
-- **Yerli PSP'ler**: iyzico (abonelik ürünü var, TRY, 3D Secure; ⚠ ~%2,5–3,5 + sabit), PayTR, Param. Yalnızca Türkiye müşterileri ve TRY için mantıklı; yurt dışı vergi yükü bize kalır.
+| Seçenek | Durum | Ücret | Not |
+|---|---|---|---|
+| **Stripe (doğrudan)** | ✅ **Türkiye desteklenmiyor** (stripe.com/global) | – | – |
+| Stripe Atlas (ABD Delaware LLC) | ⚠ Mümkün | 500 $ tek seferlik + ~100 $/yıl registered agent + ~300 $/yıl Delaware vergisi + ABD vergi beyanı (5472/1120) muhasebe ücreti | İki şirketli yapı; TR'de KEYK/transfer fiyatlaması soruları; yalnızca Stripe'a özel özellik veya ABD yatırımcı yapısı gerekirse |
+| **Paddle (MoR)** | ✅ Türk satıcıları kabul ediyor; payout USD/EUR/GBP (**TRY payout yok**) | ⚠ %5 + 0,50 $ | Onboarding 1–2 hafta; canlı site + şartlar + gizlilik + iade politikası şart; Türk SaaS'larında yaygın |
+| **Polar.sh (MoR)** | ✅ 195 ülke, Türkiye dahil (Stripe Connect Express payout) | ⚠ Starter ücretsiz %5 + 0,50 $; Pro 20 $/ay %3,8 + 0,40 $; Growth 100 $/ay %3,6; Scale 400 $/ay %3,4; +%1,5 uluslararası kart; 2 $/ay payout | Açık kaynak, geliştirici odaklı, **kullanım/kredi faturalama primitifleri** var (AI kredisi ölçümüne uygun); daha genç |
+| Lemon Squeezy (Stripe'ın) | ✅ Türkiye listede, TRY satış para birimi var | %5 + 0,50 $ | ⚠ Doğrulama 1–6 hafta, destek zayıf; stratejik gelecek Stripe Managed Payments; **yeni entegrasyon için riskli** |
+| FastSpring | Kabul ediyor | ⚠ ~%5,9 + 0,95 $ | Satış odaklı, eski UX; gereksiz |
+| Stripe Managed Payments | Türkiye desteklenmiyor | +%3,5 | Yalnızca ABD LLC ile |
 
-### 2.2 Karar (ADR-0013)
+### 2.2 Yerli PSP'ler (TRY, Türkiye müşterileri)
 
-1. **Birincil: Paddle (MoR)** — global kart/PayPal/Apple Pay, KDV dahil fiyatlandırma, faturalar otomatik, bize tek payout. Türkiye'deki şirket için ihracat KDV istisnası çerçevesi (Paddle bize B2B hizmet alıcısı gibi ödeme yapar; **mali müşavirle teyit** ⚠).
-2. **İkincil (faz 2): iyzico** — Türkiye pazarına TRY fiyat ve yerel kart deneyimi için; faturalar e-Arşiv ile bizden.
-3. **Mobil**: uygulama içinde satın alma yalnızca mağaza kuralı gerektiriyorsa. Strateji "web'den satın al, uygulama hakları okur": Apple 3.1.1 dijital abonelikleri IAP'ye zorlar; **ancak** uygulama içinde satın alma düğmesi göstermeyip yalnızca giriş yapan kullanıcının haklarını okumak ("reader" benzeri çok platformlu hizmet) yaygın ve kabul gören bir modeldir; ABD'de Epic kararı sonrası dış link, AB'de DMA ile alternatif ödeme mümkün ⚠ (ülkeye göre `config`'te bayrak). İstenirse Apple/Google IAP **RevenueCat** ile eklenir (komisyon %15 küçük işletme programı / %30).
-4. Sağlayıcı soyutlaması: `PaymentProvider` portu (`createCheckout`, `handleWebhook`, `cancel`, `changePlan`, `getInvoice`); Paddle/iyzico/RevenueCat adaptörleri.
+| PSP | Yurt içi oran ⚠ | Yabancı kart | Abonelik | Not |
+|---|---|---|---|---|
+| **iyzico** | ~%2,49 + 0,25 ₺ | ~%4,5 | **Abonelik ürünü** (ürün → fiyat planı → abonelik, yenileme webhook'ları); kart saklama tek seferlik 99 ₺ | En SaaS-dostu TR API; yalnızca TRY payout |
+| PayTR | ~%1,49–1,99 | Pazarlıklı | Tokenizasyon + tekrarlayan | En ucuz başlık oranı; API daha az cilalı |
+| Param | ~%1,85–2,29 | Pazarlıklı | PCI kart saklama + zamanlı tahsilat | – |
 
-### 2.3 Vergi ve muhasebe (Türkiye) ⚠ mali müşavir teyidi zorunlu
+### 2.3 Karar (ADR-0013)
 
-- Şirket türü: başlangıçta **şahıs şirketi** (hızlı, düşük maliyet; gelir vergisi dilimleri) → gelir büyüyünce **Limited Şirket** (kurumlar vergisi %25, yatırımcı/ortak için gerekli). Genç girişimci istisnası (29 yaş altı) varsa değerlendirilir.
-- KDV %20 (yurt içi dijital hizmet). Yurt dışı müşteriye hizmet ihracı KDV'den istisna (koşullu). MoR kullanımında MoR'a fatura kesilir.
-- **e-Arşiv fatura** internet satışlarında zorunlu (e-Fatura mükellefi olunca e-Fatura); MoR'a kesilen faturalar aylık toplu olabilir.
-- Dijital Hizmet Vergisi (%7,5) yalnızca çok yüksek hasılat eşiğinde (⚠ 20 M TL Türkiye + 750 M € global); başlangıçta ilgili değil.
-- **ETBİS** kaydı (elektronik ticaret bilgi sistemi) kendi sitesinden satış yapanlara zorunlu.
+1. **Birincil: MoR.** Paddle (olgunluk, yaygın kullanım) veya Polar (daha düşük ücret kademeleri, yerleşik kredi/kullanım faturalama). **Karar:** M1.6'da iki sağlayıcı da `PaymentProvider` portu arkasında; **Paddle ile canlıya çıkılır**, Polar ikinci sağlayıcı olarak entegre edilir ve 6 ay sonra ücret/işlevsellik verisiyle birincil yeniden değerlendirilir. Lemon Squeezy kullanılmaz.
+2. **İkincil (faz 2): iyzico Abonelik** — Türkiye pazarında TRY fiyat ve Türk Lirası zorunluluğu için; faturalar e-Arşiv ile bizden.
+3. **Mobil (Apple 3.1.3(b) ✅):** "Web'de satın al, uygulama hakları okur" yalnızca **aynı planlar uygulama içi satın alma olarak da sunuluyorsa** serbest. Bu yüzden iOS/Android'de aynı planlar **IAP** olarak da satılır (Apple Small Business Program %15; ABD vitrininde komisyonsuz web link-out ✅ mayıs 2025 kararı, Yargıtay Haziran 2026'da temyize aldı ⚠; AB'de 1 Ekim 2026 yeni şartlar ⚠). Google Play: 30 Haziran 2026'dan itibaren ABD/AEA/İngiltere'de %10 hizmet ücreti + **web link-out %10** ⚠; Türkiye vitrini standart %15/30 + User Choice Billing. IAP entegrasyonu **RevenueCat** ile (ücretsiz 2,5K $ MTR'ye kadar, sonra %1 ⚠); haklar tek kaynaktan (`subscriptions` + `entitlements`), sağlayıcı fark etmez.
+4. Sağlayıcı soyutlaması: `PaymentProvider` portu (`createCheckout`, `handleWebhook`, `cancel`, `changePlan`, `getInvoice`); Paddle/Polar/iyzico/RevenueCat adaptörleri.
+
+### 2.4 Vergi ve şirket (Türkiye) — mali müşavir teyidi zorunlu
+
+| Konu | Bulgu | Durum |
+|---|---|---|
+| Şirket türü | Şahıs: artan oranlı gelir vergisi (%15–40), hızlı, sınırsız sorumluluk. **Limited: %25 kurumlar vergisi**, sınırlı sorumluluk, MoR KYC ve yatırımcı için uygun. Genç girişimci (29 yaş altı, ilk işletme): 2026'da 400.000 ₺ kazanç istisnası; Bağ-Kur prim desteği 1 Ocak 2026'da kaldırıldı | ⚠ |
+| **Karar** | Limited Şirket (MoR onayı, sorumluluk, ölçek) | – |
+| KDV | Türkiye'deki müşteriye dijital hizmette %20 | ✅ |
+| Hizmet ihracı KDV istisnası | Müşteri yurt dışında yerleşik **ve** hizmet yurt dışında kullanılıyorsa istisna; MoR üzerinden satışta müşteri MoR tüzel kişisi (İngiltere/ABD/AB) → istisna genelde uygulanabilir; para bankadan gelmeli | ⚠ SMMM teyidi |
+| Yazılım ihracatı kazanç istisnası (GVK 89/13, KVK 10/1-ğ) | %80 indirim; 30 Nisan 2026 tarihli 11257 sayılı Cumhurbaşkanı Kararı ile **%100'e çıkarıldığı** raporlanıyor | ❓ karar metni doğrulanacak |
+| Dijital Hizmet Vergisi | Oran 2026 için %5, 2027 için %2,5 (10767 sayılı Karar); eşik 20 M ₺ Türkiye **ve** 750 M € küresel — ikisi birden | ⚠; başlangıçta ilgisiz |
+| e-Fatura / e-Arşiv | İnternet satışı ≥ 500.000 ₺ (önceki yıl) → e-Fatura (2025 cirosu için 1 Tem 2026); e-Fatura mükellefi olmayanlar için 2026'da tüketiciye tüm faturalar e-Arşiv; MoR'a aylık toplu fatura | ⚠ |
+| ETBİS | Kendi sitesinden/uygulamasından satış yapan herkes için zorunlu, ücretsiz (e-Devlet) | ⚠ |
+| **Hizmet İhracatı Destekleri (10962 sayılı Karar, Şub 2026)** | Bilişim/mobil uygulama ihracatçılarına hosting, platform komisyonları, onaylı SaaS araçları, pazarlama ve yurt dışı ofis giderlerinin **%50'si** (yılda 5 M ₺'ye kadar) geri ödeniyor; RevenueCat onaylı yazılım listesinde | ⚠ **başvurulacak** (docs/14 G16) |
 
 ## 3. Paketleme ve fiyat
 
-### 3.1 Rakip referansı ⚠ (Haziran 2026 hafızası; lansman öncesi güncellenecek)
+### 3.1 Rakip referansı (2026, ⚠ üçüncü taraf fiyat takipçileri; lansman öncesi resmi sayfadan doğrula)
 
-| Ürün | Giriş planı | Hesap dahil | Ek hesap | Not |
-|---|---|---|---|---|
-| Buffer | ~6 $/kanal/ay | kanal başına | – | En basit model |
-| Later | ~25–80 $/ay | 1–6 sosyal set | – | Instagram odaklı |
-| Metricool | ~22–55 $/ay | 5–15 marka | – | Analitik güçlü |
-| Publer | ~12 $/ay 3 hesap | 3 | ~4 $/hesap | Ucuz |
-| SocialBee | ~29–99 $/ay | 5–25 | – | AI copilot |
-| Vista Social | ~39–79 $/ay | 8+ | – | Ajans |
-| Postiz (bulut) | 29–99 $/ay | 5–100 kanal | – | Açık kaynak |
-| Blotato | 29–499 $/ay | 20–100 hesap | – | AI video odaklı |
-| Zernio (eski Late) | hesap başına 6 → 3 → 1 $ | – | – | Saf hesap-başı |
-| Ocoya / Predis | ~15–50 $/ay + AI kredisi | – | – | AI üretim |
+| Ürün | Giriş | Hesap | AI modeli | Ek hesap | Deneme |
+|---|---|---|---|---|---|
+| Buffer | 6 $/kanal (yıllık 5 $); 11+ kanalda 4 $, 26+ 3 $, 51+ 1 $ | Kanal başına | Metin AI sınırsız, ücretsiz planda bile | Doğrusal | Ücretsiz 3 kanal |
+| Later | 25 / 50 / 110 $ | 1 / 2 / 6 sosyal set (8 profil) | 5 / 50 / 100 kredi/ay | +15 $/set | 14 gün |
+| Hootsuite | 99 / 199 / 399 $ kullanıcı başına, yıllık | 10 / sınırsız | OwlyWriter dahil | – | 30 gün |
+| Metricool | Ücretsiz; 22 $ (5 marka) … 159 $ (50) | Marka başına | 20 / 35 kredi/marka/ay | Kademe | Ücretsiz plan |
+| Publer | 12 $ (3 hesap, ~4 $/ek); 21 $ (~7 $/ek) | 3 | BYO OpenAI anahtarı / GPT-4 dahil | ~4–7 $ | Ücretsiz plan |
+| SocialBee | 29 / 49 / 99 $ (5/10/25); Pro50 179 $, Pro100 329 $ | 5–100 | AI Copilot dahil | +15 $/5 profil | 14 gün |
+| Vista Social | 79 / 149 / 349 $ (15/30/70 profil) | 15–70 | ❓ 1.000–3.500 kredi | Kademe | 14 gün |
+| ContentStudio | 19 / 49 / 99 $ (5/10/50) | 5–50 | 10–25K AI kelime + görsel | Kademe | 14 gün |
+| Ocoya | ❓ 15 / 39 / 79 / 159 $ (5/20/50/150 profil) | 5–150 | Üretim başına kredi; üst kademe sınırsız | Kademe | 7 gün |
+| Predis.ai | Ücretsiz (15 AI post); 29–32 / 59 / 139 $ | Marka başına | AI post/ay | Kademe | Ücretsiz plan |
+| Postiz (bulut) | 29 / 39 / 49 / 99 $ (5/10/30/100 kanal) | 5–100 | AI görsel/video sayısı; metin sınırsız | Kademe | 7 gün; self-host |
+| Blotato | 29 / 97 / 499 $ (20/40/100 hesap) | 20–100 | 1.250 / 5.000 / 28.000 kredi (görsel/video/ses); metin sınırsız | Kademe | 7 gün |
+| Zernio (eski Late) | **Hesap başına kademeli:** 1–2 ücretsiz; 3–10: 6 $; 11–100: 3 $; 101+: 1 $ (20 hesap = 78 $) | Hesap başına | Kredi yok, her şey dahil | Aynı | 2 hesap ücretsiz |
+| Typefully | Ücretsiz; 8 / 19 / 39 $ | 1 / 5 / sınırsız | Creator'dan itibaren AI | – | Ücretsiz plan |
+| Hypefury | 29 / 65 / 97 / 199 $ | 6 / 30 / 60 / 90 | Dahil | Kademe | 7 gün |
+| Opus Clip / Submagic (video) | 15–29 $ / 19–69 $ | – | İşleme dakikası / video adedi | – | Ücretsiz plan |
 
-Pazar normu: **hesap sayısı + AI kredisi** iki eksenli paketleme; AI video üretenler kredi satıyor.
+**Pazar normları:** (a) iki eksen: hesap başına doğrusal (Buffer, Zernio, Publer) veya 5/10/25–30 hesaplı kademeler; (b) **metin AI giderek sınırsız**, kredi yalnızca görsel/video/ses için; giriş kademesinde 100–1.250 kredi; aşım paketleri plan içi fiyatın %40–80 üstünde; (c) AI ağırlıklı ürünlerde 7 gün kart-zorunlu deneme (dönüşüm ~%44–49 ⚠), zamanlayıcılarda 14 gün veya cömert ücretsiz plan (opt-in deneme ~%14–18, freemium %2–5 ⚠); (d) SMB/yaratıcı SaaS aylık logo churn %4,5–6 ⚠.
 
-### 3.2 Heliograph planları (öneri, `config`'te yaşar)
+### 3.2 Heliograph planları (öneri; `plans`/`plan_entitlements` tablolarında yaşar)
 
-| Plan | Fiyat (USD/ay, yıllıkta −20%) | Bağlı hesap | Persona | Günlük post/video (persona başına) | AI kredisi/ay | Ekstra |
+| Plan | Fiyat (USD/ay, yıllıkta −20%) | Bağlı hesap | Persona | Günlük post/video (persona başına) | Medya kredisi/ay | Ekstra |
 |---|---|---|---|---|---|---|
-| **Free** (deneme sonrası kalıcı) | 0 | 1 | 1 | 1 / 0 | 50 | Manuel kütüphane, insan onayı zorunlu, filigran yok, marka rozeti "Heliograph ile" (kapatılamaz) |
-| **Solo** | 19 | 3 | 1 | 5 / 1 | 600 | Trend motoru, yorum yanıtı, mobil onay |
-| **Creator** | 49 | 6 | 3 | 8 / 3 | 2.000 | Video hattı, kendi ses klonu, CRM, medya kiti |
-| **Studio** | 149 | 20 | 10 | 10 / 5 | 8.000 | Ekip (5), roller, API erişimi, öncelikli render |
-| **Agency** | 399 | 60 | 30 | 12 / 6 | 25.000 | Ekip (15), white-label rapor, müşteri workspace'leri, SLA |
-| Ek hesap | 4 $/hesap/ay (Studio+ 3 $) | | | | | |
+| **Free** (deneme sonrası kalıcı) | 0 | 2 | 1 | 1 / 0 | 30 | Manuel kütüphane, insan onayı zorunlu, "Heliograph ile" rozeti (kapatılamaz), metin AI sınırlı (20/gün) |
+| **Solo** | 19 | 3 | 1 | 5 / 1 | 300 | Trend motoru, yorum yanıtı, mobil onay, **metin AI sınırsız** |
+| **Creator** | 49 | 6 | 3 | 8 / 3 | 1.200 | Video hattı, kendi ses klonu, CRM, medya kiti |
+| **Studio** | 149 | 20 | 10 | 10 / 5 | 5.000 | Ekip (5), roller, API erişimi, öncelikli render |
+| **Agency** | 399 | 60 | 30 | 12 / 6 | 15.000 | Ekip (15), white-label rapor, müşteri workspace'leri, SLA |
+| Ek hesap | 3–10 hesap: 5 $; 11–50: 3 $; 51+: 1,5 $ (Zernio/Buffer düzeni) | | | | | |
 | Kredi paketi | 1.000 kredi = 12 $ (hacimde 9 $) | | | | | |
-| **Internal** | 0 | sınırsız | | | | Yalnızca sahibin workspace'i; süper yönetici atar |
+| **Internal** | 0 | sınırsız | | | | Sahibin workspace'i |
 
-Kredi tanımı (maliyete bağlı, ADR-0011 ile güncellenir): metin post = 2 kredi, carousel = 5, yorum yanıtı = 1, kısa video (stok B-roll) = 25, kısa video (AI B-roll) = 60, görsel üretimi = 3, ses klonu eğitimi = 200.
+Kredi = yalnızca medya (görsel, video, ses). Tanım `config`'te (`billing.credit_costs`): görsel 3, carousel kareleri 1/kare, kısa video (stok B-roll) 25, kısa video (AI B-roll) 60, ses klonu eğitimi 200. Metin post ve yorum yanıtı kredi harcamaz (Solo+), günlük hak sınırına tabidir.
 
-Deneme: 14 gün Creator, kart gerekmez (spam önlemek için e-posta + telefon doğrulama; deneme boyunca günlük 1 video sınırı).
+Deneme: **7 gün Creator, kart gerekli** (AI-ağırlıklı ürün normu; yüksek dönüşüm) **veya** kartsız Free plana düşüş; ikisi A/B ile test edilir. Deneme boyunca günlük 1 video.
 
-### 3.3 Birim ekonomi (hedef ölçek varsayımları)
+### 3.3 Birim ekonomi (varsayım; `cost` modülü gerçek verilerle her ay yeniden üretir)
 
-| Kalem | Solo | Creator | Studio |
+| Kalem | Solo 19 $ | Creator 49 $ | Studio 149 $ |
 |---|---|---|---|
-| Fiyat | 19 | 49 | 149 |
-| LLM + TTS + görsel maliyeti (kredi kullanımı %70) | ~3 | ~9 | ~30 |
+| LLM (metin sınırsız ama günlük hak sınırlı; prompt caching) | ~2,5 | ~6 | ~20 |
+| Medya kredisi kullanımı (%70) TTS + görsel + video | ~1 | ~5 | ~18 |
 | Platform API (X PPU ortalama) | ~0,5 | ~1,5 | ~6 |
-| Altyapı payı (render, depolama) | ~1 | ~3 | ~8 |
-| Ödeme komisyonu (%5 + 0,5) | ~1,5 | ~3 | ~8 |
-| **Brüt marj** | ~%68 | ~%66 | ~%65 |
+| Altyapı payı (render, depolama, izleme) | ~1 | ~3 | ~8 |
+| Ödeme (MoR %5 + 0,50) | ~1,5 | ~3 | ~8 |
+| Mağaza satışlarında ek komisyon (%15) | (yalnızca IAP payı) | | |
+| **Brüt marj (web satışı)** | ~%66 | ~%62 | ~%60 |
 
-Marjı yükselten kaldıraçlar: prompt caching (persona ön eki), Sonnet/Haiku'ya düşürme, stok B-roll varsayılan, self-host render ve WhisperX, kredi aşımında yumuşak fren. `cost` modülü bu tabloyu **gerçek verilerle** her ay yeniden üretir (panel: "birim ekonomi").
+Marj kaldıraçları: prompt caching, Sonnet/Haiku'ya düşürme, stok B-roll varsayılan, self-host render ve WhisperX, Polar'ın düşük kademeleri, IAP yerine web satışına yönlendirme (yasal sınırlar içinde).
 
 ## 4. Fiyatlandırma kuralları (ürün içi)
 
-- Fiyatlar ve haklar `plans`/`plan_entitlements` tablolarında; site fiyat sayfası da API'den okur (bayat fiyat yok).
-- Para birimi: USD tabanlı; TRY ve EUR görüntüleme MoR üzerinden; Türkiye için iyzico açılınca TRY fiyat listesi ayrı (kur dalgalanması için aylık gözden geçirme, `config` alarmı).
-- Yükseltme anında orantılı fark (proration), düşürme dönem sonunda; iptal tek tıkla ve dönem sonuna kadar hak devam eder (yasal zorunluluk, docs/16).
-- Kredi aşımı: %80'de uyarı, %100'de yumuşak fren (üretim durur, planlı yayınlar sürer), tek tıkla kredi paketi.
+- Fiyatlar ve haklar DB'de; site fiyat sayfası API'den okur. IAP ürün kimlikleri planlarla eşlenir (`plans.store_product_ids`).
+- USD tabanlı; MoR yerel para birimi gösterir; Türkiye'deki tüketiciye **TRY** fiyat (iyzico aşaması; kur gözden geçirme aylık, `config` alarmı).
+- Yükseltme anında orantılı, düşürme dönem sonunda; iptal tek tık; yıllık planda yenilemeden 15 gün önce e-posta.
+- Kredi aşımı: %80 uyarı, %100 yumuşak fren (medya üretimi durur, metin ve yayınlar sürer), tek tıkla paket.
 - Hesap sınırı aşımı: yeni kanal bağlanamaz, mevcutlar çalışır.
 
 ## 5. Pazara giriş (GTM)
 
 ### 5.1 Sıra
-1. **Kendi hesaplarımız** (0–3. ay): 20 persona canlı; ürünün en iyi vitrini kendi büyüme grafiğidir. Her persona bio'sunda "Heliograph ile" (Free plandaki rozetin aynısı).
-2. **Davetli beta** (3–5. ay): 30–50 yaratıcı/ajans, ücretsiz Creator, karşılığında geri bildirim + vaka çalışması izni.
-3. **Halka açık lansman** (5–6. ay): Product Hunt, Hacker News "Show HN" (DevOps nişi HN'de güçlü), X/Threads/LinkedIn lansman dizisi, 3 vaka çalışması.
+1. **Kendi hesaplarımız** (0–3. ay): 20 persona canlı; büyüme grafiği vitrin; bio'da "Heliograph ile".
+2. **Davetli beta** (3–5. ay): 30–50 yaratıcı/ajans, ücretsiz Creator ↔ geri bildirim + vaka çalışması.
+3. **Halka açık lansman** (5–6. ay): Product Hunt (iyi B2B lansmanı ⚠ 50–300 kayıt, 5–50K ziyaret, 2 haftada normale döner; önceden kitle şart), Hacker News "Show HN", X/Threads/LinkedIn dizisi, 3 vaka çalışması.
 
-### 5.2 Kanallar (ölçülebilir, düşük bütçe)
-- **İçerik ve SEO**: "AI social media scheduler for developers", "faceless DevOps shorts", karşılaştırma sayfaları (vs Buffer/Postiz), ücretsiz araçlar (hashtag/kanca üretici, "post zamanı" hesaplayıcı) → lead.
-- **Kendi personalarımız**: ürünün ürettiği içeriğin altında doğal CTA; haftalık "nasıl yaptık" videosu.
-- **Affiliate**: %25 yinelenen 12 ay (Rewardful/Tolt ⚠ ~49–99 $/ay); yaratıcılar ve DevOps eğitmenleri.
-- **Topluluk**: Discord/Telegram; DevOps ve AI Discord'larında sponsorlu değil, faydalı katılım.
-- **AppSumo**: lansmanda düşünülmez (ömür boyu anlaşma marjı ve destek yükü); ancak nakit gerekirse sınırlı LTD.
-- **Ücretli reklam**: yalnızca retargeting ve marka aramaları; CAC hedefi < 3 aylık ARPU.
+### 5.2 Kanallar
+- **İçerik/SEO:** karşılaştırma ve "X pricing" sayfaları (Blotato, Zernio bunu yapıyor), ücretsiz araçlar (kanca/hashtag üretici, en iyi saat) → lead.
+- **Kendi personalarımız:** doğal CTA; haftalık "nasıl yaptık" videosu.
+- **Affiliate %25 yinelenen (12 ay):** araç: Tolt (29/49/99 $/ay) veya Rewardful (49/99/149 $/ay); ikisi de Paddle'ı destekliyor ⚠ (Polar için teyit). PartnerStack/Impact.com lansman aşaması için pahalı.
+- **Yaratıcı sponsorlukları:** B2B SaaS/dev-tool YouTube CPM 40–80 $ ⚠; nano yaratıcı (1–10K) 50–500 $/entegrasyon.
+- **Topluluk:** Discord/Telegram; DevOps ve AI topluluklarında faydalı katılım.
+- **AppSumo:** **yapılmaz** — platform payı %50–70 ⚠, ömür boyu destek ve hesap başına API/AI maliyeti; ancak nakit şartsa 3 hesap ve kredisiz sıkı kapaklı LTD.
+- **Referans programı:** iki taraflı (performans +%30–50 ⚠), ödül 1 ay ücretsiz veya 100 kredi (10–20 $ değer aralığı en verimli), katılım %10–15, dönüşüm %3–5.
+- **Ücretli reklam:** yalnızca retargeting ve marka aramaları; CAC < 3 aylık ARPU.
 
 ### 5.3 Metrik hedefleri (ilk 12 ay)
 | Metrik | Hedef |
 |---|---|
-| Deneme → ücretli | %8–12 |
-| Aylık brüt churn | < %6 |
+| Deneme → ücretli (kartlı 7 gün) | %35–45 |
+| Freemium → ücretli | %3–5 |
+| Aylık brüt churn | < %5 |
 | ARPU | 45 $ |
-| Ödeme başarısızlığı kurtarma (dunning) | %50 |
-| 12. ay MRR | 15–25K $ (300–500 ödeyen) |
+| Dunning kurtarma | %50 |
+| 12. ay MRR | 15–25K $ |
 
 ## 6. Kendi hesaplarımızdan gelir
 
-| Kaynak | Mekanizma | Beklenti ⚠ |
+| Kaynak | Mekanizma | Bulgu ⚠ |
 |---|---|---|
-| Sponsorluk / iş birliği | CRM (docs/07 §7.3); DevOps/AI araç şirketleri (gözlemlenebilirlik, CI/CD, bulut, AI altyapı) B2B teknik izleyici için yüksek CPM öder | 10K takipçi teknik hesap: 300–1.500 $/entegre post; 50K+: 1.500–5.000 $ |
-| Platform gelir paylaşımı | YouTube Partner Program (Shorts havuzu %45), X Creator Revenue Sharing (Premium + eşikler), TikTok Creator Rewards (1 dk+ videolar), Instagram bonus programları | Küçük ama otomatik; video hattı YouTube'da 1 dk+ varyant üretebilir |
-| Pazar yerleri | Collabstr, Passionfroot, Impact.com; bülten için Paved/Beehiiv | Medya kiti otomatik üretilir |
-| Affiliate (araçların) | İçerikte kullanılan araçların affiliate linkleri (etiketli, `#reklam`) | Pasif |
-| Ürünün kendisi | Persona büyüdükçe "bu hesabı Heliograph yönetiyor" | Dönüşüm |
+| Sponsorluk / iş birliği | CRM (docs/07 §7.3); DevOps/AI araç şirketleri teknik izleyici için yüksek CPM öder | B2B/dev-tool CPM 40–80 $; 10K takipçi teknik hesap 300–1.500 $/entegre post; 50K+: 1.500–5.000 $ |
+| YouTube Partner Program | Şu an 1.000 abone + 4.000 saat **veya** 10 M Shorts/90 gün; **1 Şubat 2027'den itibaren 8.000 saat veya 20 M Shorts** ve Shorts havuzu için 10 M/90 gün sürdürme; Shorts %45, uzun video %55 | Video hattı 1 dk+ varyant üretebilmeli |
+| TikTok Creator Rewards | 10K takipçi, 100K görüntülenme/30 gün, ≥60 sn; ülkeler ABD/İngiltere/DE/FR/JP/KR/BR (+MX) — **Türkiye yok** | Persona ülkesi ABD ise mümkün |
+| X | Creator Revenue Sharing **7 Eylül 2026'da kapandı**; yerine **Original Content Rewards**: Premium + 500 doğrulanmış takipçi + 90 günde 500K doğrulanmış-kullanıcı gösterimi; 2 haftada bir ödeme, 30 $ minimum; Türkiye uygunluğu teyit edilecek | – |
+| Instagram | Reels/Breakthrough bonusları davetle; planlanabilir gelir değil | – |
+| Pazar yerleri | Passionfroot (yaratıcıya ücretsiz, %5–15), Collabstr (~%25 toplam), Paved (bülten CPM 15–30 $), beehiiv ad network | Medya kiti otomatik |
+| Affiliate (araçların) | İçerikte kullanılan araçların linkleri, `#reklam` etiketli | Pasif |
 
-Hukuki zorunluluklar (etiketleme, AI beyanı) docs/16 ve `research` §2'de; sistem bunları alan olarak zorlar.
+## 7. Ajans / white-label kıyas
 
-## 7. Riskler (iş)
+Cloud Campaign 49–299 $/ay, Sendible white-label 299–750 $/ay, SocialBee Pro50 179 $, Hypefury Agency 199 $ ⚠. Ajanslar müşteri başına 500–3.000 $/ay tahsil edip %40–60 marj koyuyor. Sonuç: **Agency 399 $** üst sınırda; 60 hesap + white-label rapor + müşteri workspace'leri ile gerekçelendirilir; 25+ hesapta hesap başı 1–3 $ (bkz. §3.2).
+
+## 8. Riskler (iş)
 
 | Risk | Azaltma |
 |---|---|
-| Platform API fiyat/politika şoku (X gibi) | Adaptör soyutlaması; plan haklarında "platform ek ücreti" satırı; config alarmı |
-| Ödeme sağlayıcısının Türk satıcıyı kapatması | İki sağlayıcı (Paddle + iyzico), soyutlama |
-| App review reddi (Meta/Google/TikTok) | Erken başvuru, uyumlu ürün (docs/16 §D), aracı servis yedeği (Zernio/Ayrshare) |
-| AI maliyet artışı | Kredi tanımı `config`'te; aylık birim ekonomi raporu; model düşürme kuralları |
-| Kötüye kullanım (spam ağları bizim uygulamamızı kullanır) | Kabul edilebilir kullanım politikası, hacim kademesi, abuse tespiti, hesap kapatma; platform politikası ihlalinde sorumluluk kullanıcıda |
-| Mağaza reddi (IAP) | Web-öncelikli satın alma; RevenueCat yedeği |
+| Platform API fiyat/politika şoku (X PPU, program kapanışları) | Adaptör soyutlaması; "platform ek ücreti" satırı; config alarmı |
+| MoR'un Türk satıcıyı kapatması | İki MoR (Paddle + Polar) aynı port arkasında; iyzico yerel |
+| Apple/Google kural değişikliği | IAP + web ikisi de; haklar tek kaynakta; RevenueCat soyutlaması |
+| App review reddi | Erken başvuru, uyumlu ürün (docs/16), aracı servis yedeği |
+| AI maliyet artışı | Kredi tanımı `config`'te; aylık birim ekonomi; model düşürme |
+| Kötüye kullanım | AUP, hacim kademesi, abuse tespiti; sorumluluk kullanıcıda |
+| Vergi yorumu (KDV istisnası, %100 kazanç istisnası) | SMMM görüşü yazılı; ❓ maddeler doğrulanmadan modele girmez |
 
-## 8. Yapılacaklar (bu doküman için)
+## 9. Yapılacaklar
 
-- [ ] ⚠ ile işaretli rakamları kaynak sayfalardan doğrula ve `policy_entries`'e gir (Paddle/iyzico ücretleri, rakip fiyatları, mağaza kuralları, vergi eşikleri).
-- [ ] Mali müşavir görüşmesi: şirket türü, MoR faturalama, KDV istisnası, e-Arşiv.
-- [ ] Paddle başvurusu (web sitesi + hukuki sayfalar hazır olmalı, docs/14).
-- [ ] ADR-0013'ü yaz.
+- [ ] ❓ maddeleri doğrula: 11257 sayılı Karar (%100 istisna), Vista Social/Ocoya/Typefully kademeleri, AppSumo payı, X yeni program ülke listesi; `policy_entries`'e işle.
+- [ ] Mali müşavir: Ltd kuruluşu, MoR faturalama, KDV istisnası, e-Arşiv, 10962 desteği başvurusu.
+- [ ] Paddle + Polar başvuruları (site ve hukuki sayfalar canlı olunca); RevenueCat hesabı; Apple Small Business Program başvurusu.
+- [x] ADR-0013 yazıldı.

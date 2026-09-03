@@ -156,7 +156,10 @@ Isınma: ilk 7 gün düşük hacim otomatik; sen bir şey yapmazsın.
 | G1 | **Şirket** | Mali müşavir ile: şahıs şirketi (hızlı) veya Ltd. Şti.; vergi levhası, e-imza, e-Arşiv/e-Fatura başvurusu; ETBİS kaydı (kendi sitenden satış) | Şahıs: birkaç gün; Ltd: 1–2 hafta ⚠ | Business Verification'lar bu belgeleri ister |
 | G2 | **Mali müşavir** | Aylık; MoR faturalaması, ihracat KDV istisnası, e-Arşiv | ⚠ ~3–6 bin TL/ay | docs/15 §2.3 |
 | G3 | **Avukat incelemesi** | `legal/` taslakları (KVKK + tüketici + AI) | Tek seferlik ⚠ | Yayın öncesi zorunlu |
-| G4 | **Paddle (MoR)** | https://paddle.com → satıcı başvurusu: şirket bilgileri, web sitesi, hukuki sayfalar canlı, ürün açıklaması; onay sonrası API key + webhook secret | 3–10 gün ⚠; ~%5 + 0,50 $ | `HG_PADDLE_API_KEY`, `HG_PADDLE_WEBHOOK_SECRET`, `HG_PADDLE_CLIENT_TOKEN` |
+| G4 | **Paddle (MoR)** | https://paddle.com → satıcı başvurusu: şirket bilgileri, web sitesi, hukuki sayfalar canlı, ürün açıklaması; onay sonrası API key + webhook secret. Payout USD/EUR/GBP (TRY yok) → döviz hesabı gerekir | 1–2 hafta; %5 + 0,50 $ | `HG_PADDLE_API_KEY`, `HG_PADDLE_WEBHOOK_SECRET`, `HG_PADDLE_CLIENT_TOKEN` |
+| G4b | **Polar.sh (ikinci MoR)** | https://polar.sh → organizasyon + Stripe Connect Express payout; ücretsiz Starter %5 + 0,50 $ | Birkaç gün | `HG_POLAR_ACCESS_TOKEN`, `HG_POLAR_WEBHOOK_SECRET` |
+| G4c | **RevenueCat** (IAP) | https://app.revenuecat.com → proje; App Store Connect API key ve Play service account bağla; ürünleri planlarla eşle | Ücretsiz (2,5K $ MTR'ye kadar) | `HG_REVENUECAT_API_KEY`, `HG_REVENUECAT_WEBHOOK_SECRET` |
+| G4d | **Apple Small Business Program** | App Store Connect → Agreements → başvuru (< 1 M $/yıl) → %15 komisyon | – | – |
 | G5 | **iyzico** (faz 2, TRY) | https://www.iyzico.com → üye işyeri başvurusu (şirket belgeleri) | 1–2 hafta ⚠ | `HG_IYZICO_API_KEY`, `HG_IYZICO_SECRET` |
 | G6 | **İYS** (pazarlama e-postası/SMS için) | https://iys.org.tr → marka kaydı (MERSİS ile) | Ücretsiz; birkaç gün | Onaylar İYS'ye aktarılır |
 | G7 | **VERBİS değerlendirmesi** | Avukat/mali müşavir ile eşik kontrolü; gerekirse https://verbis.kvkk.gov.tr kayıt | – | docs/16 §2.5 |
@@ -167,6 +170,8 @@ Isınma: ilk 7 gün düşük hacim otomatik; sen bir şey yapmazsın.
 | G12 | **AB/UK temsilcisi** (AB müşterisi olursa) | GDPR md. 27 temsilci servisi (ör. DataRep, EDPO) ⚠ | ~100–300 €/yıl ⚠ | docs/16 §3 |
 | G13 | **Alt işleyici sözleşmeleri** | Anthropic, Google, ElevenLabs, fal, Cloudflare, Paddle, Resend, Sentry'nin DPA/SCC sayfalarını kabul et, PDF'leri `legal/dpa/` klasörüne koy | Ücretsiz | KVKK standart sözleşme bildirimi gerekirse 5 iş günü ⚠ |
 | G14 | **Affiliate programı** (lansman) | Rewardful veya Tolt hesabı ⚠ | ~49–99 $/ay | docs/15 §5.2 |
+| G16 | **Hizmet İhracatı Destekleri (10962 sayılı Karar)** | Ticaret Bakanlığı → hosting, platform komisyonu, onaylı SaaS, pazarlama giderlerinin %50'si (yılda 5 M ₺'ye kadar) ⚠; SMMM/danışmanla başvuru | Ücretsiz; aylık raporlama | docs/15 §2.4 |
+| G17 | **Döviz hesabı** | MoR payout'ları için USD/EUR hesabı (banka veya Wise Business ⚠) | – | – |
 | G15 | **Destek kanalı** | destek@<alan> (Resend inbound) + yardım merkezi sayfası | – | – |
 
 ## F. Kontrol listesi (kısa)
