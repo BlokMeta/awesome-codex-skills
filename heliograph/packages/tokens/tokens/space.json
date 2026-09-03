@@ -1,0 +1,39 @@
+{
+  "space": {
+    "$type": "dimension",
+    "1": { "$value": "2px" },
+    "2": { "$value": "4px" },
+    "3": { "$value": "8px" },
+    "4": { "$value": "12px" },
+    "5": { "$value": "16px" },
+    "6": { "$value": "24px" },
+    "7": { "$value": "32px" },
+    "8": { "$value": "48px" },
+    "9": { "$value": "64px" }
+  },
+  "radius": {
+    "$type": "dimension",
+    "none": { "$value": "0px", "$description": "Satırlar, tablolar" },
+    "sm": { "$value": "4px", "$description": "Giriş alanları, düğmeler" },
+    "md": { "$value": "8px", "$description": "Önizleme kartları, sheet" },
+    "pill": { "$value": "9999px", "$description": "Yalnızca rozet/avatar" }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "state": { "$value": "120ms" },
+      "panel": { "$value": "200ms" },
+      "sheet": { "$value": "320ms" }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "standard": { "$value": [0.2, 0.8, 0.2, 1] }
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "touchTarget": { "$value": "44px" },
+    "focusRing": { "$value": "2px" },
+    "readingWidth": { "$value": "76ch" }
+  }
+}

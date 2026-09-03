@@ -14,7 +14,7 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
   - KK: `pnpm contracts:gen` deterministik (diff yok); örnek `GET /v1/health`.
 - [x] **M0.5 Domain paketi iskeleti** — `Result`, `DomainError`, `Clock`, `Rng`, `Id` yardımcıları; ilk aggregate (`Persona`) + property-based test.
 - [x] **M0.6 i18n paketi** (Lingui runtime, elle id'li mesajlar, Intl biçimleyiciler, pseudo, .po codec, `i18n:check`; SWC/Metro entegrasyonu uygulamalarla) — `tr`, `en`, `en-x-pseudo`; extract/check betikleri; lint kuralı ham string.
-- [ ] **M0.7 UI paketi çekirdeği** — token'lar (Style Dictionary), yazı tipleri, `Button/Input/List/Sheet` web + RN; Storybook (web + RN); axe.
+- [~] **M0.7 UI paketi çekirdeği** (token'lar: DTCG JSON → CSS değişkenleri + TS teması, WCAG kontrast testleri hazır; bileşenler ve Storybook sırada) — token'lar (Style Dictionary), yazı tipleri, `Button/Input/List/Sheet` web + RN; Storybook (web + RN); axe.
 - [ ] **M0.8 Auth** — operatör kayıt/giriş, passkey + TOTP, oturum rotasyonu, RLS; e2e "giriş".
 - [ ] **M0.9 Gözlemlenebilirlik temeli** — pino + OTel + requestId; Grafana panosu boş ama bağlı.
 - [x] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).

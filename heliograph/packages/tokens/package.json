@@ -1,0 +1,30 @@
+{
+  "name": "@heliograph/tokens",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./css": "./build/tokens.css",
+    "./theme": {
+      "types": "./build/theme.d.ts",
+      "import": "./build/theme.js"
+    }
+  },
+  "scripts": {
+    "build": "tsx scripts/build.ts && tsc -b",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@heliograph/config": "workspace:*",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "^3.2.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
