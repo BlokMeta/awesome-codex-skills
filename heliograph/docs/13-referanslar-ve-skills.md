@@ -87,3 +87,48 @@ Kurallar: her karar ADR; her modül README; yol haritası canlı; sohbet geçmi�
 2. `plan.md`: etkilenen modüller, contract değişiklikleri, veri modeli, test planı.
 3. `tasks.md`: DoD'lu görev listesi.
 4. Uygulama; PR spec'e bağlanır; spec kapanınca `12-teknik-yol-haritasi.md` işaretlenir.
+
+## 6. "Tekerleği yeniden icat etme" listesi (CLAUDE.md kural 16)
+
+Karar: **Kullan** = doğrudan bağımlılık; **Uyarlayarak al** = kodu/deseni kopyala, lisansa uy; **Yalnızca referans** = oku, kendi yaz.
+
+| Problem | Çözüm | Karar | Not |
+|---|---|---|---|
+| Kimlik, passkey, 2FA, organizasyon | better-auth | Kullan | ADR-0007 |
+| API sözleşmesi + OpenAPI + istemci | oRPC | Kullan | ADR-0003 |
+| Durable workflow | Temporal | Kullan | ADR-0002 |
+| Video montaj, altyazı animasyonu, TikTok tarzı caption şablonları | Remotion + resmi `remotion-dev/templates` (tiktok, captions, audiogram) | Kullan / Uyarlayarak al | Şablonlar MIT; şirket lisansı kuralı |
+| Terminal demoları | Charm VHS | Kullan | MIT |
+| Altyazı hizalama | WhisperX | Kullan | BSD |
+| Faceless video pipeline fikirleri (konu → script → TTS → stok → altyazı) | MoneyPrinterTurbo | Yalnızca referans | MIT ama Python/Streamlit; mimarimize uymaz |
+| Platform adaptörleri (Instagram/Threads/TikTok/YouTube/X/Telegram istek şekilleri, hata durumları) | Postiz `apps/backend/src/.../providers/*` | Uyarlayarak al (AGPL: kodu kopyalama, davranışı öğren) | Kendi adaptörümüz MIT-temiz kalır |
+| UI primitifleri | shadcn (Base UI), Radix ikonları, Lucide | Kullan | MIT |
+| Tasarım token pipeline | Style Dictionary, Tokens Studio | Kullan | – |
+| i18n çıkarım/derleme | Lingui CLI | Kullan | – |
+| Mock/test | MSW, Prism, faker, Testcontainers, Maestro, Playwright, Storybook | Kullan | – |
+| E-posta şablonları | react-email | Kullan | MIT |
+| Takvim/sürükle-bırak | `@dnd-kit`, `date-fns`/`@internationalized/date` | Kullan | – |
+| Sanallaştırılmış liste/tablo | TanStack Virtual/Table | Kullan | – |
+| Grafikler | d3-scale + kendi SVG; gerekirse `visx` | Kullan | – |
+| RSS/HN/HF/arXiv toplayıcı | `rss-parser`, resmi API'ler; `alan-turing-institute/ai-rss-feeds` listesi | Kullan / Uyarlayarak al | – |
+| Embedding + benzerlik | pgvector + sağlayıcı embedding API'si | Kullan | – |
+| C2PA/IPTC işaretleme | `c2pa-node` (Adobe/CAI), `exiftool-vendored` | Kullan | Apache/MIT |
+| Ödeme | Paddle SDK (`@paddle/paddle-node-sdk`), iyzico SDK, RevenueCat | Kullan | ADR-0013 |
+| KVKK/GDPR rıza banner'ı | kendi minimal bileşen (token'lı) | Kendi yaz | Üçüncü taraf CMP'ler ağır ve takip ediyor |
+| Yönetim paneli iskeleti | Refine / Postiz UI | Yalnızca referans | Görsel kimlik bize özgü (docs/07) |
+| Kalite kapısı, persona ses kitabı, trend skorlama, Thompson sampling | – | **Kendi yaz** | Ürün farkı burada |
+
+### 6.1 Geliştirme sırasında kullanılacak MCP sunucuları ve skill'ler
+
+| Araç | Ne için | Durum |
+|---|---|---|
+| GitHub MCP (bu oturumda var) | PR, issue, CI | Kullanılıyor |
+| Playwright MCP / `webapp-testing` skill | UI doğrulama, ekran görüntüsü | M2'den itibaren |
+| Postgres MCP (ör. `crystaldba/postgres-mcp`) | Şema/sorgu inceleme, indeks önerisi | M0.11'de değerlendir |
+| Context7 MCP | Güncel kütüphane dokümanı (oRPC, Expo, Lingui sürüm farkları) | Kur |
+| Sentry MCP | Hata triage | M2 |
+| Temporal CLI + UI | Workflow inceleme | Compose'da |
+| `frontend-design` (anthropics/skills), `vercel-labs/agent-skills` (react-best-practices, web-design-guidelines, react-native-guidelines), `expo/skills` | UI/mobil işlerinde okunur | Kur: `python ../skill-installer/scripts/install-skill-from-github.py --repo <owner/repo> --path <skill>` |
+| `obra/superpowers` (TDD, verification-before-completion) | Çalışma disiplini | Kur |
+| `trailofbits/skills`, `anthropics/claude-code-security-review` | Güvenlik incelemesi | M6 |
+| Composio Rube MCP (bu repodaki `composio-skills/*`) | ElevenLabs/Ayrshare/HeyGen gibi servislere hızlı deneme; üretimde kendi adaptörümüz | Prototip |
