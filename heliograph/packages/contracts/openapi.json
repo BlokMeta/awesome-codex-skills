@@ -33,11 +33,18 @@
                             "type": "string"
                           },
                           "status": {
-                            "enum": ["ok", "degraded", "down"],
+                            "enum": [
+                              "ok",
+                              "degraded",
+                              "down"
+                            ],
                             "type": "string"
                           }
                         },
-                        "required": ["name", "status"],
+                        "required": [
+                          "name",
+                          "status"
+                        ],
                         "type": "object"
                       },
                       "type": "array"
@@ -48,14 +55,24 @@
                       "type": "integer"
                     },
                     "status": {
-                      "enum": ["ok", "degraded", "down"],
+                      "enum": [
+                        "ok",
+                        "degraded",
+                        "down"
+                      ],
                       "type": "string"
                     },
                     "version": {
                       "type": "string"
                     }
                   },
-                  "required": ["status", "version", "checkedAt", "dependencies", "staleConfigKeys"],
+                  "required": [
+                    "status",
+                    "version",
+                    "checkedAt",
+                    "dependencies",
+                    "staleConfigKeys"
+                  ],
                   "type": "object"
                 }
               }
@@ -64,7 +81,9 @@
           }
         },
         "summary": "Liveness + dependency health",
-        "tags": ["system"]
+        "tags": [
+          "system"
+        ]
       }
     },
     "/v1/health/config": {
@@ -101,13 +120,21 @@
                             "type": "string"
                           }
                         },
-                        "required": ["key", "verifiedAt", "maxAgeDays", "overdueDays"],
+                        "required": [
+                          "key",
+                          "verifiedAt",
+                          "maxAgeDays",
+                          "overdueDays"
+                        ],
                         "type": "object"
                       },
                       "type": "array"
                     }
                   },
-                  "required": ["checkedAt", "stale"],
+                  "required": [
+                    "checkedAt",
+                    "stale"
+                  ],
                   "type": "object"
                 }
               }
@@ -116,7 +143,9 @@
           }
         },
         "summary": "Stale dynamic-config keys (ADR-0011)",
-        "tags": ["system"]
+        "tags": [
+          "system"
+        ]
       }
     }
   },
