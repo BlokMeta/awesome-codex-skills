@@ -3,6 +3,7 @@
   "references": [
     { "path": "packages/domain" },
     { "path": "packages/contracts" },
+    { "path": "packages/i18n" },
     { "path": "tooling/scripts" },
     { "path": "tooling/seed" }
   ]

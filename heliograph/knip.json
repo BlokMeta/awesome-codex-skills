@@ -3,6 +3,7 @@
   "workspaces": {
     "packages/domain": { "project": ["src/**/*.ts"] },
     "tooling/seed": { "entry": ["config.ts"] },
+    "packages/i18n": { "entry": ["scripts/*.ts"], "project": ["src/**/*.ts", "scripts/**/*.ts"] },
     "packages/contracts": {
       "entry": ["src/index.ts", "scripts/*.ts"],
       "project": ["src/**/*.ts", "scripts/**/*.ts"]

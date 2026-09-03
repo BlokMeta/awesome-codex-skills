@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "common.action.approve"
+msgstr "Approve"
+
+msgid "common.action.reject"
+msgstr "Reject"
+
+msgid "common.action.regenerate"
+msgstr "Regenerate"
+
+msgid "common.action.cancel"
+msgstr "Cancel"
+
+msgid "common.action.save"
+msgstr "Save"
+
+#. Money/legal escalation button
+msgid "common.action.takeOver"
+msgstr "I'll take it from here"
+
+msgid "review.queue.title"
+msgstr "Approval queue"
+
+msgid "review.queue.pendingCount"
+msgstr "{count, plural, =0 {Nothing waiting} one {# item waiting} other {# items waiting}}"
+
+msgid "review.gate.passed"
+msgstr "Passed {passed} of {total} checks"
+
+msgid "errors.persona.invalidTransition"
+msgstr "Cannot move this persona from {from} to {to}."
+
+msgid "errors.identity.notAMember"
+msgstr "You are not a member of this workspace."
+
+msgid "errors.identity.forbidden"
+msgstr "Your role ({role}) cannot {permission}."
+
+msgid "errors.identity.roleTooHigh"
+msgstr "You cannot assign the {role} role."
+
+msgid "errors.identity.lastOwner"
+msgstr "A workspace needs at least one owner."
+
+msgid "errors.billing.featureNotInPlan"
+msgstr "Your plan does not include {feature}."
+
+msgid "errors.billing.featureDisabled"
+msgstr "{feature} is disabled on your plan."
+
+msgid "errors.billing.entitlementExceeded"
+msgstr "Limit reached: {used} of {limit} {feature} used."
+
+msgid "errors.billing.insufficientCredits"
+msgstr "Not enough credits: {amount} needed, {balance} left."
+
+msgid "errors.billing.invalidAmount"
+msgstr "Invalid credit amount."
+
+msgid "errors.channel.quotaExceeded"
+msgstr "{channel} has no publishing quota left until {resetAt}."
+
+msgid "errors.validation.past"
+msgstr "This time is in the past."

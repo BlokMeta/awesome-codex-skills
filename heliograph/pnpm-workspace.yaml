@@ -18,3 +18,5 @@ catalog:
   "@orpc/contract": ^1.15.0
   "@orpc/openapi": ^1.15.0
   "@orpc/zod": ^1.15.0
+  "@lingui/core": ^6.6.0
+  "@lingui/message-utils": ^6.6.0

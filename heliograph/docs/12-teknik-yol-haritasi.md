@@ -13,7 +13,7 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [x] **M0.4 Contracts paketi** (oRPC + Zod 4 → `openapi.json`; Prism/Spectral M0.3'te) — Zod → OpenAPI 3.1 → tipli istemci üretimi; Spectral; Prism mock sunucusu.
   - KK: `pnpm contracts:gen` deterministik (diff yok); örnek `GET /v1/health`.
 - [x] **M0.5 Domain paketi iskeleti** — `Result`, `DomainError`, `Clock`, `Rng`, `Id` yardımcıları; ilk aggregate (`Persona`) + property-based test.
-- [ ] **M0.6 i18n paketi** — `tr`, `en`, `en-x-pseudo`; extract/check betikleri; lint kuralı ham string.
+- [x] **M0.6 i18n paketi** (Lingui runtime, elle id'li mesajlar, Intl biçimleyiciler, pseudo, .po codec, `i18n:check`; SWC/Metro entegrasyonu uygulamalarla) — `tr`, `en`, `en-x-pseudo`; extract/check betikleri; lint kuralı ham string.
 - [ ] **M0.7 UI paketi çekirdeği** — token'lar (Style Dictionary), yazı tipleri, `Button/Input/List/Sheet` web + RN; Storybook (web + RN); axe.
 - [ ] **M0.8 Auth** — operatör kayıt/giriş, passkey + TOTP, oturum rotasyonu, RLS; e2e "giriş".
 - [ ] **M0.9 Gözlemlenebilirlik temeli** — pino + OTel + requestId; Grafana panosu boş ama bağlı.

@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Language: tr\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "common.action.approve"
+msgstr "Onayla"
+
+msgid "common.action.reject"
+msgstr "Reddet"
+
+msgid "common.action.regenerate"
+msgstr "Yeniden üret"
+
+msgid "common.action.cancel"
+msgstr "Vazgeç"
+
+msgid "common.action.save"
+msgstr "Kaydet"
+
+#. Money/legal escalation button
+msgid "common.action.takeOver"
+msgstr "Ben devralıyorum"
+
+msgid "review.queue.title"
+msgstr "Onay kuyruğu"
+
+msgid "review.queue.pendingCount"
+msgstr "{count, plural, =0 {Bekleyen yok} one {# öğe bekliyor} other {# öğe bekliyor}}"
+
+msgid "review.gate.passed"
+msgstr "{total} kontrolden {passed} tanesi geçti"
+
+msgid "errors.persona.invalidTransition"
+msgstr "Bu persona {from} durumundan {to} durumuna geçirilemez."
+
+msgid "errors.identity.notAMember"
+msgstr "Bu çalışma alanının üyesi değilsiniz."
+
+msgid "errors.identity.forbidden"
+msgstr "Rolünüz ({role}) şu işlemi yapamaz: {permission}."
+
+msgid "errors.identity.roleTooHigh"
+msgstr "{role} rolünü atayamazsınız."
+
+msgid "errors.identity.lastOwner"
+msgstr "Bir çalışma alanının en az bir sahibi olmalıdır."
+
+msgid "errors.billing.featureNotInPlan"
+msgstr "Planınız {feature} özelliğini içermiyor."
+
+msgid "errors.billing.featureDisabled"
+msgstr "{feature} planınızda kapalı."
+
+msgid "errors.billing.entitlementExceeded"
+msgstr "Sınıra ulaşıldı: {feature} için {limit} hakkın {used} tanesi kullanıldı."
+
+msgid "errors.billing.insufficientCredits"
+msgstr "Yeterli kredi yok: {amount} gerekiyor, {balance} kaldı."
+
+msgid "errors.billing.invalidAmount"
+msgstr "Geçersiz kredi miktarı."
+
+msgid "errors.channel.quotaExceeded"
+msgstr "{channel} için {resetAt} tarihine kadar yayın kotası kalmadı."
+
+msgid "errors.validation.past"
+msgstr "Bu zaman geçmişte kalıyor."
