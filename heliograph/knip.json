@@ -22,6 +22,10 @@
     "apps/api": {
       "entry": ["test/**/*.test.ts"],
       "project": ["src/**/*.ts", "test/**/*.ts"]
+    },
+    "packages/ui": {
+      "entry": [".storybook/*.{ts,tsx}", "src/**/*.stories.tsx", "test/*.d.ts"],
+      "project": ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}", "test/**/*.ts"]
     }
   }
 }

@@ -66,7 +66,7 @@ Sürümler npm kayıt defterinden ve resmi sürüm notlarından alınmıştır (
 | Paket | Seçim |
 |---|---|
 | `packages/tokens` | DTCG JSON → küçük kendi üreticimiz (`scripts/build.ts`) → CSS değişkenleri (web) + TS tema (Unistyles); Tokens Studio/Figma senkronu gerekirse Style Dictionary 5'e geçilir |
-| `packages/ui` | Web: shadcn/Base UI + Tailwind; RN: Unistyles ile yazılmış eş bileşenler; **aynı props arayüzü, iki uygulama**; Storybook 10 (web) + Storybook RN 10 (cihaz + RN-Web-Vite) |
+| `packages/ui` | Web: Base UI (headless) + token değişkenleriyle yazılmış düz CSS (`styles.css`, `data-*` varyantları; Tailwind yalnızca uygulamalarda sayfa düzeni için); RN: Unistyles ile yazılmış eş bileşenler; **aynı props arayüzü (`@heliograph/ui/props`), iki uygulama**; Storybook 10 (web) + Storybook RN 10 (cihaz + RN-Web-Vite); testler Vitest + jsdom + Testing Library + `vitest-axe` |
 | `packages/i18n` | **Lingui 6** (ICU, `.po` kataloglar, SWC eklentisi Next'te, Metro transformer Expo'da, pseudo-locale yerleşik) |
 | `packages/contracts` | oRPC contract + Zod 4; `openapi.json` çıktısı; Prism mock; Pact contract testleri |
 | `packages/domain` | Saf TS; fast-check property-based testler |

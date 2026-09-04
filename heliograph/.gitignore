@@ -14,3 +14,6 @@ coverage/
 .next/
 *.log
 tmp/
+
+# Storybook build output
+storybook-static/

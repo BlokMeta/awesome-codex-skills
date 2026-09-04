@@ -67,6 +67,8 @@ jobs:
         run: |
           pnpm --filter @heliograph/contracts gen
           git diff --exit-code -- packages/contracts/openapi.json
+      - name: Storybook builds (stories are the component contract)
+        run: pnpm --filter @heliograph/ui storybook:build
       - name: Env example is doctor-parsable
         run: pnpm doctor || true
 
