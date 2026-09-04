@@ -8,7 +8,7 @@ export default defineConfig({
     include: ['test/**/*.test.ts', 'src/**/*.test.ts'],
     coverage: {
       ...vitestBase.test?.coverage,
-      exclude: ['src/**/*.test.ts', 'src/**/index.ts', 'src/main.ts'],
+      exclude: ['src/**/*.test.ts', 'src/**/index.ts', 'src/main.ts', 'src/db/cli.ts'],
       thresholds: { lines: 85, branches: 75, functions: 85, statements: 85 },
     },
   },

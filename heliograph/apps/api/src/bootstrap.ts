@@ -2,11 +2,11 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fastify';
 import { Logger } from 'nestjs-pino';
-import { AppModule } from './app.module.js';
+import { AppModule, type AppOptions } from './app.module.js';
 
-export async function createApp(): Promise<NestFastifyApplication> {
+export async function createApp(opts: AppOptions): Promise<NestFastifyApplication> {
   const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
+    AppModule.forRoot(opts),
     new FastifyAdapter({ trustProxy: true }),
     { bufferLogs: true },
   );

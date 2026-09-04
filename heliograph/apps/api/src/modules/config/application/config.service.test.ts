@@ -1,6 +1,5 @@
-import { fixedClock, type PolicyEntry } from '@heliograph/domain';
+import { fixedClock, type PolicyEntry, type PolicyRepository } from '@heliograph/domain';
 import { describe, expect, it } from 'vitest';
-import { InMemoryPolicyRepository } from '../infrastructure/in-memory-policy.repository.js';
 import { ConfigService } from './config.service.js';
 
 const now = new Date('2026-09-03T12:00:00Z');
@@ -20,9 +19,23 @@ const entry = (over: Partial<PolicyEntry>): PolicyEntry => ({
   ...over,
 });
 
+/** Minimal in-memory port double; the real repository is covered by its own PGlite test. */
+class StubRepo implements PolicyRepository {
+  constructor(private readonly entries: PolicyEntry[]) {}
+  async findByKey(key: string) {
+    return this.entries.filter((e) => e.key === key);
+  }
+  async listEffective() {
+    return [...this.entries];
+  }
+  async save(e: PolicyEntry) {
+    this.entries.push(e);
+  }
+}
+
 describe('ConfigService', () => {
   it('reads through the repository, caches with a TTL and honours invalidate()', async () => {
-    const repo = new InMemoryPolicyRepository([entry({})]);
+    const repo = new StubRepo([entry({})]);
     const svc = new ConfigService(repo, fixedClock(now), 1000);
     const num = (v: unknown) => Number(v);
     expect(await svc.get('platform.publish_limit_24h', num, { platform: 'instagram' })).toBe(100);
@@ -35,9 +48,7 @@ describe('ConfigService', () => {
   });
 
   it('reports staleness from the repository', async () => {
-    const repo = new InMemoryPolicyRepository([
-      entry({ verifiedAt: new Date(now.getTime() - 45 * 86_400_000) }),
-    ]);
+    const repo = new StubRepo([entry({ verifiedAt: new Date(now.getTime() - 45 * 86_400_000) })]);
     const svc = new ConfigService(repo, fixedClock(now));
     const report = await svc.staleness();
     expect(report[0]).toMatchObject({ level: 'warning', overdueDays: 15 });

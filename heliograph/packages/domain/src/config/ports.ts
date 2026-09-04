@@ -37,3 +37,8 @@ export interface ConfigStale {
   readonly level: 'warning' | 'critical';
   readonly at: Date;
 }
+
+/** Where the staleness watcher reports overdue entries (log now, notification module in M1.4). */
+export interface StaleAlertSink {
+  notify(event: ConfigStale): Promise<void>;
+}
