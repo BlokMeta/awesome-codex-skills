@@ -125,7 +125,7 @@ weekly_reports (id, workspace_id, week_start, body JSONB, storage_key)
 alerts (id, workspace_id, persona_id NULL, severity ENUM('info','warning','critical'), kind, payload JSONB, runbook,
   delivered JSONB, acknowledged_by, acknowledged_at)
 push_tokens (id, operator_id, platform, token, last_seen_at)
-usage_records (id, workspace_id, module, provider, model, unit, quantity, cost_usd, ref_type, ref_id, at)
+usage_records (id, workspace_id, feature NULL, module, provider, model, unit, quantity, cost_usd, ref_type, ref_id, at)  -- feature: hangi plan hakkına sayılır (daily_posts…); EntitlementService pencere toplamını buradan okur
 budgets (id, workspace_id, scope ENUM('workspace','persona'), scope_id, daily_usd, monthly_usd, cutoff BOOL)
 audit_log (id, workspace_id, actor_type, actor_id, action, resource_type, resource_id, before JSONB, after JSONB, request_id, workflow_id, at)  -- append-only
 outbox (id, aggregate_type, aggregate_id, event_type, payload JSONB, created_at, published_at NULL)
@@ -154,7 +154,7 @@ Tohum anahtarları (`tooling/seed/config.ts`): platform limitleri, kabiliyet mat
 ## 12c. billing
 
 ```sql
-plans (id, code UNIQUE, name, interval ENUM('month','year'), price_minor INT, currency, active BOOL, sort, public BOOL)
+plans (id, code UNIQUE, name, interval ENUM('month','year'), price_minor INT, currency, active BOOL, sort, public BOOL)  -- ilk katalog `tooling/seed/plans.ts`, sonrası panel
 plan_entitlements (plan_id, feature, limit_value NUMERIC, PRIMARY KEY(plan_id, feature))
   -- feature: connected_accounts, personas, daily_posts, daily_videos, ai_credits_month, team_members, manual_library, priority_support...
 subscriptions (id, workspace_id, plan_id, provider ENUM('paddle','iyzico','apple','google','manual'), provider_ref,
@@ -169,7 +169,7 @@ coupons (id, code UNIQUE, kind, value, max_redemptions, expires_at)
 ## 12d. privacy
 
 ```sql
-consent_records (id, operator_id, workspace_id NULL, document ENUM('terms','privacy','kvkk_aydinlatma','kvkk_acik_riza','cookies','marketing_iys','distance_sale'), version, accepted_at, ip, user_agent)
+consent_records (id, operator_id, document ENUM('terms','privacy','kvkk_aydinlatma','kvkk_acik_riza_marketing','kvkk_acik_riza_voice','kvkk_acik_riza_likeness','cookies','distance_sale','aup','ai_processing'), version, accepted_at, withdrawn_at NULL, ip, user_agent)  -- kişisel kayıt, workspace'e bağlı değil; yayımlı sürüm `legal.<doc>.version` config anahtarından
 erasure_requests (id, workspace_id NULL, operator_id NULL, channel_id NULL, source ENUM('user','meta_callback','support'), requested_at, due_at, completed_at, confirmation_code)
 data_exports (id, operator_id, requested_at, ready_at, storage_key, expires_at)
 ```

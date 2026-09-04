@@ -83,7 +83,7 @@ Hedef brüt marj %65+ (AI, platform API ve ödeme komisyonu dahil).
 
 **Pazar normları:** (a) iki eksen: hesap başına doğrusal (Buffer, Zernio, Publer) veya 5/10/25–30 hesaplı kademeler; (b) **metin AI giderek sınırsız**, kredi yalnızca görsel/video/ses için; giriş kademesinde 100–1.250 kredi; aşım paketleri plan içi fiyatın %40–80 üstünde; (c) AI ağırlıklı ürünlerde 7 gün kart-zorunlu deneme (dönüşüm ~%44–49 ⚠), zamanlayıcılarda 14 gün veya cömert ücretsiz plan (opt-in deneme ~%14–18, freemium %2–5 ⚠); (d) SMB/yaratıcı SaaS aylık logo churn %4,5–6 ⚠.
 
-### 3.2 Heliograph planları (öneri; `plans`/`plan_entitlements` tablolarında yaşar)
+### 3.2 Heliograph planları (öneri; `plans`/`plan_entitlements` tablolarında yaşar — ilk katalog `tooling/seed/plans.ts`, `pnpm db:seed`; okuma `GET /v1/billing/entitlements`)
 
 | Plan | Fiyat (USD/ay, yıllıkta −20%) | Bağlı hesap | Persona | Günlük post/video (persona başına) | Medya kredisi/ay | Ekstra |
 |---|---|---|---|---|---|---|

@@ -78,6 +78,8 @@ Yanıt:
 |---|---|
 | auth | better-auth: `POST /auth/sign-up/email`, `/auth/sign-in/email`, `/auth/sign-out`, `GET /auth/get-session`, `/auth/verify-email`, `POST /auth/two-factor/{enable,verify-totp,disable}`, `/auth/passkey/*`, `POST /auth/organization/{create,set-active,invite-member,accept-invitation,has-permission}` |
 | identity | `GET /me` (operatör + üyelikler + aktif çalışma alanı) — **canlı** |
+| billing | `GET /billing/entitlements` (plan, haklar, kullanım, kredi) — **canlı**; checkout/webhook M1.6 |
+| privacy | `GET /consents`, `POST /consents` (kabul), `POST /consents/withdraw` — **canlı**; silme/dışa aktarma M2.8 |
 | personas | `GET/POST /personas`, `GET/PATCH /personas/{id}`, `POST /personas/{id}:activate`, `:pause`, `GET /personas/{id}/health` |
 | channels | `GET /channels`, `POST /channels/oauth/{platform}:start`, `/callback`, `PATCH /channels/{id}`, `POST /channels/{id}:refresh`, `GET /channels/{id}/quota` |
 | trends | `GET /trends/clusters` (sayfalı, skor sıralı), `GET /trends/clusters/{id}`, `POST /briefs` (manuel brief) |
