@@ -21,11 +21,25 @@ beforeAll(async () => {
     { id: 'op_bora', email: 'bora@example.com', name: 'Bora' },
   ]);
   await workspaces.create(
-    { id: 'ws_a', name: 'Atölye A', locale: 'tr', timezone: 'Europe/Istanbul', createdAt: t0 },
+    {
+      id: 'ws_a',
+      name: 'Atölye A',
+      slug: 'atolye-a',
+      locale: 'tr',
+      timezone: 'Europe/Istanbul',
+      createdAt: t0,
+    },
     { operatorId: 'op_ayse' },
   );
   await workspaces.create(
-    { id: 'ws_b', name: 'Studio B', locale: 'en', timezone: 'UTC', createdAt: t0 },
+    {
+      id: 'ws_b',
+      name: 'Studio B',
+      slug: 'studio-b',
+      locale: 'en',
+      timezone: 'UTC',
+      createdAt: t0,
+    },
     { operatorId: 'op_bora' },
   );
 });
@@ -34,6 +48,10 @@ afterAll(() => handle.close());
 describe('workspaces + memberships (Drizzle, RLS)', () => {
   it('creates a workspace with its first owner in one transaction', async () => {
     expect(await workspaces.findById('ws_a')).toMatchObject({ name: 'Atölye A', locale: 'tr' });
+    expect((await workspaces.listByIds(['ws_a', 'ws_b', 'nope'])).map((w) => w.slug)).toEqual(
+      expect.arrayContaining(['atolye-a', 'studio-b']),
+    );
+    expect(await workspaces.listByIds([])).toEqual([]);
     expect(await workspaces.findById('nope')).toBeNull();
     expect(await members.listForWorkspace('ws_a')).toMatchObject([
       { operatorId: 'op_ayse', role: 'owner', workspaceId: 'ws_a' },

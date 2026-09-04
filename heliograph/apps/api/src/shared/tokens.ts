@@ -8,3 +8,5 @@ export const DATABASE = Symbol('Database');
 export const MEMBERSHIP_REPOSITORY = Symbol('MembershipRepository');
 export const WORKSPACE_REPOSITORY = Symbol('WorkspaceRepository');
 export const STALE_ALERT_SINK = Symbol('StaleAlertSink');
+export const AUTH = Symbol('Auth');
+export const EMAIL_SENDER = Symbol('EmailSender');

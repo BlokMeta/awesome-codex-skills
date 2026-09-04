@@ -8,7 +8,10 @@
     "useDefineForClassFields": false,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "target": "ES2023"
+    "target": "ES2023",
+    "declaration": false,
+    "declarationMap": false,
+    "composite": false
   },
   "include": ["src"],
   "references": [

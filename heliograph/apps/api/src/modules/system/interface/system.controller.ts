@@ -4,7 +4,9 @@ import { Controller, Inject } from '@nestjs/common';
 import { Implement, implement } from '@orpc/nest';
 import { APP_VERSION, CLOCK, CONFIG_SERVICE } from '../../../shared/tokens.js';
 import type { ConfigService } from '../../config/application/config.service.js';
+import { Public } from '../../identity/interface/auth.decorators.js';
 
+@Public()
 @Controller()
 export class SystemController {
   constructor(

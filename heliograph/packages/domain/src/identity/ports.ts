@@ -3,6 +3,7 @@ import type { Membership, Role } from './membership.js';
 export interface Workspace {
   readonly id: string;
   readonly name: string;
+  readonly slug: string;
   readonly locale: string;
   readonly timezone: string;
   readonly createdAt: Date;
@@ -10,6 +11,7 @@ export interface Workspace {
 
 export interface WorkspaceRepository {
   findById(id: string): Promise<Workspace | null>;
+  listByIds(ids: readonly string[]): Promise<Workspace[]>;
   create(workspace: Workspace, owner: { operatorId: string }): Promise<void>;
 }
 

@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fastify';
 import { Logger } from 'nestjs-pino';
 import { AppModule, type AppOptions } from './app.module.js';
+import { mountAuth } from './modules/identity/interface/auth.mount.js';
 
 export async function createApp(opts: AppOptions): Promise<NestFastifyApplication> {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -11,6 +12,7 @@ export async function createApp(opts: AppOptions): Promise<NestFastifyApplicatio
     { bufferLogs: true },
   );
   app.useLogger(app.get(Logger));
+  mountAuth(app);
   app.enableShutdownHooks();
   return app;
 }

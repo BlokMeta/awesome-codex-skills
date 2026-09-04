@@ -4,13 +4,14 @@ import { LoggerModule } from 'nestjs-pino';
 import { ulid } from 'ulid';
 import type { Database } from './db/client.js';
 import { DatabaseModule } from './db/database.module.js';
-import { IdentityModule } from './modules/identity/identity.module.js';
+import { IdentityModule, type IdentityModuleOptions } from './modules/identity/identity.module.js';
 import { SystemModule } from './modules/system/system.module.js';
 
 export interface AppOptions {
   readonly db: Database;
   /** Cron jobs (staleness watcher) are off in tests and one-off CLIs. */
   readonly schedule?: boolean;
+  readonly identity?: IdentityModuleOptions;
 }
 
 @Module({})
@@ -38,7 +39,7 @@ export class AppModule {
         }),
         DatabaseModule.forRoot(opts.db),
         ...(opts.schedule ? [ScheduleModule.forRoot()] : []),
-        IdentityModule,
+        IdentityModule.forRoot(opts.identity ?? {}),
         SystemModule,
       ],
     };

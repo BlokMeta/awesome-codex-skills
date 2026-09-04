@@ -5,6 +5,7 @@ describe('contract', () => {
   it('exposes the system routes under /v1', () => {
     expect(contract.system.health['~orpc'].route?.path).toBe('/v1/health');
     expect(contract.system.configHealth['~orpc'].route?.path).toBe('/v1/health/config');
+    expect(contract.identity.me['~orpc'].route?.path).toBe('/v1/me');
   });
 
   it('health response requires the stale-config counter (ADR-0011)', () => {
