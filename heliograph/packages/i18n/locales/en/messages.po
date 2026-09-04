@@ -211,6 +211,294 @@ msgstr "Language"
 msgid "nav.skipToContent"
 msgstr "Skip to content"
 
+msgid "persona.list.title"
+msgstr "Personas"
+
+msgid "persona.list.new"
+msgstr "New persona"
+
+msgid "persona.list.empty"
+msgstr "No personas yet"
+
+msgid "persona.list.emptyHint"
+msgstr "A persona is one voice with its own channels, schedule and topics."
+
+msgid "persona.list.loadMore"
+msgstr "Load more"
+
+msgid "persona.status.draft"
+msgstr "Draft"
+
+msgid "persona.status.warming"
+msgstr "Warming up"
+
+msgid "persona.status.active"
+msgstr "Active"
+
+msgid "persona.status.paused"
+msgstr "Paused"
+
+msgid "persona.status.archived"
+msgstr "Archived"
+
+msgid "persona.niche.devops"
+msgstr "DevOps"
+
+msgid "persona.niche.ai"
+msgstr "AI"
+
+msgid "persona.niche.both"
+msgstr "DevOps + AI"
+
+msgid "persona.niche.personal"
+msgstr "Personal"
+
+msgid "persona.wizard.title"
+msgstr "Persona wizard"
+
+msgid "persona.wizard.step.identity"
+msgstr "Identity"
+
+msgid "persona.wizard.step.voice"
+msgstr "Voice bible"
+
+msgid "persona.wizard.step.visual"
+msgstr "Visual kit"
+
+msgid "persona.wizard.step.channels"
+msgstr "Channels"
+
+msgid "persona.wizard.step.policy"
+msgstr "Policy"
+
+msgid "persona.wizard.step.preview"
+msgstr "Preview & start"
+
+msgid "persona.wizard.next"
+msgstr "Save and continue"
+
+msgid "persona.wizard.back"
+msgstr "Back"
+
+msgid "persona.wizard.saved"
+msgstr "Saved"
+
+msgid "persona.wizard.start"
+msgstr "Start persona"
+
+msgid "persona.wizard.pause"
+msgstr "Pause"
+
+msgid "persona.wizard.resume"
+msgstr "Resume"
+
+msgid "persona.wizard.archive"
+msgstr "Archive"
+
+msgid "persona.wizard.stepOf"
+msgstr "Step {current} of {total}"
+
+msgid "persona.field.name"
+msgstr "Persona name"
+
+msgid "persona.field.slug"
+msgstr "URL name"
+
+msgid "persona.field.niche"
+msgstr "Niche"
+
+msgid "persona.field.language"
+msgstr "Content language"
+
+msgid "persona.field.timezone"
+msgstr "Time zone"
+
+msgid "persona.voice.summary"
+msgstr "Who is speaking?"
+
+msgid "persona.voice.summaryHint"
+msgstr "One paragraph: background, why they post, what they never do. At least 40 characters."
+
+msgid "persona.voice.audience"
+msgstr "Audience"
+
+msgid "persona.voice.tone"
+msgstr "Tone words"
+
+msgid "persona.voice.toneHint"
+msgstr "Press Enter to add; e.g. dry, concrete, curious"
+
+msgid "persona.voice.register"
+msgstr "Register"
+
+msgid "persona.voice.register.casual"
+msgstr "Casual"
+
+msgid "persona.voice.register.plain"
+msgstr "Plain"
+
+msgid "persona.voice.register.professional"
+msgstr "Professional"
+
+msgid "persona.voice.register.playful"
+msgstr "Playful"
+
+msgid "persona.voice.doList"
+msgstr "Always"
+
+msgid "persona.voice.dontList"
+msgstr "Never"
+
+msgid "persona.voice.samplePosts"
+msgstr "Sample posts"
+
+msgid "persona.voice.samplePostsHint"
+msgstr "Paste 3–5 posts written in this voice, one per line. They anchor every draft."
+
+msgid "persona.voice.experiencePool"
+msgstr "Experience pool"
+
+msgid "persona.voice.experiencePoolHint"
+msgstr "Real anecdotes the persona may reuse, one per line. The antidote to generic AI text."
+
+msgid "persona.voice.emojiMax"
+msgstr "Max emoji per post"
+
+msgid "persona.voice.hashtagMax"
+msgstr "Max hashtags per post"
+
+msgid "persona.topics.include"
+msgstr "Topics to cover"
+
+msgid "persona.topics.exclude"
+msgstr "Topics to avoid"
+
+msgid "persona.visual.primary"
+msgstr "Primary colour"
+
+msgid "persona.visual.accent"
+msgstr "Accent colour"
+
+msgid "persona.visual.ground"
+msgstr "Background"
+
+msgid "persona.visual.font"
+msgstr "Typeface"
+
+msgid "persona.visual.font.display"
+msgstr "Display"
+
+msgid "persona.visual.font.body"
+msgstr "Body"
+
+msgid "persona.visual.font.mono"
+msgstr "Mono"
+
+msgid "persona.visual.watermark"
+msgstr "Watermark posts with the persona handle"
+
+msgid "persona.visual.preview"
+msgstr "Preview"
+
+msgid "persona.channels.soon"
+msgstr "Channel connections arrive with the next milestone."
+
+msgid "persona.channels.hint"
+msgstr "You will connect Telegram, Threads, X, Instagram, YouTube and TikTok here; the capability matrix shows what each channel can publish."
+
+msgid "persona.policy.dailyPosts"
+msgstr "Posts per day"
+
+msgid "persona.policy.dailyVideos"
+msgstr "Videos per day"
+
+msgid "persona.policy.min"
+msgstr "Min"
+
+msgid "persona.policy.max"
+msgstr "Max"
+
+msgid "persona.policy.windows"
+msgstr "Posting windows"
+
+msgid "persona.policy.windowFrom"
+msgstr "From"
+
+msgid "persona.policy.windowTo"
+msgstr "To"
+
+msgid "persona.policy.weekdays"
+msgstr "Mon,Tue,Wed,Thu,Fri,Sat,Sun"
+
+msgid "persona.policy.addWindow"
+msgstr "Add window"
+
+msgid "persona.policy.removeWindow"
+msgstr "Remove window"
+
+msgid "persona.policy.jitter"
+msgstr "Jitter (minutes)"
+
+msgid "persona.policy.weekendFactor"
+msgstr "Weekend factor (0–1)"
+
+msgid "persona.policy.autoReply"
+msgstr "Reply to comments automatically"
+
+msgid "persona.policy.autoReplyHint"
+msgstr "Replies still pass the quality gate; money and legal topics always escalate to you."
+
+msgid "persona.policy.replyRatio"
+msgstr "Share of comments answered (0–1)"
+
+msgid "persona.policy.humanReview"
+msgstr "Human review"
+
+msgid "persona.policy.humanReview.always"
+msgstr "Always"
+
+msgid "persona.policy.humanReview.first30"
+msgstr "First 30 days"
+
+msgid "persona.policy.humanReview.below"
+msgstr "Only below the score threshold"
+
+msgid "persona.policy.humanReview.never"
+msgstr "Never"
+
+msgid "persona.policy.minScore"
+msgstr "Minimum quality score (0–10)"
+
+msgid "persona.preview.ready"
+msgstr "Ready to start"
+
+msgid "persona.preview.missing"
+msgstr "Before starting, complete:"
+
+msgid "persona.preview.missing.summary"
+msgstr "Voice bible: who is speaking"
+
+msgid "persona.preview.missing.tone"
+msgstr "Voice bible: tone words"
+
+msgid "persona.preview.missing.topics"
+msgstr "Topics to cover"
+
+msgid "persona.preview.warmup"
+msgstr "The first {days} days run at reduced volume (warm-up)."
+
+msgid "persona.preview.started"
+msgstr "Persona started. It is warming up."
+
+msgid "persona.error.slugTaken"
+msgstr "That URL name is already used in this workspace."
+
+msgid "persona.error.limit"
+msgstr "Your plan allows {limit, plural, one {# persona} other {# personas}}. Upgrade to add more."
+
+msgid "persona.error.incomplete"
+msgstr "Complete the missing steps before starting."
+
 msgid "errors.persona.invalidTransition"
 msgstr "Cannot move this persona from {from} to {to}."
 

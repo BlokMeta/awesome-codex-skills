@@ -4,4 +4,5 @@ export * from './common.js';
 export * from './feedback.js';
 export * from './field.js';
 export * from './list.js';
+export * from './select.js';
 export * from './sheet.js';

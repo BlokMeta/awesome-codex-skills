@@ -14,6 +14,7 @@ import { LanguageSwitch } from './language-switch';
 
 const NAV = [
   { href: '/', m: messages.nav.today },
+  { href: '/personas', m: messages.persona.listTitle },
   { href: '/queue', m: messages.nav.queue },
   { href: '/calendar', m: messages.nav.calendar },
   { href: '/trends', m: messages.nav.trends },

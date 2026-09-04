@@ -11,6 +11,8 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['components/**/*.test.tsx', 'lib/**/*.test.ts', 'lib/**/*.test.tsx'],
     setupFiles: ['test/setup.ts'],
+    // userEvent typing + axe on full forms is slow under a loaded CI runner
+    testTimeout: 20_000,
     css: false,
     coverage: {
       ...vitestBase.test?.coverage,

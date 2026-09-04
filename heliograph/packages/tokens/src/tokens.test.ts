@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AA_LARGE, AA_TEXT, contrastRatio, hexToRgb, luminance } from './contrast.js';
+import { AA_TEXT, contrastRatio, hexToRgb, luminance } from './contrast.js';
 import { type ThemeName, tokens } from './tokens.js';
 
 const themes: ThemeName[] = ['light', 'dark'];
@@ -22,7 +22,10 @@ describe('color tokens', () => {
   it.each(themes)('%s: accent and semantic colors read against the ground', (theme) => {
     const c = tokens.color[theme];
     for (const fg of [c.tide, c.good, c.warn, c.critical]) {
-      expect(contrastRatio(fg, c.ground)).toBeGreaterThanOrEqual(AA_LARGE);
+      // status colours are used as small text (badges, inline notices), so normal-text AA applies
+      for (const bg of [c.ground, c.surface, c.surface2]) {
+        expect(contrastRatio(fg, bg)).toBeGreaterThanOrEqual(AA_TEXT);
+      }
     }
     expect(contrastRatio(c.flashInk, c.flash)).toBeGreaterThanOrEqual(AA_TEXT);
     expect(contrastRatio(c.ink, c.tideSoft)).toBeGreaterThanOrEqual(AA_TEXT);

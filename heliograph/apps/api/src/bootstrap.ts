@@ -18,6 +18,8 @@ export async function createApp(opts: AppOptions): Promise<NestFastifyApplicatio
   await app.register(cors, {
     origin: opts.corsOrigins ?? [],
     credentials: true,
+    // @fastify/cors defaults to the CORS-safelisted methods only; the API also serves PATCH/DELETE.
+    methods: ['GET', 'HEAD', 'POST', 'PATCH', 'PUT', 'DELETE'],
     allowedHeaders: ['content-type', 'authorization', 'x-request-id', 'idempotency-key'],
     exposedHeaders: ['set-auth-token', 'x-request-id'],
     maxAge: 600,

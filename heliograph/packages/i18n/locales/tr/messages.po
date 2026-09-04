@@ -211,6 +211,294 @@ msgstr "Dil"
 msgid "nav.skipToContent"
 msgstr "İçeriğe atla"
 
+msgid "persona.list.title"
+msgstr "Personalar"
+
+msgid "persona.list.new"
+msgstr "Yeni persona"
+
+msgid "persona.list.empty"
+msgstr "Henüz persona yok"
+
+msgid "persona.list.emptyHint"
+msgstr "Persona; kendi kanalları, takvimi ve konuları olan tek bir sestir."
+
+msgid "persona.list.loadMore"
+msgstr "Daha fazla"
+
+msgid "persona.status.draft"
+msgstr "Taslak"
+
+msgid "persona.status.warming"
+msgstr "Isınıyor"
+
+msgid "persona.status.active"
+msgstr "Etkin"
+
+msgid "persona.status.paused"
+msgstr "Duraklatıldı"
+
+msgid "persona.status.archived"
+msgstr "Arşivlendi"
+
+msgid "persona.niche.devops"
+msgstr "DevOps"
+
+msgid "persona.niche.ai"
+msgstr "Yapay zekâ"
+
+msgid "persona.niche.both"
+msgstr "DevOps + yapay zekâ"
+
+msgid "persona.niche.personal"
+msgstr "Kişisel"
+
+msgid "persona.wizard.title"
+msgstr "Persona sihirbazı"
+
+msgid "persona.wizard.step.identity"
+msgstr "Kimlik"
+
+msgid "persona.wizard.step.voice"
+msgstr "Ses kitabı"
+
+msgid "persona.wizard.step.visual"
+msgstr "Görsel kit"
+
+msgid "persona.wizard.step.channels"
+msgstr "Kanallar"
+
+msgid "persona.wizard.step.policy"
+msgstr "Politika"
+
+msgid "persona.wizard.step.preview"
+msgstr "Önizleme ve başlat"
+
+msgid "persona.wizard.next"
+msgstr "Kaydet ve devam et"
+
+msgid "persona.wizard.back"
+msgstr "Geri"
+
+msgid "persona.wizard.saved"
+msgstr "Kaydedildi"
+
+msgid "persona.wizard.start"
+msgstr "Personayı başlat"
+
+msgid "persona.wizard.pause"
+msgstr "Duraklat"
+
+msgid "persona.wizard.resume"
+msgstr "Sürdür"
+
+msgid "persona.wizard.archive"
+msgstr "Arşivle"
+
+msgid "persona.wizard.stepOf"
+msgstr "Adım {current} / {total}"
+
+msgid "persona.field.name"
+msgstr "Persona adı"
+
+msgid "persona.field.slug"
+msgstr "URL adı"
+
+msgid "persona.field.niche"
+msgstr "Alan"
+
+msgid "persona.field.language"
+msgstr "İçerik dili"
+
+msgid "persona.field.timezone"
+msgstr "Saat dilimi"
+
+msgid "persona.voice.summary"
+msgstr "Kim konuşuyor?"
+
+msgid "persona.voice.summaryHint"
+msgstr "Tek paragraf: geçmişi, neden paylaştığı, asla yapmadıkları. En az 40 karakter."
+
+msgid "persona.voice.audience"
+msgstr "Hedef kitle"
+
+msgid "persona.voice.tone"
+msgstr "Ton sözcükleri"
+
+msgid "persona.voice.toneHint"
+msgstr "Eklemek için Enter; ör. kuru, somut, meraklı"
+
+msgid "persona.voice.register"
+msgstr "Üslup"
+
+msgid "persona.voice.register.casual"
+msgstr "Samimi"
+
+msgid "persona.voice.register.plain"
+msgstr "Yalın"
+
+msgid "persona.voice.register.professional"
+msgstr "Profesyonel"
+
+msgid "persona.voice.register.playful"
+msgstr "Oyuncu"
+
+msgid "persona.voice.doList"
+msgstr "Her zaman"
+
+msgid "persona.voice.dontList"
+msgstr "Asla"
+
+msgid "persona.voice.samplePosts"
+msgstr "Örnek gönderiler"
+
+msgid "persona.voice.samplePostsHint"
+msgstr "Bu sesle yazılmış 3–5 gönderi yapıştır, her satıra bir tane. Her taslağı bunlar sabitler."
+
+msgid "persona.voice.experiencePool"
+msgstr "Deneyim havuzu"
+
+msgid "persona.voice.experiencePoolHint"
+msgstr "Personanın yeniden kullanabileceği gerçek anekdotlar, her satıra bir tane. Jenerik yapay zekâ metninin panzehiri."
+
+msgid "persona.voice.emojiMax"
+msgstr "Gönderi başına en fazla emoji"
+
+msgid "persona.voice.hashtagMax"
+msgstr "Gönderi başına en fazla hashtag"
+
+msgid "persona.topics.include"
+msgstr "İşlenecek konular"
+
+msgid "persona.topics.exclude"
+msgstr "Kaçınılacak konular"
+
+msgid "persona.visual.primary"
+msgstr "Ana renk"
+
+msgid "persona.visual.accent"
+msgstr "Vurgu rengi"
+
+msgid "persona.visual.ground"
+msgstr "Arka plan"
+
+msgid "persona.visual.font"
+msgstr "Yazı tipi"
+
+msgid "persona.visual.font.display"
+msgstr "Başlık"
+
+msgid "persona.visual.font.body"
+msgstr "Metin"
+
+msgid "persona.visual.font.mono"
+msgstr "Mono"
+
+msgid "persona.visual.watermark"
+msgstr "Gönderilere persona adıyla filigran ekle"
+
+msgid "persona.visual.preview"
+msgstr "Önizleme"
+
+msgid "persona.channels.soon"
+msgstr "Kanal bağlantıları bir sonraki kilometre taşıyla geliyor."
+
+msgid "persona.channels.hint"
+msgstr "Telegram, Threads, X, Instagram, YouTube ve TikTok'u burada bağlayacaksın; kabiliyet matrisi her kanalın neyi yayınlayabildiğini gösterir."
+
+msgid "persona.policy.dailyPosts"
+msgstr "Günlük gönderi"
+
+msgid "persona.policy.dailyVideos"
+msgstr "Günlük video"
+
+msgid "persona.policy.min"
+msgstr "En az"
+
+msgid "persona.policy.max"
+msgstr "En çok"
+
+msgid "persona.policy.windows"
+msgstr "Yayın pencereleri"
+
+msgid "persona.policy.windowFrom"
+msgstr "Başlangıç"
+
+msgid "persona.policy.windowTo"
+msgstr "Bitiş"
+
+msgid "persona.policy.weekdays"
+msgstr "Pzt,Sal,Çar,Per,Cum,Cmt,Paz"
+
+msgid "persona.policy.addWindow"
+msgstr "Pencere ekle"
+
+msgid "persona.policy.removeWindow"
+msgstr "Pencereyi kaldır"
+
+msgid "persona.policy.jitter"
+msgstr "Sapma (dakika)"
+
+msgid "persona.policy.weekendFactor"
+msgstr "Hafta sonu katsayısı (0–1)"
+
+msgid "persona.policy.autoReply"
+msgstr "Yorumlara otomatik yanıt ver"
+
+msgid "persona.policy.autoReplyHint"
+msgstr "Yanıtlar yine kalite kapısından geçer; para ve hukuk konuları her zaman sana yükseltilir."
+
+msgid "persona.policy.replyRatio"
+msgstr "Yanıtlanan yorum oranı (0–1)"
+
+msgid "persona.policy.humanReview"
+msgstr "İnsan onayı"
+
+msgid "persona.policy.humanReview.always"
+msgstr "Her zaman"
+
+msgid "persona.policy.humanReview.first30"
+msgstr "İlk 30 gün"
+
+msgid "persona.policy.humanReview.below"
+msgstr "Yalnızca skor eşiğinin altında"
+
+msgid "persona.policy.humanReview.never"
+msgstr "Hiçbir zaman"
+
+msgid "persona.policy.minScore"
+msgstr "En düşük kalite skoru (0–10)"
+
+msgid "persona.preview.ready"
+msgstr "Başlamaya hazır"
+
+msgid "persona.preview.missing"
+msgstr "Başlamadan önce tamamla:"
+
+msgid "persona.preview.missing.summary"
+msgstr "Ses kitabı: kim konuşuyor"
+
+msgid "persona.preview.missing.tone"
+msgstr "Ses kitabı: ton sözcükleri"
+
+msgid "persona.preview.missing.topics"
+msgstr "İşlenecek konular"
+
+msgid "persona.preview.warmup"
+msgstr "İlk {days} gün düşük hacimde çalışır (ısınma)."
+
+msgid "persona.preview.started"
+msgstr "Persona başladı. Isınıyor."
+
+msgid "persona.error.slugTaken"
+msgstr "Bu URL adı bu çalışma alanında zaten kullanılıyor."
+
+msgid "persona.error.limit"
+msgstr "Planın {limit, plural, one {# persona} other {# persona}} izin veriyor. Daha fazlası için yükselt."
+
+msgid "persona.error.incomplete"
+msgstr "Başlamadan önce eksik adımları tamamla."
+
 msgid "errors.persona.invalidTransition"
 msgstr "Bu persona {from} durumundan {to} durumuna geçirilemez."
 

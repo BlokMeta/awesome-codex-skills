@@ -52,7 +52,12 @@ export function Today({ me }: { me: MeResponse }) {
           <Skeleton width={220} />
         ) : null}
       </section>
-      <EmptyState title={t(messages.today.empty)} testID="today-empty" />
+      <EmptyState
+        title={t(messages.today.empty)}
+        actionLabel={t(messages.persona.newPersona)}
+        onAction={() => router.push('/personas/new')}
+        testID="today-empty"
+      />
     </div>
   );
 }

@@ -23,8 +23,8 @@ Kaçınılanlar (yaygın AI-görünümlü kalıplar): krem zemin + serif + terra
 | `tide-soft` | `#DCE9EC` | `#12343C` | Seçili satır zemini |
 | `flash` | `#F2B705` | `#FFC933` | **Yalnızca** canlı/dikkat: onay bekleyen sayacı, canlı yayın noktası, alarm çubuğu |
 | `flash-ink` | `#3F2F00` | `#0E1213` | Flaş üzerindeki metin |
-| `good` | `#2F855A` | `#5CC48C` | Sağlıklı, yayınlandı |
-| `warn` | `#B9730A` | `#E3A33B` | Kota yaklaşıyor, token süresi |
+| `good` | `#27704C` | `#5CC48C` | Sağlıklı, yayınlandı |
+| `warn` | `#935B05` | `#E3A33B` | Kota yaklaşıyor, token süresi |
 | `critical` | `#B83A31` | `#F07A70` | Ban riski, para eşiği, hata |
 
 Kural: `flash` bir ekranda en fazla iki yerde. Semantik renkler aksan değildir. Gri tonları saf gri değil, yeşil-gri eğilimli.
@@ -117,7 +117,7 @@ Alt sekmeler: **Bugün · Kuyruk · Inbox · Fırsatlar · Daha**
 Temel: `Button, IconButton, Input, Textarea, Select, Combobox, Switch, Slider, Checkbox, Radio, Tabs, Sheet, Dialog, Popover, Tooltip, Toast, Badge, Avatar, Skeleton, DataTable (cursor-aware), List (virtualized), EmptyState, Form (schema-driven), DateTimeField (timezone-aware), MoneyField, LanguageSwitch`.
 İmza: `HorizonStrip, SignalLog, GateReport, ConstellationRail, TrendHeat, MoneyLine, MediaPreview (9:16 player, carousel, platform kartları)`.
 
-Her bileşen: web + RN uygulaması, aynı props (`packages/ui/src/props/*.ts`, platform tipi içermez; olay adı `onPress`, test kancası `testID`); story (varsayılan, tüm durumlar, sahte dil, RTL — Storybook araç çubuğunda tema ve yön); erişilebilirlik testi (`vitest-axe`, sıfır ihlal); token dışı renk yasak (CSS yalnızca `--hg-*`). Web CSS sınıfları `hg-<bileşen>__<parça>` ve `data-variant/size/tone` nitelikleri; mantıksal özellikler (`inline/block`, `inset-inline-end`) RTL için zorunlu.
+Temel bileşenlere `SelectField` (yerel select) ve `TagInput` (chip listesi; Enter/virgül ekler, Backspace siler) eklendi (2026-09-04). Her bileşen: web + RN uygulaması, aynı props (`packages/ui/src/props/*.ts`, platform tipi içermez; olay adı `onPress`, test kancası `testID`); story (varsayılan, tüm durumlar, sahte dil, RTL — Storybook araç çubuğunda tema ve yön); erişilebilirlik testi (`vitest-axe`, sıfır ihlal); token dışı renk yasak (CSS yalnızca `--hg-*`). Web CSS sınıfları `hg-<bileşen>__<parça>` ve `data-variant/size/tone` nitelikleri; mantıksal özellikler (`inline/block`, `inset-inline-end`) RTL için zorunlu.
 
 ## 7. Yazım tonu (UI copy)
 

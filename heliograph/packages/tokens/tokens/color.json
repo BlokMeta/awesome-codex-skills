@@ -41,10 +41,12 @@
         "$value": "#3F2F00"
       },
       "good": {
-        "$value": "#2F855A"
+        "$value": "#27704C",
+        "$description": "Durum: iyi — küçük metinde de AA"
       },
       "warn": {
-        "$value": "#B9730A"
+        "$value": "#935B05",
+        "$description": "Durum: uyarı — küçük metinde de AA"
       },
       "critical": {
         "$value": "#B83A31"
