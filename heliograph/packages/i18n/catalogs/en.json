@@ -1,1 +1,140 @@
-{"common.action.approve":["Approve"],"common.action.reject":["Reject"],"common.action.regenerate":["Regenerate"],"common.action.cancel":["Cancel"],"common.action.save":["Save"],"common.action.takeOver":["I'll take it from here"],"review.queue.title":["Approval queue"],"review.queue.pendingCount":[["count","plural",{"0":["Nothing waiting"],"one":["#"," item waiting"],"other":["#"," items waiting"]}]],"review.gate.passed":["Passed ",["passed"]," of ",["total"]," checks"],"auth.signIn.title":["Sign in"],"auth.signUp.title":["Create your account"],"auth.field.email":["Email"],"auth.field.password":["Password"],"auth.field.passwordHint":["At least 10 characters"],"auth.field.name":["Name"],"auth.action.signIn":["Sign in"],"auth.action.signUp":["Create account"],"auth.action.signOut":["Sign out"],"auth.signIn.noAccount":["No account yet?"],"auth.signUp.haveAccount":["Already have an account?"],"auth.error.invalidCredentials":["Email or password is wrong."],"auth.error.emailTaken":["An account with this email already exists."],"auth.error.generic":["Something went wrong. Please try again."],"auth.twoFactor.title":["Second factor"],"auth.twoFactor.hint":["Enter the 6-digit code from your authenticator app."],"auth.twoFactor.code":["Code"],"auth.twoFactor.verify":["Verify"],"auth.twoFactor.invalid":["That code is not valid."],"auth.verifyEmail.title":["Check your inbox"],"auth.verifyEmail.body":["We sent a verification link to ",["email"],". Open it to activate your account."],"consent.title":["Before we start"],"consent.intro":["Please review and accept the documents below. You can withdraw optional consents at any time in Settings."],"consent.action.acceptAll":["Accept and continue"],"consent.action.read":["Read"],"consent.doc.terms":["Terms of Service"],"consent.doc.privacy":["Privacy Policy"],"consent.doc.aup":["Acceptable Use Policy"],"consent.doc.aiProcessing":["Permission to process my content with third-party AI providers"],"consent.doc.kvkkAydinlatma":["KVKK privacy notice"],"consent.doc.distanceSale":["Distance sales agreement"],"consent.doc.cookies":["Cookie policy"],"consent.doc.kvkkAcikRizaMarketing":["Explicit consent for marketing communication"],"consent.doc.kvkkAcikRizaVoice":["Explicit consent for voice cloning"],"consent.doc.kvkkAcikRizaLikeness":["Explicit consent for using my likeness"],"workspace.create.title":["Create your workspace"],"workspace.create.intro":["A workspace holds your personas, connected accounts and team."],"workspace.field.name":["Workspace name"],"workspace.field.slug":["URL name"],"workspace.field.slugHint":["Lowercase letters, numbers and dashes"],"workspace.action.create":["Create workspace"],"workspace.action.switch":["Switch workspace"],"workspace.label.active":["Active"],"workspace.label.role":[["role","select",{"owner":["Owner"],"admin":["Admin"],"editor":["Editor"],"viewer":["Viewer"],"other":["Member"]}]],"today.title":["Today"],"today.welcome":["Welcome, ",["name"]],"today.empty":["Nothing is scheduled yet. Create a persona and connect a channel to light the first signal."],"today.plan":["Plan: ",["plan"]],"today.credits":[["balance","plural",{"0":["No media credits"],"one":["#"," media credit"],"other":["#"," media credits"]}]],"nav.today":["Today"],"nav.queue":["Queue"],"nav.calendar":["Calendar"],"nav.trends":["Trends"],"nav.inbox":["Inbox"],"nav.deals":["Deals"],"nav.library":["Library"],"nav.analytics":["Analytics"],"nav.settings":["Settings"],"nav.language":["Language"],"nav.skipToContent":["Skip to content"],"errors.persona.invalidTransition":["Cannot move this persona from ",["from"]," to ",["to"],"."],"errors.identity.notAMember":["You are not a member of this workspace."],"errors.identity.forbidden":["Your role (",["role"],") cannot ",["permission"],"."],"errors.identity.roleTooHigh":["You cannot assign the ",["role"]," role."],"errors.identity.lastOwner":["A workspace needs at least one owner."],"errors.billing.featureNotInPlan":["Your plan does not include ",["feature"],"."],"errors.billing.featureDisabled":[["feature"]," is disabled on your plan."],"errors.billing.entitlementExceeded":["Limit reached: ",["used"]," of ",["limit"]," ",["feature"]," used."],"errors.billing.insufficientCredits":["Not enough credits: ",["amount"]," needed, ",["balance"]," left."],"errors.billing.invalidAmount":["Invalid credit amount."],"errors.channel.quotaExceeded":[["channel"]," has no publishing quota left until ",["resetAt"],"."],"errors.validation.past":["This time is in the past."]}
+{
+  "common.action.approve": ["Approve"],
+  "common.action.reject": ["Reject"],
+  "common.action.regenerate": ["Regenerate"],
+  "common.action.cancel": ["Cancel"],
+  "common.action.save": ["Save"],
+  "common.action.takeOver": ["I'll take it from here"],
+  "review.queue.title": ["Approval queue"],
+  "review.queue.pendingCount": [
+    [
+      "count",
+      "plural",
+      { "0": ["Nothing waiting"], "one": ["#", " item waiting"], "other": ["#", " items waiting"] }
+    ]
+  ],
+  "review.gate.passed": ["Passed ", ["passed"], " of ", ["total"], " checks"],
+  "auth.signIn.title": ["Sign in"],
+  "auth.signUp.title": ["Create your account"],
+  "auth.field.email": ["Email"],
+  "auth.field.password": ["Password"],
+  "auth.field.passwordHint": ["At least 10 characters"],
+  "auth.field.name": ["Name"],
+  "auth.action.signIn": ["Sign in"],
+  "auth.action.signUp": ["Create account"],
+  "auth.action.signOut": ["Sign out"],
+  "auth.signIn.noAccount": ["No account yet?"],
+  "auth.signUp.haveAccount": ["Already have an account?"],
+  "auth.error.invalidCredentials": ["Email or password is wrong."],
+  "auth.error.emailTaken": ["An account with this email already exists."],
+  "auth.error.generic": ["Something went wrong. Please try again."],
+  "auth.twoFactor.title": ["Second factor"],
+  "auth.twoFactor.hint": ["Enter the 6-digit code from your authenticator app."],
+  "auth.twoFactor.code": ["Code"],
+  "auth.twoFactor.verify": ["Verify"],
+  "auth.twoFactor.invalid": ["That code is not valid."],
+  "auth.verifyEmail.title": ["Check your inbox"],
+  "auth.verifyEmail.body": [
+    "We sent a verification link to ",
+    ["email"],
+    ". Open it to activate your account."
+  ],
+  "consent.title": ["Before we start"],
+  "consent.intro": [
+    "Please review and accept the documents below. You can withdraw optional consents at any time in Settings."
+  ],
+  "consent.action.acceptAll": ["Accept and continue"],
+  "consent.action.read": ["Read"],
+  "consent.doc.terms": ["Terms of Service"],
+  "consent.doc.privacy": ["Privacy Policy"],
+  "consent.doc.aup": ["Acceptable Use Policy"],
+  "consent.doc.aiProcessing": ["Permission to process my content with third-party AI providers"],
+  "consent.doc.kvkkAydinlatma": ["KVKK privacy notice"],
+  "consent.doc.distanceSale": ["Distance sales agreement"],
+  "consent.doc.cookies": ["Cookie policy"],
+  "consent.doc.kvkkAcikRizaMarketing": ["Explicit consent for marketing communication"],
+  "consent.doc.kvkkAcikRizaVoice": ["Explicit consent for voice cloning"],
+  "consent.doc.kvkkAcikRizaLikeness": ["Explicit consent for using my likeness"],
+  "workspace.create.title": ["Create your workspace"],
+  "workspace.create.intro": ["A workspace holds your personas, connected accounts and team."],
+  "workspace.field.name": ["Workspace name"],
+  "workspace.field.slug": ["URL name"],
+  "workspace.field.slugHint": ["Lowercase letters, numbers and dashes"],
+  "workspace.action.create": ["Create workspace"],
+  "workspace.action.switch": ["Switch workspace"],
+  "workspace.label.active": ["Active"],
+  "workspace.label.role": [
+    [
+      "role",
+      "select",
+      {
+        "owner": ["Owner"],
+        "admin": ["Admin"],
+        "editor": ["Editor"],
+        "viewer": ["Viewer"],
+        "other": ["Member"]
+      }
+    ]
+  ],
+  "today.title": ["Today"],
+  "today.welcome": ["Welcome, ", ["name"]],
+  "today.empty": [
+    "Nothing is scheduled yet. Create a persona and connect a channel to light the first signal."
+  ],
+  "today.plan": ["Plan: ", ["plan"]],
+  "today.credits": [
+    [
+      "balance",
+      "plural",
+      { "0": ["No media credits"], "one": ["#", " media credit"], "other": ["#", " media credits"] }
+    ]
+  ],
+  "nav.today": ["Today"],
+  "nav.queue": ["Queue"],
+  "nav.calendar": ["Calendar"],
+  "nav.trends": ["Trends"],
+  "nav.inbox": ["Inbox"],
+  "nav.deals": ["Deals"],
+  "nav.library": ["Library"],
+  "nav.analytics": ["Analytics"],
+  "nav.settings": ["Settings"],
+  "nav.language": ["Language"],
+  "nav.skipToContent": ["Skip to content"],
+  "errors.persona.invalidTransition": [
+    "Cannot move this persona from ",
+    ["from"],
+    " to ",
+    ["to"],
+    "."
+  ],
+  "errors.identity.notAMember": ["You are not a member of this workspace."],
+  "errors.identity.forbidden": ["Your role (", ["role"], ") cannot ", ["permission"], "."],
+  "errors.identity.roleTooHigh": ["You cannot assign the ", ["role"], " role."],
+  "errors.identity.lastOwner": ["A workspace needs at least one owner."],
+  "errors.billing.featureNotInPlan": ["Your plan does not include ", ["feature"], "."],
+  "errors.billing.featureDisabled": [["feature"], " is disabled on your plan."],
+  "errors.billing.entitlementExceeded": [
+    "Limit reached: ",
+    ["used"],
+    " of ",
+    ["limit"],
+    " ",
+    ["feature"],
+    " used."
+  ],
+  "errors.billing.insufficientCredits": [
+    "Not enough credits: ",
+    ["amount"],
+    " needed, ",
+    ["balance"],
+    " left."
+  ],
+  "errors.billing.invalidAmount": ["Invalid credit amount."],
+  "errors.channel.quotaExceeded": [
+    ["channel"],
+    " has no publishing quota left until ",
+    ["resetAt"],
+    "."
+  ],
+  "errors.validation.past": ["This time is in the past."]
+}

@@ -27,7 +27,13 @@ const NAV = [
  * Three-column shell (docs/07 §4): ConstellationRail on the start side, workspace in the middle,
  * inspector on the end side (M2). Below 1100px it collapses to a single column.
  */
-export function AppShell({ locale, children }: { locale: string; children: (me: MeResponse) => ReactNode }) {
+export function AppShell({
+  locale,
+  children,
+}: {
+  locale: string;
+  children: (me: MeResponse) => ReactNode;
+}) {
   const t = useT();
   const router = useRouter();
   const me = useQuery({ queryKey: ['me'], queryFn: () => api.identity.me() });
@@ -47,23 +53,35 @@ export function AppShell({ locale, children }: { locale: string; children: (me: 
       </a>
       <aside className="border-line lg:border-e p-4 grid content-start gap-6 bg-surface">
         <div className="grid gap-1">
-          <span className="font-[family-name:var(--hg-font-display)] text-[length:var(--hg-font-size-lg)]">Heliograph</span>
+          <span className="font-[family-name:var(--hg-font-display)] text-[length:var(--hg-font-size-lg)]">
+            Heliograph
+          </span>
           {active ? (
-            <span className="flex items-center gap-2 text-ink2 text-[length:var(--hg-font-size-sm)]" data-testid="active-workspace">
-              {active.name} <Badge label={t(messages.workspace.role, { role: active.role })} tone="tide" />
+            <span
+              className="flex items-center gap-2 text-ink2 text-[length:var(--hg-font-size-sm)]"
+              data-testid="active-workspace"
+            >
+              {active.name}{' '}
+              <Badge label={t(messages.workspace.role, { role: active.role })} tone="tide" />
             </span>
           ) : null}
         </div>
         <nav aria-label="Primary" className="grid gap-1">
           {NAV.map((item) => (
-            <Link key={item.href} href={item.href} className="px-3 py-2 rounded-[var(--hg-radius-sm)] hover:bg-surface2 text-ink">
+            <Link
+              key={item.href}
+              href={item.href}
+              className="px-3 py-2 rounded-[var(--hg-radius-sm)] hover:bg-surface2 text-ink"
+            >
               {t(item.m)}
             </Link>
           ))}
         </nav>
         {data.workspaces.length > 1 ? (
           <div className="grid gap-1">
-            <span className="text-[length:var(--hg-font-size-xs)] text-ink3 uppercase tracking-[var(--hg-tracking-label)]">{t(messages.workspace.switch)}</span>
+            <span className="text-[length:var(--hg-font-size-xs)] text-ink3 uppercase tracking-[var(--hg-tracking-label)]">
+              {t(messages.workspace.switch)}
+            </span>
             {data.workspaces.map((w) => (
               <button
                 key={w.id}

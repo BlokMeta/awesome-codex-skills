@@ -82,7 +82,10 @@ export const messages = {
         'consent.doc.kvkkAcikRizaMarketing',
         'Explicit consent for marketing communication',
       ),
-      kvkk_acik_riza_voice: m('consent.doc.kvkkAcikRizaVoice', 'Explicit consent for voice cloning'),
+      kvkk_acik_riza_voice: m(
+        'consent.doc.kvkkAcikRizaVoice',
+        'Explicit consent for voice cloning',
+      ),
       kvkk_acik_riza_likeness: m(
         'consent.doc.kvkkAcikRizaLikeness',
         'Explicit consent for using my likeness',
@@ -101,7 +104,10 @@ export const messages = {
     create: m('workspace.action.create', 'Create workspace'),
     switch: m('workspace.action.switch', 'Switch workspace'),
     active: m('workspace.label.active', 'Active'),
-    role: m('workspace.label.role', '{role, select, owner {Owner} admin {Admin} editor {Editor} viewer {Viewer} other {Member}}'),
+    role: m(
+      'workspace.label.role',
+      '{role, select, owner {Owner} admin {Admin} editor {Editor} viewer {Viewer} other {Member}}',
+    ),
   },
   today: {
     title: m('today.title', 'Today'),
@@ -111,7 +117,10 @@ export const messages = {
       'Nothing is scheduled yet. Create a persona and connect a channel to light the first signal.',
     ),
     plan: m('today.plan', 'Plan: {plan}'),
-    credits: m('today.credits', '{balance, plural, =0 {No media credits} one {# media credit} other {# media credits}}'),
+    credits: m(
+      'today.credits',
+      '{balance, plural, =0 {No media credits} one {# media credit} other {# media credits}}',
+    ),
   },
   nav: {
     today: m('nav.today', 'Today'),

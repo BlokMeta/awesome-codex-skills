@@ -1,10 +1,10 @@
 import { createApp } from './bootstrap.js';
-import { readAuthConfig } from './modules/identity/infrastructure/auth-env.js';
 import { openDatabase } from './db/client.js';
 import { DrizzlePlanRepository } from './modules/billing/infrastructure/drizzle-billing.repositories.js';
 import { seedPlans } from './modules/billing/infrastructure/seed.js';
 import { DrizzlePolicyRepository } from './modules/config/infrastructure/drizzle-policy.repository.js';
 import { seedEntries } from './modules/config/infrastructure/seed.js';
+import { readAuthConfig } from './modules/identity/infrastructure/auth-env.js';
 import { readTelemetryOptions, startTelemetry } from './telemetry.js';
 
 const telemetry = startTelemetry(readTelemetryOptions());

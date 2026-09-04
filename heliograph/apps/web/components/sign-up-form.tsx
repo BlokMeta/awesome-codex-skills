@@ -30,7 +30,11 @@ export function SignUpForm() {
     } as Parameters<typeof authClient.signUp.email>[0]);
     setBusy(false);
     if (res.error) {
-      setError(res.error.code === 'USER_ALREADY_EXISTS' ? t(messages.auth.emailTaken) : t(messages.auth.generic));
+      setError(
+        res.error.code === 'USER_ALREADY_EXISTS'
+          ? t(messages.auth.emailTaken)
+          : t(messages.auth.generic),
+      );
       return;
     }
     router.push('/consents');
@@ -39,7 +43,14 @@ export function SignUpForm() {
 
   return (
     <form onSubmit={submit} className="grid gap-4" noValidate>
-      <TextInput label={t(messages.auth.name)} value={name} onChangeText={setName} autoComplete="name" required testID="name" />
+      <TextInput
+        label={t(messages.auth.name)}
+        value={name}
+        onChangeText={setName}
+        autoComplete="name"
+        required
+        testID="name"
+      />
       <TextInput
         label={t(messages.auth.email)}
         kind="email"
@@ -60,7 +71,14 @@ export function SignUpForm() {
         required
         testID="password"
       />
-      <Button type="submit" label={t(messages.auth.signUp)} variant="primary" size="lg" loading={busy} testID="submit" />
+      <Button
+        type="submit"
+        label={t(messages.auth.signUp)}
+        variant="primary"
+        size="lg"
+        loading={busy}
+        testID="submit"
+      />
       <p className="text-ink2 m-0">
         {t(messages.auth.haveAccount)}{' '}
         <Link href="/sign-in" className="text-tide underline">

@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { routerMock } from '@/test/setup';
 import { renderApp } from '@/test/render';
+import { routerMock } from '@/test/setup';
 
 const consentStatus = vi.fn();
 const acceptConsents = vi.fn();
@@ -21,7 +21,12 @@ const pending = {
   pending: ['terms', 'privacy', 'aup', 'ai_processing'],
   accepted: [],
   optional: { cookies: 'not_granted' },
-  published: { terms: '2026-09-03', privacy: '2026-09-03', aup: '2026-09-03', ai_processing: '2026-09-03' },
+  published: {
+    terms: '2026-09-03',
+    privacy: '2026-09-03',
+    aup: '2026-09-03',
+    ai_processing: '2026-09-03',
+  },
 };
 
 describe('ConsentsForm', () => {
@@ -41,7 +46,10 @@ describe('ConsentsForm', () => {
     expect(screen.getAllByText('v2026-09-03').length).toBe(4);
     await userEvent.click(screen.getByRole('button', { name: 'Accept and continue' }));
     expect(acceptConsents).toHaveBeenCalledWith({
-      accept: ['terms', 'privacy', 'aup', 'ai_processing'].map((document) => ({ document, version: '2026-09-03' })),
+      accept: ['terms', 'privacy', 'aup', 'ai_processing'].map((document) => ({
+        document,
+        version: '2026-09-03',
+      })),
     });
     await waitFor(() => expect(routerMock.push).toHaveBeenCalledWith('/'));
   });

@@ -4,7 +4,13 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   typedRoutes: true,
   poweredByHeader: false,
-  transpilePackages: ['@heliograph/ui', '@heliograph/i18n', '@heliograph/contracts', '@heliograph/domain', '@heliograph/tokens'],
+  transpilePackages: [
+    '@heliograph/ui',
+    '@heliograph/i18n',
+    '@heliograph/contracts',
+    '@heliograph/domain',
+    '@heliograph/tokens',
+  ],
   env: {
     NEXT_PUBLIC_API_URL: process.env['HG_PUBLIC_API_URL'] ?? 'http://localhost:4000',
   },

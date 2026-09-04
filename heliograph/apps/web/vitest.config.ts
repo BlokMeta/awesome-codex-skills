@@ -1,5 +1,5 @@
-import { vitestBase } from '@heliograph/config/vitest.base';
 import { resolve } from 'node:path';
+import { vitestBase } from '@heliograph/config/vitest.base';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({

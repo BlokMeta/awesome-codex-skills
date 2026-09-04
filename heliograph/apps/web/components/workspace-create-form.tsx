@@ -46,7 +46,13 @@ export function WorkspaceCreateForm() {
   return (
     <form onSubmit={submit} className="grid gap-4" noValidate>
       <p className="m-0 text-ink2">{t(messages.workspace.createIntro)}</p>
-      <TextInput label={t(messages.workspace.name)} value={name} onChangeText={setName} required testID="name" />
+      <TextInput
+        label={t(messages.workspace.name)}
+        value={name}
+        onChangeText={setName}
+        required
+        testID="name"
+      />
       <TextInput
         label={t(messages.workspace.slug)}
         hint={t(messages.workspace.slugHint)}
@@ -59,7 +65,15 @@ export function WorkspaceCreateForm() {
         error={error}
         testID="slug"
       />
-      <Button type="submit" label={t(messages.workspace.create)} variant="primary" size="lg" loading={busy} disabled={!name || !effectiveSlug} testID="submit" />
+      <Button
+        type="submit"
+        label={t(messages.workspace.create)}
+        variant="primary"
+        size="lg"
+        loading={busy}
+        disabled={!name || !effectiveSlug}
+        testID="submit"
+      />
     </form>
   );
 }

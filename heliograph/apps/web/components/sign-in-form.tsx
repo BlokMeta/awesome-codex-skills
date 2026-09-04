@@ -24,7 +24,9 @@ export function SignInForm() {
     const res = await authClient.signIn.email({ email, password });
     setBusy(false);
     if (res.error) {
-      setError(res.error.status === 401 ? t(messages.auth.invalidCredentials) : t(messages.auth.generic));
+      setError(
+        res.error.status === 401 ? t(messages.auth.invalidCredentials) : t(messages.auth.generic),
+      );
       return;
     }
     if ((res.data as { twoFactorRedirect?: boolean } | null)?.twoFactorRedirect) {
@@ -56,7 +58,14 @@ export function SignInForm() {
         error={error}
         testID="password"
       />
-      <Button type="submit" label={t(messages.auth.signIn)} variant="primary" size="lg" loading={busy} testID="submit" />
+      <Button
+        type="submit"
+        label={t(messages.auth.signIn)}
+        variant="primary"
+        size="lg"
+        loading={busy}
+        testID="submit"
+      />
       <p className="text-ink2 m-0">
         {t(messages.auth.noAccount)}{' '}
         <Link href="/sign-up" className="text-tide underline">

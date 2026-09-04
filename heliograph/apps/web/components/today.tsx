@@ -28,16 +28,25 @@ export function Today({ me }: { me: MeResponse }) {
   return (
     <div className="grid gap-6 max-w-3xl">
       <header className="grid gap-1">
-        <h1 className="m-0 text-[length:var(--hg-font-size-2xl)] leading-[var(--hg-line-height-2xl)]">{t(messages.today.title)}</h1>
+        <h1 className="m-0 text-[length:var(--hg-font-size-2xl)] leading-[var(--hg-line-height-2xl)]">
+          {t(messages.today.title)}
+        </h1>
         <p className="m-0 text-ink2" data-testid="welcome">
           {t(messages.today.welcome, { name: me.operator.name })}
         </p>
       </header>
-      <section className="flex flex-wrap gap-4 text-[length:var(--hg-font-size-sm)] text-ink2" aria-live="polite">
+      <section
+        className="flex flex-wrap gap-4 text-[length:var(--hg-font-size-sm)] text-ink2"
+        aria-live="polite"
+      >
         {entitlements.data ? (
           <>
-            <span data-testid="plan">{t(messages.today.plan, { plan: entitlements.data.plan.name })}</span>
-            <span data-testid="credits">{t(messages.today.credits, { balance: entitlements.data.credits.balance })}</span>
+            <span data-testid="plan">
+              {t(messages.today.plan, { plan: entitlements.data.plan.name })}
+            </span>
+            <span data-testid="credits">
+              {t(messages.today.credits, { balance: entitlements.data.credits.balance })}
+            </span>
           </>
         ) : me.activeWorkspaceId ? (
           <Skeleton width={220} />

@@ -41,7 +41,14 @@ export function TwoFactorForm() {
         error={error}
         testID="code"
       />
-      <Button type="submit" label={t(messages.auth.twoFactorVerify)} variant="primary" size="lg" loading={busy} testID="submit" />
+      <Button
+        type="submit"
+        label={t(messages.auth.twoFactorVerify)}
+        variant="primary"
+        size="lg"
+        loading={busy}
+        testID="submit"
+      />
     </form>
   );
 }

@@ -1,9 +1,9 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { axe } from 'vitest-axe';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { routerMock } from '@/test/setup';
+import { axe } from 'vitest-axe';
 import { renderApp } from '@/test/render';
+import { routerMock } from '@/test/setup';
 
 const signIn = vi.fn();
 vi.mock('@/lib/auth-client', () => ({
@@ -24,7 +24,10 @@ describe('SignInForm', () => {
     await userEvent.type(screen.getByLabelText(/^Email/), 'ayse@example.com');
     await userEvent.type(screen.getByLabelText(/^Password/), 'correct horse battery staple');
     await userEvent.click(screen.getByRole('button', { name: 'Sign in' }));
-    expect(signIn).toHaveBeenCalledWith({ email: 'ayse@example.com', password: 'correct horse battery staple' });
+    expect(signIn).toHaveBeenCalledWith({
+      email: 'ayse@example.com',
+      password: 'correct horse battery staple',
+    });
     expect(routerMock.push).toHaveBeenCalledWith('/');
     expect(await axe(container)).toHaveNoViolations();
   });

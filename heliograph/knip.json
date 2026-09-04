@@ -2,62 +2,30 @@
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "workspaces": {
     "packages/domain": {
-      "project": [
-        "src/**/*.ts"
-      ]
+      "project": ["src/**/*.ts"]
     },
     "tooling/seed": {
-      "entry": [
-        "config.ts"
-      ]
+      "entry": ["config.ts"]
     },
     "packages/tokens": {
-      "entry": [
-        "scripts/*.ts"
-      ],
-      "project": [
-        "src/**/*.ts",
-        "scripts/**/*.ts"
-      ]
+      "entry": ["scripts/*.ts"],
+      "project": ["src/**/*.ts", "scripts/**/*.ts"]
     },
     "packages/i18n": {
-      "entry": [
-        "scripts/*.ts"
-      ],
-      "project": [
-        "src/**/*.ts",
-        "scripts/**/*.ts"
-      ]
+      "entry": ["scripts/*.ts"],
+      "project": ["src/**/*.ts", "scripts/**/*.ts"]
     },
     "packages/contracts": {
-      "entry": [
-        "scripts/*.ts"
-      ],
-      "project": [
-        "src/**/*.ts",
-        "scripts/**/*.ts"
-      ]
+      "entry": ["scripts/*.ts"],
+      "project": ["src/**/*.ts", "scripts/**/*.ts"]
     },
     "apps/api": {
-      "entry": [
-        "test/**/*.test.ts"
-      ],
-      "project": [
-        "src/**/*.ts",
-        "test/**/*.ts"
-      ]
+      "entry": ["test/**/*.test.ts"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
     },
     "packages/ui": {
-      "entry": [
-        ".storybook/*.{ts,tsx}",
-        "src/**/*.stories.tsx",
-        "test/*.d.ts"
-      ],
-      "project": [
-        "src/**/*.{ts,tsx}",
-        ".storybook/**/*.{ts,tsx}",
-        "test/**/*.ts"
-      ]
+      "entry": [".storybook/*.{ts,tsx}", "src/**/*.stories.tsx", "test/*.d.ts"],
+      "project": ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}", "test/**/*.ts"]
     },
     "apps/web": {
       "entry": [

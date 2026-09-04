@@ -5,7 +5,9 @@
  */
 import { spawn } from 'node:child_process';
 
-const tsc = spawn('pnpm', ['exec', 'tsc', '-b', '--watch', '--preserveWatchOutput'], { stdio: 'inherit' });
+const tsc = spawn('pnpm', ['exec', 'tsc', '-b', '--watch', '--preserveWatchOutput'], {
+  stdio: 'inherit',
+});
 const node = spawn('node', ['--watch', '--enable-source-maps', 'dist/main.js'], {
   stdio: 'inherit',
   env: process.env,

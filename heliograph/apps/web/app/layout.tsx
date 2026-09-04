@@ -14,7 +14,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const [cookieStore, headerStore] = await Promise.all([cookies(), headers()]);
-  const locale = resolveLocale(cookieStore.get(LOCALE_COOKIE)?.value, headerStore.get('accept-language'));
+  const locale = resolveLocale(
+    cookieStore.get(LOCALE_COOKIE)?.value,
+    headerStore.get('accept-language'),
+  );
   return (
     <html lang={locale} dir={localeDirection(locale)} suppressHydrationWarning>
       <body>

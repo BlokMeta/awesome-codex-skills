@@ -55,20 +55,37 @@ export function ConsentsForm({ onDone }: { onDone?: () => void }) {
       <p className="m-0 text-ink2">{t(messages.consent.intro)}</p>
       <ul className="m-0 p-0 list-none grid gap-2" data-testid="pending-docs">
         {s.pending.map((doc) => (
-          <li key={doc} className="flex items-center justify-between gap-3 border-b border-line py-2">
+          <li
+            key={doc}
+            className="flex items-center justify-between gap-3 border-b border-line py-2"
+          >
             <span>
               {docLabel(doc)}{' '}
-              <span className="text-ink3 font-mono text-[length:var(--hg-font-size-xs)]">v{s.published[doc]}</span>
+              <span className="text-ink3 font-mono text-[length:var(--hg-font-size-xs)]">
+                v{s.published[doc]}
+              </span>
             </span>
             {LEGAL_LINKS[doc] ? (
-              <a href={LEGAL_LINKS[doc]} target="_blank" rel="noreferrer" className="text-tide underline text-[length:var(--hg-font-size-sm)]">
+              <a
+                href={LEGAL_LINKS[doc]}
+                target="_blank"
+                rel="noreferrer"
+                className="text-tide underline text-[length:var(--hg-font-size-sm)]"
+              >
                 {t(messages.consent.read)}
               </a>
             ) : null}
           </li>
         ))}
       </ul>
-      <Button type="submit" label={t(messages.consent.acceptAll)} variant="primary" size="lg" loading={accept.isPending} testID="accept" />
+      <Button
+        type="submit"
+        label={t(messages.consent.acceptAll)}
+        variant="primary"
+        size="lg"
+        loading={accept.isPending}
+        testID="accept"
+      />
     </form>
   );
 }

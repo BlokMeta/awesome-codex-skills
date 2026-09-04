@@ -1,13 +1,18 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { routerMock } from '@/test/setup';
 import { renderApp } from '@/test/render';
+import { routerMock } from '@/test/setup';
 
 const create = vi.fn();
 const setActive = vi.fn();
 vi.mock('@/lib/auth-client', () => ({
-  authClient: { organization: { create: (...a: unknown[]) => create(...a), setActive: (...a: unknown[]) => setActive(...a) } },
+  authClient: {
+    organization: {
+      create: (...a: unknown[]) => create(...a),
+      setActive: (...a: unknown[]) => setActive(...a),
+    },
+  },
 }));
 
 import { slugify, WorkspaceCreateForm } from './workspace-create-form';
