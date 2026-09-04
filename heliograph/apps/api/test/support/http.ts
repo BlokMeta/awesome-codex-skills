@@ -9,7 +9,7 @@ export class TestClient {
   constructor(private readonly app: NestFastifyApplication) {}
 
   async call(
-    method: 'GET' | 'POST',
+    method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
     url: string,
     body?: unknown,
     extraHeaders: Record<string, string> = {},

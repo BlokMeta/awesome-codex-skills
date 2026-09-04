@@ -10,6 +10,13 @@ import {
   WARMUP_DAYS,
 } from './persona.js';
 import { type PostingPolicy, planDailySlots, targetCountFor } from './posting-policy.js';
+import {
+  DEFAULT_ENGAGEMENT_POLICY,
+  DEFAULT_QUALITY_POLICY,
+  DEFAULT_TOPIC_PROFILE,
+  DEFAULT_VISUAL_KIT,
+  DEFAULT_VOICE_BIBLE,
+} from './profile.js';
 
 const policy: PostingPolicy = {
   dailyPosts: { min: 3, max: 5 },
@@ -31,6 +38,11 @@ const aPersona = (overrides: Partial<Persona> = {}): Persona => ({
   language: 'tr',
   timezone: 'Europe/Istanbul',
   postingPolicy: policy,
+  voiceBible: DEFAULT_VOICE_BIBLE,
+  visualKit: DEFAULT_VISUAL_KIT,
+  topicProfile: DEFAULT_TOPIC_PROFILE,
+  engagementPolicy: DEFAULT_ENGAGEMENT_POLICY,
+  qualityPolicy: DEFAULT_QUALITY_POLICY,
   status: 'draft',
   warmupStartedAt: null,
   ...overrides,

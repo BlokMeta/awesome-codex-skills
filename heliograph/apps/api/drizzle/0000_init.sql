@@ -16,6 +16,8 @@ CREATE TYPE "public"."subscription_status" AS ENUM('trialing', 'active', 'past_d
 CREATE TYPE "public"."policy_scope" AS ENUM('global', 'platform', 'workspace');--> statement-breakpoint
 CREATE TYPE "public"."invitation_status" AS ENUM('pending', 'accepted', 'rejected', 'canceled');--> statement-breakpoint
 CREATE TYPE "public"."membership_role" AS ENUM('owner', 'admin', 'editor', 'viewer');--> statement-breakpoint
+CREATE TYPE "public"."persona_niche" AS ENUM('devops', 'ai', 'both', 'personal');--> statement-breakpoint
+CREATE TYPE "public"."persona_status" AS ENUM('draft', 'warming', 'active', 'paused', 'archived');--> statement-breakpoint
 CREATE TYPE "public"."erasure_source" AS ENUM('user', 'meta_callback', 'support');--> statement-breakpoint
 CREATE TYPE "public"."legal_document" AS ENUM('terms', 'privacy', 'kvkk_aydinlatma', 'kvkk_acik_riza_marketing', 'kvkk_acik_riza_voice', 'kvkk_acik_riza_likeness', 'cookies', 'distance_sale', 'aup', 'ai_processing');--> statement-breakpoint
 CREATE TABLE "credit_ledger" (
@@ -227,6 +229,38 @@ CREATE TABLE "workspaces" (
 	"deleted_at" timestamp with time zone
 );
 --> statement-breakpoint
+CREATE TABLE "persona_versions" (
+	"id" text PRIMARY KEY NOT NULL,
+	"workspace_id" text NOT NULL,
+	"persona_id" text NOT NULL,
+	"snapshot" jsonb NOT NULL,
+	"changed_by" text NOT NULL,
+	"reason" text,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE "persona_versions" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
+CREATE TABLE "personas" (
+	"id" text PRIMARY KEY NOT NULL,
+	"workspace_id" text NOT NULL,
+	"slug" text NOT NULL,
+	"name" text NOT NULL,
+	"niche" "persona_niche" NOT NULL,
+	"language" text NOT NULL,
+	"timezone" text NOT NULL,
+	"voice_bible" jsonb NOT NULL,
+	"visual_kit" jsonb NOT NULL,
+	"topic_profile" jsonb NOT NULL,
+	"posting_policy" jsonb NOT NULL,
+	"engagement_policy" jsonb NOT NULL,
+	"quality_policy" jsonb NOT NULL,
+	"status" "persona_status" DEFAULT 'draft' NOT NULL,
+	"warmup_started_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE "personas" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
 CREATE TABLE "consent_records" (
 	"id" text PRIMARY KEY NOT NULL,
 	"operator_id" text NOT NULL,
@@ -262,6 +296,7 @@ ALTER TABLE "memberships" ADD CONSTRAINT "memberships_invited_by_operators_id_fk
 ALTER TABLE "passkeys" ADD CONSTRAINT "passkeys_operator_id_operators_id_fk" FOREIGN KEY ("operator_id") REFERENCES "public"."operators"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_operator_id_operators_id_fk" FOREIGN KEY ("operator_id") REFERENCES "public"."operators"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "two_factors" ADD CONSTRAINT "two_factors_operator_id_operators_id_fk" FOREIGN KEY ("operator_id") REFERENCES "public"."operators"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "persona_versions" ADD CONSTRAINT "persona_versions_persona_id_personas_id_fk" FOREIGN KEY ("persona_id") REFERENCES "public"."personas"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "credit_ledger_workspace_at_idx" ON "credit_ledger" USING btree ("workspace_id","at","id");--> statement-breakpoint
 CREATE UNIQUE INDEX "plans_code_unique" ON "plans" USING btree ("code");--> statement-breakpoint
 CREATE INDEX "subscriptions_workspace_created_idx" ON "subscriptions" USING btree ("workspace_id","created_at");--> statement-breakpoint
@@ -282,6 +317,9 @@ CREATE INDEX "sessions_operator_idx" ON "sessions" USING btree ("operator_id");-
 CREATE INDEX "two_factors_operator_idx" ON "two_factors" USING btree ("operator_id");--> statement-breakpoint
 CREATE INDEX "verifications_identifier_idx" ON "verifications" USING btree ("identifier");--> statement-breakpoint
 CREATE UNIQUE INDEX "workspaces_slug_unique" ON "workspaces" USING btree ("slug");--> statement-breakpoint
+CREATE INDEX "persona_versions_persona_idx" ON "persona_versions" USING btree ("persona_id","created_at");--> statement-breakpoint
+CREATE UNIQUE INDEX "personas_workspace_slug_unique" ON "personas" USING btree ("workspace_id","slug");--> statement-breakpoint
+CREATE INDEX "personas_workspace_created_idx" ON "personas" USING btree ("workspace_id","created_at","id");--> statement-breakpoint
 CREATE INDEX "consent_records_operator_idx" ON "consent_records" USING btree ("operator_id","document");--> statement-breakpoint
 CREATE INDEX "erasure_requests_due_idx" ON "erasure_requests" USING btree ("completed_at","due_at");--> statement-breakpoint
 CREATE POLICY "credit_ledger_tenant_isolation" ON "credit_ledger" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
@@ -290,6 +328,8 @@ CREATE POLICY "usage_records_tenant_isolation" ON "usage_records" AS PERMISSIVE 
 CREATE POLICY "policy_entries_scope_visibility" ON "policy_entries" AS PERMISSIVE FOR ALL TO "hg_app" USING (scope <> 'workspace' OR scope_id = current_setting('hg.workspace_id', true)) WITH CHECK (scope <> 'workspace' OR scope_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
 CREATE POLICY "invitations_tenant_isolation" ON "invitations" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
 CREATE POLICY "memberships_tenant_isolation" ON "memberships" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
+CREATE POLICY "persona_versions_tenant_isolation" ON "persona_versions" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
+CREATE POLICY "personas_tenant_isolation" ON "personas" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
 CREATE POLICY "erasure_requests_tenant_isolation" ON "erasure_requests" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id IS NULL OR workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id IS NULL OR workspace_id = current_setting('hg.workspace_id', true));
 --> statement-breakpoint
 GRANT USAGE ON SCHEMA public TO hg_app;--> statement-breakpoint

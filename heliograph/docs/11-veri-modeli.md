@@ -20,7 +20,7 @@ personas (id, workspace_id, slug UNIQUE(workspace_id, slug), name, niche, langua
   voice_bible JSONB, visual_kit JSONB, topic_profile JSONB,
   posting_policy JSONB, engagement_policy JSONB, quality_policy JSONB,
   status ENUM('draft','warming','active','paused','archived'), warmup_started_at)
-persona_versions (id, persona_id, snapshot JSONB, changed_by, reason)   -- ses kitabı geçmişi
+persona_versions (id, workspace_id, persona_id, snapshot JSONB, changed_by, reason, created_at)   -- her PATCH/geçişten önceki hâl; workspace_id RLS için
 ```
 
 `posting_policy` şeması (Zod): `{ dailyPosts: {min,max}, dailyVideos: {min,max}, windows: [{days:[1..7], from:'09:00', to:'21:00'}], jitterMinutes, weekendFactor, formats: {news:1, educational:1, opinion:1, tip:1, community:1} }`.

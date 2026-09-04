@@ -2,6 +2,15 @@ import { oc } from '@orpc/contract';
 import { entitlementsContract } from './billing/entitlements.js';
 import { meContract } from './identity/me.js';
 import {
+  activatePersonaContract,
+  archivePersonaContract,
+  createPersonaContract,
+  getPersonaContract,
+  listPersonasContract,
+  pausePersonaContract,
+  updatePersonaContract,
+} from './persona/personas.js';
+import {
   acceptConsentsContract,
   consentStatusContract,
   withdrawConsentContract,
@@ -12,6 +21,7 @@ export * from './billing/entitlements.js';
 export * from './common/pagination.js';
 export * from './common/problem.js';
 export * from './identity/me.js';
+export * from './persona/personas.js';
 export * from './privacy/consents.js';
 export * from './system/health.js';
 
@@ -26,6 +36,15 @@ export const contract = oc.router({
   },
   billing: {
     entitlements: entitlementsContract,
+  },
+  persona: {
+    list: listPersonasContract,
+    create: createPersonaContract,
+    get: getPersonaContract,
+    update: updatePersonaContract,
+    activate: activatePersonaContract,
+    pause: pausePersonaContract,
+    archive: archivePersonaContract,
   },
   privacy: {
     consentStatus: consentStatusContract,

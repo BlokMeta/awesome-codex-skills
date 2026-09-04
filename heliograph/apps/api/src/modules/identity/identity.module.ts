@@ -9,6 +9,7 @@ import {
   MEMBERSHIP_REPOSITORY,
   WORKSPACE_REPOSITORY,
 } from '../../shared/tokens.js';
+import { Authorizer } from './application/authorizer.js';
 import type { EmailSender } from './application/email-sender.js';
 import { createAuth } from './infrastructure/auth.js';
 import { type AuthConfig, readAuthConfig } from './infrastructure/auth-env.js';
@@ -49,10 +50,11 @@ export class IdentityModule {
           useFactory: (db: Database) => new DrizzleWorkspaceRepository(db),
           inject: [DATABASE],
         },
+        Authorizer,
         { provide: APP_GUARD, useClass: SessionGuard },
         { provide: APP_FILTER, useClass: ProblemFilter },
       ],
-      exports: [AUTH, EMAIL_SENDER, MEMBERSHIP_REPOSITORY, WORKSPACE_REPOSITORY],
+      exports: [AUTH, EMAIL_SENDER, MEMBERSHIP_REPOSITORY, WORKSPACE_REPOSITORY, Authorizer],
     };
   }
 }

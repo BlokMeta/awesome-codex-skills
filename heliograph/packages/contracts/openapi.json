@@ -891,6 +891,4960 @@
           "identity"
         ]
       }
+    },
+    "/v1/personas": {
+      "get": {
+        "operationId": "persona.list",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 25,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "enum": [
+                "draft",
+                "warming",
+                "active",
+                "paused",
+                "archived"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "properties": {
+                          "createdAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "engagementPolicy": {
+                            "properties": {
+                              "autoReply": {
+                                "default": false,
+                                "type": "boolean"
+                              },
+                              "humanDraftPlatforms": {
+                                "default": [
+                                  "x",
+                                  "tiktok"
+                                ],
+                                "items": {
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "quietHours": {
+                                "anyOf": [
+                                  {
+                                    "properties": {
+                                      "from": {
+                                        "type": "string"
+                                      },
+                                      "to": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "from",
+                                      "to"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ],
+                                "default": null
+                              },
+                              "replyDelayMinutes": {
+                                "default": {
+                                  "max": 180,
+                                  "min": 8
+                                },
+                                "properties": {
+                                  "max": {
+                                    "maximum": 1440,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  },
+                                  "min": {
+                                    "maximum": 1440,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "min",
+                                  "max"
+                                ],
+                                "type": "object"
+                              },
+                              "replyRatio": {
+                                "default": 0.35,
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "language": {
+                            "type": "string"
+                          },
+                          "missingForStart": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "name": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "niche": {
+                            "enum": [
+                              "devops",
+                              "ai",
+                              "both",
+                              "personal"
+                            ],
+                            "type": "string"
+                          },
+                          "postingPolicy": {
+                            "properties": {
+                              "dailyPosts": {
+                                "properties": {
+                                  "max": {
+                                    "maximum": 9007199254740991,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  },
+                                  "min": {
+                                    "maximum": 9007199254740991,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "min",
+                                  "max"
+                                ],
+                                "type": "object"
+                              },
+                              "dailyVideos": {
+                                "properties": {
+                                  "max": {
+                                    "maximum": 9007199254740991,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  },
+                                  "min": {
+                                    "maximum": 9007199254740991,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "min",
+                                  "max"
+                                ],
+                                "type": "object"
+                              },
+                              "jitterMinutes": {
+                                "default": 22,
+                                "maximum": 120,
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "weekendFactor": {
+                                "default": 0.6,
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              },
+                              "windows": {
+                                "items": {
+                                  "properties": {
+                                    "days": {
+                                      "items": {
+                                        "maximum": 7,
+                                        "minimum": 1,
+                                        "type": "integer"
+                                      },
+                                      "minItems": 1,
+                                      "type": "array"
+                                    },
+                                    "from": {
+                                      "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                      "type": "string"
+                                    },
+                                    "to": {
+                                      "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "days",
+                                    "from",
+                                    "to"
+                                  ],
+                                  "type": "object"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              }
+                            },
+                            "required": [
+                              "dailyPosts",
+                              "dailyVideos",
+                              "windows"
+                            ],
+                            "type": "object"
+                          },
+                          "qualityPolicy": {
+                            "properties": {
+                              "aiDisclosure": {
+                                "default": "auto",
+                                "enum": [
+                                  "auto",
+                                  "always"
+                                ],
+                                "type": "string"
+                              },
+                              "humanReview": {
+                                "default": "always",
+                                "enum": [
+                                  "always",
+                                  "first_30_days",
+                                  "score_below_threshold",
+                                  "never"
+                                ],
+                                "type": "string"
+                              },
+                              "maxRegenerations": {
+                                "default": 2,
+                                "maximum": 5,
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "minScore": {
+                                "default": 7,
+                                "maximum": 10,
+                                "minimum": 0,
+                                "type": "number"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "slug": {
+                            "maxLength": 40,
+                            "minLength": 2,
+                            "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+                            "type": "string"
+                          },
+                          "status": {
+                            "enum": [
+                              "draft",
+                              "warming",
+                              "active",
+                              "paused",
+                              "archived"
+                            ],
+                            "type": "string"
+                          },
+                          "timezone": {
+                            "type": "string"
+                          },
+                          "topicProfile": {
+                            "properties": {
+                              "exclude": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 60,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 40,
+                                "type": "array"
+                              },
+                              "freshnessHours": {
+                                "default": 36,
+                                "maximum": 168,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "include": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 60,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 40,
+                                "type": "array"
+                              },
+                              "sourceWeights": {
+                                "additionalProperties": {
+                                  "maximum": 2,
+                                  "minimum": 0,
+                                  "type": "number"
+                                },
+                                "default": {},
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "updatedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "visualKit": {
+                            "properties": {
+                              "avatar": {
+                                "anyOf": [
+                                  {
+                                    "properties": {
+                                      "kind": {
+                                        "const": "initials"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  {
+                                    "properties": {
+                                      "assetId": {
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "kind": {
+                                        "const": "asset"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "assetId"
+                                    ],
+                                    "type": "object"
+                                  }
+                                ],
+                                "default": {
+                                  "kind": "initials"
+                                }
+                              },
+                              "fontFamily": {
+                                "default": "body",
+                                "enum": [
+                                  "display",
+                                  "body",
+                                  "mono"
+                                ],
+                                "type": "string"
+                              },
+                              "palette": {
+                                "default": {
+                                  "accent": "#F2B705",
+                                  "ground": "#F4F5F1",
+                                  "primary": "#1F4E5A"
+                                },
+                                "properties": {
+                                  "accent": {
+                                    "pattern": "^#[0-9A-Fa-f]{6}$",
+                                    "type": "string"
+                                  },
+                                  "ground": {
+                                    "pattern": "^#[0-9A-Fa-f]{6}$",
+                                    "type": "string"
+                                  },
+                                  "primary": {
+                                    "pattern": "^#[0-9A-Fa-f]{6}$",
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "primary",
+                                  "accent",
+                                  "ground"
+                                ],
+                                "type": "object"
+                              },
+                              "watermark": {
+                                "default": false,
+                                "type": "boolean"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "voiceBible": {
+                            "properties": {
+                              "audience": {
+                                "default": "",
+                                "maxLength": 400,
+                                "type": "string"
+                              },
+                              "bannedPhrases": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 100,
+                                "type": "array"
+                              },
+                              "doList": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 200,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 20,
+                                "type": "array"
+                              },
+                              "dontList": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 200,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 20,
+                                "type": "array"
+                              },
+                              "emojiQuota": {
+                                "default": {
+                                  "max": 2,
+                                  "min": 0
+                                },
+                                "properties": {
+                                  "max": {
+                                    "maximum": 10,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  },
+                                  "min": {
+                                    "maximum": 10,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "min",
+                                  "max"
+                                ],
+                                "type": "object"
+                              },
+                              "experiencePool": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 600,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 40,
+                                "type": "array"
+                              },
+                              "hashtagQuota": {
+                                "default": {
+                                  "max": 4,
+                                  "min": 0
+                                },
+                                "properties": {
+                                  "max": {
+                                    "maximum": 30,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  },
+                                  "min": {
+                                    "maximum": 30,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "min",
+                                  "max"
+                                ],
+                                "type": "object"
+                              },
+                              "preferredPhrases": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 50,
+                                "type": "array"
+                              },
+                              "punctuation": {
+                                "default": {
+                                  "emDash": "rare",
+                                  "exclamation": "rare",
+                                  "lowercaseStarts": false
+                                },
+                                "properties": {
+                                  "emDash": {
+                                    "default": "rare",
+                                    "enum": [
+                                      "never",
+                                      "rare",
+                                      "free"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "exclamation": {
+                                    "default": "rare",
+                                    "enum": [
+                                      "never",
+                                      "rare",
+                                      "free"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "lowercaseStarts": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "register": {
+                                "default": "plain",
+                                "enum": [
+                                  "casual",
+                                  "plain",
+                                  "professional",
+                                  "playful"
+                                ],
+                                "type": "string"
+                              },
+                              "samplePosts": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 2000,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 12,
+                                "type": "array"
+                              },
+                              "summary": {
+                                "default": "",
+                                "maxLength": 1200,
+                                "type": "string"
+                              },
+                              "tone": {
+                                "default": [],
+                                "items": {
+                                  "maxLength": 40,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 8,
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "warmupStartedAt": {
+                            "anyOf": [
+                              {
+                                "format": "date-time",
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "workspaceId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "workspaceId",
+                          "slug",
+                          "name",
+                          "niche",
+                          "language",
+                          "timezone",
+                          "status",
+                          "warmupStartedAt",
+                          "postingPolicy",
+                          "voiceBible",
+                          "visualKit",
+                          "topicProfile",
+                          "engagementPolicy",
+                          "qualityPolicy",
+                          "missingForStart",
+                          "createdAt",
+                          "updatedAt"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ],
+                      "type": "object"
+                    },
+                    "page": {
+                      "properties": {
+                        "hasMore": {
+                          "type": "boolean"
+                        },
+                        "limit": {
+                          "maximum": 9007199254740991,
+                          "minimum": -9007199254740991,
+                          "type": "integer"
+                        },
+                        "nextCursor": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "prevCursor": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "nextCursor",
+                        "prevCursor",
+                        "limit",
+                        "hasMore"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "page",
+                    "meta"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Personas of the active workspace",
+        "tags": [
+          "persona"
+        ]
+      },
+      "post": {
+        "operationId": "persona.create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "language": {
+                    "maxLength": 35,
+                    "minLength": 2,
+                    "type": "string"
+                  },
+                  "name": {
+                    "maxLength": 80,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "niche": {
+                    "enum": [
+                      "devops",
+                      "ai",
+                      "both",
+                      "personal"
+                    ],
+                    "type": "string"
+                  },
+                  "slug": {
+                    "maxLength": 40,
+                    "minLength": 2,
+                    "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+                    "type": "string"
+                  },
+                  "timezone": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "niche",
+                  "language",
+                  "timezone"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "engagementPolicy": {
+                      "properties": {
+                        "autoReply": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "humanDraftPlatforms": {
+                          "default": [
+                            "x",
+                            "tiktok"
+                          ],
+                          "items": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "quietHours": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null
+                        },
+                        "replyDelayMinutes": {
+                          "default": {
+                            "max": 180,
+                            "min": 8
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "replyRatio": {
+                          "default": 0.35,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    },
+                    "missingForStart": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "name": {
+                      "maxLength": 80,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "niche": {
+                      "enum": [
+                        "devops",
+                        "ai",
+                        "both",
+                        "personal"
+                      ],
+                      "type": "string"
+                    },
+                    "postingPolicy": {
+                      "properties": {
+                        "dailyPosts": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "dailyVideos": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "jitterMinutes": {
+                          "default": 22,
+                          "maximum": 120,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "weekendFactor": {
+                          "default": 0.6,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "windows": {
+                          "items": {
+                            "properties": {
+                              "days": {
+                                "items": {
+                                  "maximum": 7,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              },
+                              "from": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "to": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "days",
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "dailyPosts",
+                        "dailyVideos",
+                        "windows"
+                      ],
+                      "type": "object"
+                    },
+                    "qualityPolicy": {
+                      "properties": {
+                        "aiDisclosure": {
+                          "default": "auto",
+                          "enum": [
+                            "auto",
+                            "always"
+                          ],
+                          "type": "string"
+                        },
+                        "humanReview": {
+                          "default": "always",
+                          "enum": [
+                            "always",
+                            "first_30_days",
+                            "score_below_threshold",
+                            "never"
+                          ],
+                          "type": "string"
+                        },
+                        "maxRegenerations": {
+                          "default": 2,
+                          "maximum": 5,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "minScore": {
+                          "default": 7,
+                          "maximum": 10,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "slug": {
+                      "maxLength": 40,
+                      "minLength": 2,
+                      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "draft",
+                        "warming",
+                        "active",
+                        "paused",
+                        "archived"
+                      ],
+                      "type": "string"
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "topicProfile": {
+                      "properties": {
+                        "exclude": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "freshnessHours": {
+                          "default": 36,
+                          "maximum": 168,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "include": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "sourceWeights": {
+                          "additionalProperties": {
+                            "maximum": 2,
+                            "minimum": 0,
+                            "type": "number"
+                          },
+                          "default": {},
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "visualKit": {
+                      "properties": {
+                        "avatar": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "kind": {
+                                  "const": "initials"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "properties": {
+                                "assetId": {
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "const": "asset"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "assetId"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "default": {
+                            "kind": "initials"
+                          }
+                        },
+                        "fontFamily": {
+                          "default": "body",
+                          "enum": [
+                            "display",
+                            "body",
+                            "mono"
+                          ],
+                          "type": "string"
+                        },
+                        "palette": {
+                          "default": {
+                            "accent": "#F2B705",
+                            "ground": "#F4F5F1",
+                            "primary": "#1F4E5A"
+                          },
+                          "properties": {
+                            "accent": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "ground": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "primary": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "primary",
+                            "accent",
+                            "ground"
+                          ],
+                          "type": "object"
+                        },
+                        "watermark": {
+                          "default": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "voiceBible": {
+                      "properties": {
+                        "audience": {
+                          "default": "",
+                          "maxLength": 400,
+                          "type": "string"
+                        },
+                        "bannedPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "doList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "dontList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "emojiQuota": {
+                          "default": {
+                            "max": 2,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "experiencePool": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 600,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "hashtagQuota": {
+                          "default": {
+                            "max": 4,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "preferredPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 50,
+                          "type": "array"
+                        },
+                        "punctuation": {
+                          "default": {
+                            "emDash": "rare",
+                            "exclamation": "rare",
+                            "lowercaseStarts": false
+                          },
+                          "properties": {
+                            "emDash": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "exclamation": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "lowercaseStarts": {
+                              "default": false,
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "register": {
+                          "default": "plain",
+                          "enum": [
+                            "casual",
+                            "plain",
+                            "professional",
+                            "playful"
+                          ],
+                          "type": "string"
+                        },
+                        "samplePosts": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 2000,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 12,
+                          "type": "array"
+                        },
+                        "summary": {
+                          "default": "",
+                          "maxLength": 1200,
+                          "type": "string"
+                        },
+                        "tone": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 40,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 8,
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "warmupStartedAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "slug",
+                    "name",
+                    "niche",
+                    "language",
+                    "timezone",
+                    "status",
+                    "warmupStartedAt",
+                    "postingPolicy",
+                    "voiceBible",
+                    "visualKit",
+                    "topicProfile",
+                    "engagementPolicy",
+                    "qualityPolicy",
+                    "missingForStart",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Create a draft persona (wizard step 1)",
+        "tags": [
+          "persona"
+        ]
+      }
+    },
+    "/v1/personas/{id}": {
+      "get": {
+        "operationId": "persona.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "engagementPolicy": {
+                      "properties": {
+                        "autoReply": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "humanDraftPlatforms": {
+                          "default": [
+                            "x",
+                            "tiktok"
+                          ],
+                          "items": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "quietHours": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null
+                        },
+                        "replyDelayMinutes": {
+                          "default": {
+                            "max": 180,
+                            "min": 8
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "replyRatio": {
+                          "default": 0.35,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    },
+                    "missingForStart": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "name": {
+                      "maxLength": 80,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "niche": {
+                      "enum": [
+                        "devops",
+                        "ai",
+                        "both",
+                        "personal"
+                      ],
+                      "type": "string"
+                    },
+                    "postingPolicy": {
+                      "properties": {
+                        "dailyPosts": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "dailyVideos": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "jitterMinutes": {
+                          "default": 22,
+                          "maximum": 120,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "weekendFactor": {
+                          "default": 0.6,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "windows": {
+                          "items": {
+                            "properties": {
+                              "days": {
+                                "items": {
+                                  "maximum": 7,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              },
+                              "from": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "to": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "days",
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "dailyPosts",
+                        "dailyVideos",
+                        "windows"
+                      ],
+                      "type": "object"
+                    },
+                    "qualityPolicy": {
+                      "properties": {
+                        "aiDisclosure": {
+                          "default": "auto",
+                          "enum": [
+                            "auto",
+                            "always"
+                          ],
+                          "type": "string"
+                        },
+                        "humanReview": {
+                          "default": "always",
+                          "enum": [
+                            "always",
+                            "first_30_days",
+                            "score_below_threshold",
+                            "never"
+                          ],
+                          "type": "string"
+                        },
+                        "maxRegenerations": {
+                          "default": 2,
+                          "maximum": 5,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "minScore": {
+                          "default": 7,
+                          "maximum": 10,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "slug": {
+                      "maxLength": 40,
+                      "minLength": 2,
+                      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "draft",
+                        "warming",
+                        "active",
+                        "paused",
+                        "archived"
+                      ],
+                      "type": "string"
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "topicProfile": {
+                      "properties": {
+                        "exclude": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "freshnessHours": {
+                          "default": 36,
+                          "maximum": 168,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "include": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "sourceWeights": {
+                          "additionalProperties": {
+                            "maximum": 2,
+                            "minimum": 0,
+                            "type": "number"
+                          },
+                          "default": {},
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "visualKit": {
+                      "properties": {
+                        "avatar": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "kind": {
+                                  "const": "initials"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "properties": {
+                                "assetId": {
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "const": "asset"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "assetId"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "default": {
+                            "kind": "initials"
+                          }
+                        },
+                        "fontFamily": {
+                          "default": "body",
+                          "enum": [
+                            "display",
+                            "body",
+                            "mono"
+                          ],
+                          "type": "string"
+                        },
+                        "palette": {
+                          "default": {
+                            "accent": "#F2B705",
+                            "ground": "#F4F5F1",
+                            "primary": "#1F4E5A"
+                          },
+                          "properties": {
+                            "accent": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "ground": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "primary": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "primary",
+                            "accent",
+                            "ground"
+                          ],
+                          "type": "object"
+                        },
+                        "watermark": {
+                          "default": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "voiceBible": {
+                      "properties": {
+                        "audience": {
+                          "default": "",
+                          "maxLength": 400,
+                          "type": "string"
+                        },
+                        "bannedPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "doList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "dontList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "emojiQuota": {
+                          "default": {
+                            "max": 2,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "experiencePool": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 600,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "hashtagQuota": {
+                          "default": {
+                            "max": 4,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "preferredPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 50,
+                          "type": "array"
+                        },
+                        "punctuation": {
+                          "default": {
+                            "emDash": "rare",
+                            "exclamation": "rare",
+                            "lowercaseStarts": false
+                          },
+                          "properties": {
+                            "emDash": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "exclamation": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "lowercaseStarts": {
+                              "default": false,
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "register": {
+                          "default": "plain",
+                          "enum": [
+                            "casual",
+                            "plain",
+                            "professional",
+                            "playful"
+                          ],
+                          "type": "string"
+                        },
+                        "samplePosts": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 2000,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 12,
+                          "type": "array"
+                        },
+                        "summary": {
+                          "default": "",
+                          "maxLength": 1200,
+                          "type": "string"
+                        },
+                        "tone": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 40,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 8,
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "warmupStartedAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "slug",
+                    "name",
+                    "niche",
+                    "language",
+                    "timezone",
+                    "status",
+                    "warmupStartedAt",
+                    "postingPolicy",
+                    "voiceBible",
+                    "visualKit",
+                    "topicProfile",
+                    "engagementPolicy",
+                    "qualityPolicy",
+                    "missingForStart",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Persona detail",
+        "tags": [
+          "persona"
+        ]
+      },
+      "patch": {
+        "operationId": "persona.update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "engagementPolicy": {
+                    "properties": {
+                      "autoReply": {
+                        "default": false,
+                        "type": "boolean"
+                      },
+                      "humanDraftPlatforms": {
+                        "default": [
+                          "x",
+                          "tiktok"
+                        ],
+                        "items": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "quietHours": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "from": {
+                                "type": "string"
+                              },
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null
+                      },
+                      "replyDelayMinutes": {
+                        "default": {
+                          "max": 180,
+                          "min": 8
+                        },
+                        "properties": {
+                          "max": {
+                            "maximum": 1440,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "min": {
+                            "maximum": 1440,
+                            "minimum": 0,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "min",
+                          "max"
+                        ],
+                        "type": "object"
+                      },
+                      "replyRatio": {
+                        "default": 0.35,
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "language": {
+                    "maxLength": 35,
+                    "minLength": 2,
+                    "type": "string"
+                  },
+                  "name": {
+                    "maxLength": 80,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "niche": {
+                    "enum": [
+                      "devops",
+                      "ai",
+                      "both",
+                      "personal"
+                    ],
+                    "type": "string"
+                  },
+                  "postingPolicy": {
+                    "properties": {
+                      "dailyPosts": {
+                        "properties": {
+                          "max": {
+                            "maximum": 9007199254740991,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "min": {
+                            "maximum": 9007199254740991,
+                            "minimum": 0,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "min",
+                          "max"
+                        ],
+                        "type": "object"
+                      },
+                      "dailyVideos": {
+                        "properties": {
+                          "max": {
+                            "maximum": 9007199254740991,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "min": {
+                            "maximum": 9007199254740991,
+                            "minimum": 0,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "min",
+                          "max"
+                        ],
+                        "type": "object"
+                      },
+                      "jitterMinutes": {
+                        "default": 22,
+                        "maximum": 120,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "weekendFactor": {
+                        "default": 0.6,
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "windows": {
+                        "items": {
+                          "properties": {
+                            "days": {
+                              "items": {
+                                "maximum": 7,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "minItems": 1,
+                              "type": "array"
+                            },
+                            "from": {
+                              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                              "type": "string"
+                            },
+                            "to": {
+                              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "days",
+                            "from",
+                            "to"
+                          ],
+                          "type": "object"
+                        },
+                        "minItems": 1,
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "dailyPosts",
+                      "dailyVideos",
+                      "windows"
+                    ],
+                    "type": "object"
+                  },
+                  "qualityPolicy": {
+                    "properties": {
+                      "aiDisclosure": {
+                        "default": "auto",
+                        "enum": [
+                          "auto",
+                          "always"
+                        ],
+                        "type": "string"
+                      },
+                      "humanReview": {
+                        "default": "always",
+                        "enum": [
+                          "always",
+                          "first_30_days",
+                          "score_below_threshold",
+                          "never"
+                        ],
+                        "type": "string"
+                      },
+                      "maxRegenerations": {
+                        "default": 2,
+                        "maximum": 5,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "minScore": {
+                        "default": 7,
+                        "maximum": 10,
+                        "minimum": 0,
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "reason": {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  "timezone": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "topicProfile": {
+                    "properties": {
+                      "exclude": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 60,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 40,
+                        "type": "array"
+                      },
+                      "freshnessHours": {
+                        "default": 36,
+                        "maximum": 168,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "include": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 60,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 40,
+                        "type": "array"
+                      },
+                      "sourceWeights": {
+                        "additionalProperties": {
+                          "maximum": 2,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "default": {},
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "visualKit": {
+                    "properties": {
+                      "avatar": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "kind": {
+                                "const": "initials"
+                              }
+                            },
+                            "required": [
+                              "kind"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "properties": {
+                              "assetId": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "kind": {
+                                "const": "asset"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "assetId"
+                            ],
+                            "type": "object"
+                          }
+                        ],
+                        "default": {
+                          "kind": "initials"
+                        }
+                      },
+                      "fontFamily": {
+                        "default": "body",
+                        "enum": [
+                          "display",
+                          "body",
+                          "mono"
+                        ],
+                        "type": "string"
+                      },
+                      "palette": {
+                        "default": {
+                          "accent": "#F2B705",
+                          "ground": "#F4F5F1",
+                          "primary": "#1F4E5A"
+                        },
+                        "properties": {
+                          "accent": {
+                            "pattern": "^#[0-9A-Fa-f]{6}$",
+                            "type": "string"
+                          },
+                          "ground": {
+                            "pattern": "^#[0-9A-Fa-f]{6}$",
+                            "type": "string"
+                          },
+                          "primary": {
+                            "pattern": "^#[0-9A-Fa-f]{6}$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "primary",
+                          "accent",
+                          "ground"
+                        ],
+                        "type": "object"
+                      },
+                      "watermark": {
+                        "default": false,
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "voiceBible": {
+                    "properties": {
+                      "audience": {
+                        "default": "",
+                        "maxLength": 400,
+                        "type": "string"
+                      },
+                      "bannedPhrases": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 80,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 100,
+                        "type": "array"
+                      },
+                      "doList": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 200,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 20,
+                        "type": "array"
+                      },
+                      "dontList": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 200,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 20,
+                        "type": "array"
+                      },
+                      "emojiQuota": {
+                        "default": {
+                          "max": 2,
+                          "min": 0
+                        },
+                        "properties": {
+                          "max": {
+                            "maximum": 10,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "min": {
+                            "maximum": 10,
+                            "minimum": 0,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "min",
+                          "max"
+                        ],
+                        "type": "object"
+                      },
+                      "experiencePool": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 600,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 40,
+                        "type": "array"
+                      },
+                      "hashtagQuota": {
+                        "default": {
+                          "max": 4,
+                          "min": 0
+                        },
+                        "properties": {
+                          "max": {
+                            "maximum": 30,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "min": {
+                            "maximum": 30,
+                            "minimum": 0,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "min",
+                          "max"
+                        ],
+                        "type": "object"
+                      },
+                      "preferredPhrases": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 80,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 50,
+                        "type": "array"
+                      },
+                      "punctuation": {
+                        "default": {
+                          "emDash": "rare",
+                          "exclamation": "rare",
+                          "lowercaseStarts": false
+                        },
+                        "properties": {
+                          "emDash": {
+                            "default": "rare",
+                            "enum": [
+                              "never",
+                              "rare",
+                              "free"
+                            ],
+                            "type": "string"
+                          },
+                          "exclamation": {
+                            "default": "rare",
+                            "enum": [
+                              "never",
+                              "rare",
+                              "free"
+                            ],
+                            "type": "string"
+                          },
+                          "lowercaseStarts": {
+                            "default": false,
+                            "type": "boolean"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "register": {
+                        "default": "plain",
+                        "enum": [
+                          "casual",
+                          "plain",
+                          "professional",
+                          "playful"
+                        ],
+                        "type": "string"
+                      },
+                      "samplePosts": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 2000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 12,
+                        "type": "array"
+                      },
+                      "summary": {
+                        "default": "",
+                        "maxLength": 1200,
+                        "type": "string"
+                      },
+                      "tone": {
+                        "default": [],
+                        "items": {
+                          "maxLength": 40,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "maxItems": 8,
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "engagementPolicy": {
+                      "properties": {
+                        "autoReply": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "humanDraftPlatforms": {
+                          "default": [
+                            "x",
+                            "tiktok"
+                          ],
+                          "items": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "quietHours": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null
+                        },
+                        "replyDelayMinutes": {
+                          "default": {
+                            "max": 180,
+                            "min": 8
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "replyRatio": {
+                          "default": 0.35,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    },
+                    "missingForStart": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "name": {
+                      "maxLength": 80,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "niche": {
+                      "enum": [
+                        "devops",
+                        "ai",
+                        "both",
+                        "personal"
+                      ],
+                      "type": "string"
+                    },
+                    "postingPolicy": {
+                      "properties": {
+                        "dailyPosts": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "dailyVideos": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "jitterMinutes": {
+                          "default": 22,
+                          "maximum": 120,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "weekendFactor": {
+                          "default": 0.6,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "windows": {
+                          "items": {
+                            "properties": {
+                              "days": {
+                                "items": {
+                                  "maximum": 7,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              },
+                              "from": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "to": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "days",
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "dailyPosts",
+                        "dailyVideos",
+                        "windows"
+                      ],
+                      "type": "object"
+                    },
+                    "qualityPolicy": {
+                      "properties": {
+                        "aiDisclosure": {
+                          "default": "auto",
+                          "enum": [
+                            "auto",
+                            "always"
+                          ],
+                          "type": "string"
+                        },
+                        "humanReview": {
+                          "default": "always",
+                          "enum": [
+                            "always",
+                            "first_30_days",
+                            "score_below_threshold",
+                            "never"
+                          ],
+                          "type": "string"
+                        },
+                        "maxRegenerations": {
+                          "default": 2,
+                          "maximum": 5,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "minScore": {
+                          "default": 7,
+                          "maximum": 10,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "slug": {
+                      "maxLength": 40,
+                      "minLength": 2,
+                      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "draft",
+                        "warming",
+                        "active",
+                        "paused",
+                        "archived"
+                      ],
+                      "type": "string"
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "topicProfile": {
+                      "properties": {
+                        "exclude": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "freshnessHours": {
+                          "default": 36,
+                          "maximum": 168,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "include": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "sourceWeights": {
+                          "additionalProperties": {
+                            "maximum": 2,
+                            "minimum": 0,
+                            "type": "number"
+                          },
+                          "default": {},
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "visualKit": {
+                      "properties": {
+                        "avatar": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "kind": {
+                                  "const": "initials"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "properties": {
+                                "assetId": {
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "const": "asset"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "assetId"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "default": {
+                            "kind": "initials"
+                          }
+                        },
+                        "fontFamily": {
+                          "default": "body",
+                          "enum": [
+                            "display",
+                            "body",
+                            "mono"
+                          ],
+                          "type": "string"
+                        },
+                        "palette": {
+                          "default": {
+                            "accent": "#F2B705",
+                            "ground": "#F4F5F1",
+                            "primary": "#1F4E5A"
+                          },
+                          "properties": {
+                            "accent": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "ground": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "primary": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "primary",
+                            "accent",
+                            "ground"
+                          ],
+                          "type": "object"
+                        },
+                        "watermark": {
+                          "default": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "voiceBible": {
+                      "properties": {
+                        "audience": {
+                          "default": "",
+                          "maxLength": 400,
+                          "type": "string"
+                        },
+                        "bannedPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "doList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "dontList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "emojiQuota": {
+                          "default": {
+                            "max": 2,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "experiencePool": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 600,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "hashtagQuota": {
+                          "default": {
+                            "max": 4,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "preferredPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 50,
+                          "type": "array"
+                        },
+                        "punctuation": {
+                          "default": {
+                            "emDash": "rare",
+                            "exclamation": "rare",
+                            "lowercaseStarts": false
+                          },
+                          "properties": {
+                            "emDash": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "exclamation": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "lowercaseStarts": {
+                              "default": false,
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "register": {
+                          "default": "plain",
+                          "enum": [
+                            "casual",
+                            "plain",
+                            "professional",
+                            "playful"
+                          ],
+                          "type": "string"
+                        },
+                        "samplePosts": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 2000,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 12,
+                          "type": "array"
+                        },
+                        "summary": {
+                          "default": "",
+                          "maxLength": 1200,
+                          "type": "string"
+                        },
+                        "tone": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 40,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 8,
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "warmupStartedAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "slug",
+                    "name",
+                    "niche",
+                    "language",
+                    "timezone",
+                    "status",
+                    "warmupStartedAt",
+                    "postingPolicy",
+                    "voiceBible",
+                    "visualKit",
+                    "topicProfile",
+                    "engagementPolicy",
+                    "qualityPolicy",
+                    "missingForStart",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Update any wizard step; previous state is versioned",
+        "tags": [
+          "persona"
+        ]
+      }
+    },
+    "/v1/personas/{id}/activate": {
+      "post": {
+        "operationId": "persona.activate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "engagementPolicy": {
+                      "properties": {
+                        "autoReply": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "humanDraftPlatforms": {
+                          "default": [
+                            "x",
+                            "tiktok"
+                          ],
+                          "items": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "quietHours": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null
+                        },
+                        "replyDelayMinutes": {
+                          "default": {
+                            "max": 180,
+                            "min": 8
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "replyRatio": {
+                          "default": 0.35,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    },
+                    "missingForStart": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "name": {
+                      "maxLength": 80,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "niche": {
+                      "enum": [
+                        "devops",
+                        "ai",
+                        "both",
+                        "personal"
+                      ],
+                      "type": "string"
+                    },
+                    "postingPolicy": {
+                      "properties": {
+                        "dailyPosts": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "dailyVideos": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "jitterMinutes": {
+                          "default": 22,
+                          "maximum": 120,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "weekendFactor": {
+                          "default": 0.6,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "windows": {
+                          "items": {
+                            "properties": {
+                              "days": {
+                                "items": {
+                                  "maximum": 7,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              },
+                              "from": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "to": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "days",
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "dailyPosts",
+                        "dailyVideos",
+                        "windows"
+                      ],
+                      "type": "object"
+                    },
+                    "qualityPolicy": {
+                      "properties": {
+                        "aiDisclosure": {
+                          "default": "auto",
+                          "enum": [
+                            "auto",
+                            "always"
+                          ],
+                          "type": "string"
+                        },
+                        "humanReview": {
+                          "default": "always",
+                          "enum": [
+                            "always",
+                            "first_30_days",
+                            "score_below_threshold",
+                            "never"
+                          ],
+                          "type": "string"
+                        },
+                        "maxRegenerations": {
+                          "default": 2,
+                          "maximum": 5,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "minScore": {
+                          "default": 7,
+                          "maximum": 10,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "slug": {
+                      "maxLength": 40,
+                      "minLength": 2,
+                      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "draft",
+                        "warming",
+                        "active",
+                        "paused",
+                        "archived"
+                      ],
+                      "type": "string"
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "topicProfile": {
+                      "properties": {
+                        "exclude": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "freshnessHours": {
+                          "default": 36,
+                          "maximum": 168,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "include": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "sourceWeights": {
+                          "additionalProperties": {
+                            "maximum": 2,
+                            "minimum": 0,
+                            "type": "number"
+                          },
+                          "default": {},
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "visualKit": {
+                      "properties": {
+                        "avatar": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "kind": {
+                                  "const": "initials"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "properties": {
+                                "assetId": {
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "const": "asset"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "assetId"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "default": {
+                            "kind": "initials"
+                          }
+                        },
+                        "fontFamily": {
+                          "default": "body",
+                          "enum": [
+                            "display",
+                            "body",
+                            "mono"
+                          ],
+                          "type": "string"
+                        },
+                        "palette": {
+                          "default": {
+                            "accent": "#F2B705",
+                            "ground": "#F4F5F1",
+                            "primary": "#1F4E5A"
+                          },
+                          "properties": {
+                            "accent": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "ground": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "primary": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "primary",
+                            "accent",
+                            "ground"
+                          ],
+                          "type": "object"
+                        },
+                        "watermark": {
+                          "default": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "voiceBible": {
+                      "properties": {
+                        "audience": {
+                          "default": "",
+                          "maxLength": 400,
+                          "type": "string"
+                        },
+                        "bannedPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "doList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "dontList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "emojiQuota": {
+                          "default": {
+                            "max": 2,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "experiencePool": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 600,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "hashtagQuota": {
+                          "default": {
+                            "max": 4,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "preferredPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 50,
+                          "type": "array"
+                        },
+                        "punctuation": {
+                          "default": {
+                            "emDash": "rare",
+                            "exclamation": "rare",
+                            "lowercaseStarts": false
+                          },
+                          "properties": {
+                            "emDash": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "exclamation": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "lowercaseStarts": {
+                              "default": false,
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "register": {
+                          "default": "plain",
+                          "enum": [
+                            "casual",
+                            "plain",
+                            "professional",
+                            "playful"
+                          ],
+                          "type": "string"
+                        },
+                        "samplePosts": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 2000,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 12,
+                          "type": "array"
+                        },
+                        "summary": {
+                          "default": "",
+                          "maxLength": 1200,
+                          "type": "string"
+                        },
+                        "tone": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 40,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 8,
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "warmupStartedAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "slug",
+                    "name",
+                    "niche",
+                    "language",
+                    "timezone",
+                    "status",
+                    "warmupStartedAt",
+                    "postingPolicy",
+                    "voiceBible",
+                    "visualKit",
+                    "topicProfile",
+                    "engagementPolicy",
+                    "qualityPolicy",
+                    "missingForStart",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Start (draft → warming) or resume (paused → active)",
+        "tags": [
+          "persona"
+        ]
+      }
+    },
+    "/v1/personas/{id}/archive": {
+      "post": {
+        "operationId": "persona.archive",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "engagementPolicy": {
+                      "properties": {
+                        "autoReply": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "humanDraftPlatforms": {
+                          "default": [
+                            "x",
+                            "tiktok"
+                          ],
+                          "items": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "quietHours": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null
+                        },
+                        "replyDelayMinutes": {
+                          "default": {
+                            "max": 180,
+                            "min": 8
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "replyRatio": {
+                          "default": 0.35,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    },
+                    "missingForStart": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "name": {
+                      "maxLength": 80,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "niche": {
+                      "enum": [
+                        "devops",
+                        "ai",
+                        "both",
+                        "personal"
+                      ],
+                      "type": "string"
+                    },
+                    "postingPolicy": {
+                      "properties": {
+                        "dailyPosts": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "dailyVideos": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "jitterMinutes": {
+                          "default": 22,
+                          "maximum": 120,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "weekendFactor": {
+                          "default": 0.6,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "windows": {
+                          "items": {
+                            "properties": {
+                              "days": {
+                                "items": {
+                                  "maximum": 7,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              },
+                              "from": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "to": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "days",
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "dailyPosts",
+                        "dailyVideos",
+                        "windows"
+                      ],
+                      "type": "object"
+                    },
+                    "qualityPolicy": {
+                      "properties": {
+                        "aiDisclosure": {
+                          "default": "auto",
+                          "enum": [
+                            "auto",
+                            "always"
+                          ],
+                          "type": "string"
+                        },
+                        "humanReview": {
+                          "default": "always",
+                          "enum": [
+                            "always",
+                            "first_30_days",
+                            "score_below_threshold",
+                            "never"
+                          ],
+                          "type": "string"
+                        },
+                        "maxRegenerations": {
+                          "default": 2,
+                          "maximum": 5,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "minScore": {
+                          "default": 7,
+                          "maximum": 10,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "slug": {
+                      "maxLength": 40,
+                      "minLength": 2,
+                      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "draft",
+                        "warming",
+                        "active",
+                        "paused",
+                        "archived"
+                      ],
+                      "type": "string"
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "topicProfile": {
+                      "properties": {
+                        "exclude": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "freshnessHours": {
+                          "default": 36,
+                          "maximum": 168,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "include": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "sourceWeights": {
+                          "additionalProperties": {
+                            "maximum": 2,
+                            "minimum": 0,
+                            "type": "number"
+                          },
+                          "default": {},
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "visualKit": {
+                      "properties": {
+                        "avatar": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "kind": {
+                                  "const": "initials"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "properties": {
+                                "assetId": {
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "const": "asset"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "assetId"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "default": {
+                            "kind": "initials"
+                          }
+                        },
+                        "fontFamily": {
+                          "default": "body",
+                          "enum": [
+                            "display",
+                            "body",
+                            "mono"
+                          ],
+                          "type": "string"
+                        },
+                        "palette": {
+                          "default": {
+                            "accent": "#F2B705",
+                            "ground": "#F4F5F1",
+                            "primary": "#1F4E5A"
+                          },
+                          "properties": {
+                            "accent": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "ground": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "primary": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "primary",
+                            "accent",
+                            "ground"
+                          ],
+                          "type": "object"
+                        },
+                        "watermark": {
+                          "default": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "voiceBible": {
+                      "properties": {
+                        "audience": {
+                          "default": "",
+                          "maxLength": 400,
+                          "type": "string"
+                        },
+                        "bannedPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "doList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "dontList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "emojiQuota": {
+                          "default": {
+                            "max": 2,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "experiencePool": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 600,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "hashtagQuota": {
+                          "default": {
+                            "max": 4,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "preferredPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 50,
+                          "type": "array"
+                        },
+                        "punctuation": {
+                          "default": {
+                            "emDash": "rare",
+                            "exclamation": "rare",
+                            "lowercaseStarts": false
+                          },
+                          "properties": {
+                            "emDash": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "exclamation": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "lowercaseStarts": {
+                              "default": false,
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "register": {
+                          "default": "plain",
+                          "enum": [
+                            "casual",
+                            "plain",
+                            "professional",
+                            "playful"
+                          ],
+                          "type": "string"
+                        },
+                        "samplePosts": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 2000,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 12,
+                          "type": "array"
+                        },
+                        "summary": {
+                          "default": "",
+                          "maxLength": 1200,
+                          "type": "string"
+                        },
+                        "tone": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 40,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 8,
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "warmupStartedAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "slug",
+                    "name",
+                    "niche",
+                    "language",
+                    "timezone",
+                    "status",
+                    "warmupStartedAt",
+                    "postingPolicy",
+                    "voiceBible",
+                    "visualKit",
+                    "topicProfile",
+                    "engagementPolicy",
+                    "qualityPolicy",
+                    "missingForStart",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Archive (terminal)",
+        "tags": [
+          "persona"
+        ]
+      }
+    },
+    "/v1/personas/{id}/pause": {
+      "post": {
+        "operationId": "persona.pause",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "engagementPolicy": {
+                      "properties": {
+                        "autoReply": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "humanDraftPlatforms": {
+                          "default": [
+                            "x",
+                            "tiktok"
+                          ],
+                          "items": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "quietHours": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null
+                        },
+                        "replyDelayMinutes": {
+                          "default": {
+                            "max": 180,
+                            "min": 8
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 1440,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "replyRatio": {
+                          "default": 0.35,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    },
+                    "missingForStart": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "name": {
+                      "maxLength": 80,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "niche": {
+                      "enum": [
+                        "devops",
+                        "ai",
+                        "both",
+                        "personal"
+                      ],
+                      "type": "string"
+                    },
+                    "postingPolicy": {
+                      "properties": {
+                        "dailyPosts": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "dailyVideos": {
+                          "properties": {
+                            "max": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 9007199254740991,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "jitterMinutes": {
+                          "default": 22,
+                          "maximum": 120,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "weekendFactor": {
+                          "default": 0.6,
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "windows": {
+                          "items": {
+                            "properties": {
+                              "days": {
+                                "items": {
+                                  "maximum": 7,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              },
+                              "from": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "to": {
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "days",
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "dailyPosts",
+                        "dailyVideos",
+                        "windows"
+                      ],
+                      "type": "object"
+                    },
+                    "qualityPolicy": {
+                      "properties": {
+                        "aiDisclosure": {
+                          "default": "auto",
+                          "enum": [
+                            "auto",
+                            "always"
+                          ],
+                          "type": "string"
+                        },
+                        "humanReview": {
+                          "default": "always",
+                          "enum": [
+                            "always",
+                            "first_30_days",
+                            "score_below_threshold",
+                            "never"
+                          ],
+                          "type": "string"
+                        },
+                        "maxRegenerations": {
+                          "default": 2,
+                          "maximum": 5,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "minScore": {
+                          "default": 7,
+                          "maximum": 10,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "slug": {
+                      "maxLength": 40,
+                      "minLength": 2,
+                      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "draft",
+                        "warming",
+                        "active",
+                        "paused",
+                        "archived"
+                      ],
+                      "type": "string"
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "topicProfile": {
+                      "properties": {
+                        "exclude": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "freshnessHours": {
+                          "default": 36,
+                          "maximum": 168,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "include": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 60,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "sourceWeights": {
+                          "additionalProperties": {
+                            "maximum": 2,
+                            "minimum": 0,
+                            "type": "number"
+                          },
+                          "default": {},
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "visualKit": {
+                      "properties": {
+                        "avatar": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "kind": {
+                                  "const": "initials"
+                                }
+                              },
+                              "required": [
+                                "kind"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "properties": {
+                                "assetId": {
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "const": "asset"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "assetId"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "default": {
+                            "kind": "initials"
+                          }
+                        },
+                        "fontFamily": {
+                          "default": "body",
+                          "enum": [
+                            "display",
+                            "body",
+                            "mono"
+                          ],
+                          "type": "string"
+                        },
+                        "palette": {
+                          "default": {
+                            "accent": "#F2B705",
+                            "ground": "#F4F5F1",
+                            "primary": "#1F4E5A"
+                          },
+                          "properties": {
+                            "accent": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "ground": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            },
+                            "primary": {
+                              "pattern": "^#[0-9A-Fa-f]{6}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "primary",
+                            "accent",
+                            "ground"
+                          ],
+                          "type": "object"
+                        },
+                        "watermark": {
+                          "default": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "voiceBible": {
+                      "properties": {
+                        "audience": {
+                          "default": "",
+                          "maxLength": 400,
+                          "type": "string"
+                        },
+                        "bannedPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 100,
+                          "type": "array"
+                        },
+                        "doList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "dontList": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 200,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "emojiQuota": {
+                          "default": {
+                            "max": 2,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 10,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "experiencePool": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 600,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 40,
+                          "type": "array"
+                        },
+                        "hashtagQuota": {
+                          "default": {
+                            "max": 4,
+                            "min": 0
+                          },
+                          "properties": {
+                            "max": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "min": {
+                              "maximum": 30,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "type": "object"
+                        },
+                        "preferredPhrases": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 80,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 50,
+                          "type": "array"
+                        },
+                        "punctuation": {
+                          "default": {
+                            "emDash": "rare",
+                            "exclamation": "rare",
+                            "lowercaseStarts": false
+                          },
+                          "properties": {
+                            "emDash": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "exclamation": {
+                              "default": "rare",
+                              "enum": [
+                                "never",
+                                "rare",
+                                "free"
+                              ],
+                              "type": "string"
+                            },
+                            "lowercaseStarts": {
+                              "default": false,
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "register": {
+                          "default": "plain",
+                          "enum": [
+                            "casual",
+                            "plain",
+                            "professional",
+                            "playful"
+                          ],
+                          "type": "string"
+                        },
+                        "samplePosts": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 2000,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 12,
+                          "type": "array"
+                        },
+                        "summary": {
+                          "default": "",
+                          "maxLength": 1200,
+                          "type": "string"
+                        },
+                        "tone": {
+                          "default": [],
+                          "items": {
+                            "maxLength": 40,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "maxItems": 8,
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "warmupStartedAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "slug",
+                    "name",
+                    "niche",
+                    "language",
+                    "timezone",
+                    "status",
+                    "warmupStartedAt",
+                    "postingPolicy",
+                    "voiceBible",
+                    "visualKit",
+                    "topicProfile",
+                    "engagementPolicy",
+                    "qualityPolicy",
+                    "missingForStart",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Pause publishing and engagement",
+        "tags": [
+          "persona"
+        ]
+      }
     }
   },
   "servers": [

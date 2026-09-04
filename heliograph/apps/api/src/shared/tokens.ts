@@ -15,3 +15,4 @@ export const SUBSCRIPTION_REPOSITORY = Symbol('SubscriptionRepository');
 export const USAGE_REPOSITORY = Symbol('UsageRepository');
 export const CREDIT_LEDGER_REPOSITORY = Symbol('CreditLedgerRepository');
 export const CONSENT_REPOSITORY = Symbol('ConsentRepository');
+export const PERSONA_REPOSITORY = Symbol('PersonaRepository');

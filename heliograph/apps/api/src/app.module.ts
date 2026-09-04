@@ -9,6 +9,7 @@ import type { Database } from './db/client.js';
 import { DatabaseModule } from './db/database.module.js';
 import { BillingModule } from './modules/billing/billing.module.js';
 import { IdentityModule, type IdentityModuleOptions } from './modules/identity/identity.module.js';
+import { PersonaModule } from './modules/persona/persona.module.js';
 import { PrivacyModule } from './modules/privacy/privacy.module.js';
 import { SystemModule } from './modules/system/system.module.js';
 import { orpcProblemInterceptor } from './shared/http/orpc-problem.js';
@@ -59,6 +60,7 @@ export class AppModule {
         SystemModule,
         BillingModule,
         PrivacyModule,
+        PersonaModule,
       ],
     };
   }

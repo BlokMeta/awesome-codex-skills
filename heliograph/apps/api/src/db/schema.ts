@@ -6,4 +6,5 @@
 export * from '../modules/billing/infrastructure/schema.js';
 export * from '../modules/config/infrastructure/schema.js';
 export * from '../modules/identity/infrastructure/schema.js';
+export * from '../modules/persona/infrastructure/schema.js';
 export * from '../modules/privacy/infrastructure/schema.js';
