@@ -19,7 +19,8 @@
     "@orpc/contract": "catalog:",
     "@orpc/openapi": "catalog:",
     "@orpc/zod": "catalog:",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@heliograph/domain": "workspace:*"
   },
   "devDependencies": {
     "@heliograph/config": "workspace:*",

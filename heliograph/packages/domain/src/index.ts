@@ -1,4 +1,5 @@
 export * from './billing/entitlement.js';
+export * from './billing/ports.js';
 export * from './config/policy-entry.js';
 export * from './config/ports.js';
 export * from './identity/membership.js';
@@ -6,6 +7,7 @@ export * from './identity/ports.js';
 export * from './persona/persona.js';
 export * from './persona/posting-policy.js';
 export * from './privacy/consent.js';
+export * from './privacy/ports.js';
 export * from './shared/domain-error.js';
 export * from './shared/id.js';
 export * from './shared/ports.js';

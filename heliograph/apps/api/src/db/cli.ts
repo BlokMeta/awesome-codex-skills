@@ -1,3 +1,5 @@
+import { DrizzlePlanRepository } from '../modules/billing/infrastructure/drizzle-billing.repositories.js';
+import { seedPlans } from '../modules/billing/infrastructure/seed.js';
 import { DrizzlePolicyRepository } from '../modules/config/infrastructure/drizzle-policy.repository.js';
 import { seedEntries } from '../modules/config/infrastructure/seed.js';
 import { createPostgresDatabase } from './client.js';
@@ -14,7 +16,8 @@ async function main(command: string | undefined): Promise<void> {
       const inserted = await new DrizzlePolicyRepository(handle.db).seedIfMissing(
         seedEntries(new Date()),
       );
-      console.error(`seeded ${inserted} policy entries`);
+      const plans = await seedPlans(new DrizzlePlanRepository(handle.db));
+      console.error(`seeded ${inserted} policy entries, ${plans} plans`);
     } else {
       throw new Error(`unknown command: ${command ?? '(none)'} — use migrate | seed`);
     }

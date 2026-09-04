@@ -1,5 +1,7 @@
 import { createApp } from './bootstrap.js';
 import { createPostgresDatabase } from './db/client.js';
+import { DrizzlePlanRepository } from './modules/billing/infrastructure/drizzle-billing.repositories.js';
+import { seedPlans } from './modules/billing/infrastructure/seed.js';
 import { DrizzlePolicyRepository } from './modules/config/infrastructure/drizzle-policy.repository.js';
 import { seedEntries } from './modules/config/infrastructure/seed.js';
 import { readTelemetryOptions, startTelemetry } from './telemetry.js';
@@ -13,6 +15,7 @@ const handle = createPostgresDatabase(url);
 if ((process.env['HG_DB_AUTO_MIGRATE'] ?? 'true') === 'true') {
   await handle.migrate();
   await new DrizzlePolicyRepository(handle.db).seedIfMissing(seedEntries(new Date()));
+  await seedPlans(new DrizzlePlanRepository(handle.db));
 }
 
 const app = await createApp({

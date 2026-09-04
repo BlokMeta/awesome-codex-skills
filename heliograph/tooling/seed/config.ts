@@ -13,6 +13,8 @@ export interface SeedPolicy {
   notes?: string;
 }
 
+export * from './plans.js';
+
 export const configSeed: SeedPolicy[] = [
   // Platform limits
   {
@@ -368,6 +370,54 @@ export const configSeed: SeedPolicy[] = [
   },
   {
     key: 'legal.distance_sale.version',
+    scope: 'global',
+    scopeId: null,
+    value: '2026-09-03',
+    sourceUrl: null,
+    maxAgeDays: 180,
+  },
+  {
+    key: 'legal.aup.version',
+    scope: 'global',
+    scopeId: null,
+    value: '2026-09-03',
+    sourceUrl: null,
+    maxAgeDays: 180,
+  },
+  {
+    key: 'legal.ai_processing.version',
+    scope: 'global',
+    scopeId: null,
+    value: '2026-09-03',
+    sourceUrl: null,
+    maxAgeDays: 180,
+  },
+  {
+    key: 'legal.cookies.version',
+    scope: 'global',
+    scopeId: null,
+    value: '2026-09-03',
+    sourceUrl: null,
+    maxAgeDays: 180,
+  },
+  {
+    key: 'legal.kvkk_acik_riza_marketing.version',
+    scope: 'global',
+    scopeId: null,
+    value: '2026-09-03',
+    sourceUrl: null,
+    maxAgeDays: 180,
+  },
+  {
+    key: 'legal.kvkk_acik_riza_voice.version',
+    scope: 'global',
+    scopeId: null,
+    value: '2026-09-03',
+    sourceUrl: null,
+    maxAgeDays: 180,
+  },
+  {
+    key: 'legal.kvkk_acik_riza_likeness.version',
     scope: 'global',
     scopeId: null,
     value: '2026-09-03',

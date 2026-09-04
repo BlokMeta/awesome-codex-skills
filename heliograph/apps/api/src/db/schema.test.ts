@@ -46,12 +46,16 @@ describe('schema invariants', () => {
     expect(inv).toEqual(expect.arrayContaining([schema.workspaces, schema.operators]));
   });
 
-  it('every table has a text ULID primary key', () => {
+  it('every table has a text ULID primary key (or a composite key for pure join tables)', () => {
     for (const [name, table] of tables) {
       const cfg = getTableConfig(table);
       const pk = cfg.columns.find((c) => c.primary);
-      expect(pk?.name, name).toBe('id');
-      expect(pk?.dataType, name).toBe('string');
+      if (!pk) {
+        expect(cfg.primaryKeys.length, `${name}: composite primary key`).toBe(1);
+        continue;
+      }
+      expect(pk.name, name).toBe('id');
+      expect(pk.dataType, name).toBe('string');
     }
   });
 });

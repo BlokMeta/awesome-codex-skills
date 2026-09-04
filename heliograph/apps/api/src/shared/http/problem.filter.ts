@@ -24,13 +24,19 @@ export class ProblemFilter implements ExceptionFilter<HttpException> {
     const extra = typeof res === 'object' && res !== null ? (res as Record<string, unknown>) : {};
     const slug = SLUGS[status] ?? 'error';
     const code = typeof extra['code'] === 'string' ? extra['code'] : `http.${slug}`;
+    const messageId =
+      typeof extra['messageId'] === 'string' ? extra['messageId'] : `errors.${code}`;
+    const params = extra['params'];
     const problem: Problem = {
-      type: problemType(slug),
+      type: problemType(code.includes('.') ? code.replace(/[._]/g, '-') : slug),
       title: exception.message,
       status,
       instance: req.url,
       code,
-      messageId: `errors.${code}`,
+      messageId,
+      ...(params && typeof params === 'object'
+        ? { params: params as Record<string, string | number> }
+        : {}),
       requestId: String(req.id),
     };
     void reply.status(status).header('content-type', 'application/problem+json').send(problem);

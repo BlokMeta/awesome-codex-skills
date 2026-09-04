@@ -5,6 +5,645 @@
   },
   "openapi": "3.1.1",
   "paths": {
+    "/v1/billing/entitlements": {
+      "get": {
+        "operationId": "billing.entitlements",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "credits": {
+                      "properties": {
+                        "balance": {
+                          "maximum": 9007199254740991,
+                          "minimum": -9007199254740991,
+                          "type": "integer"
+                        },
+                        "monthlyGrant": {
+                          "maximum": 9007199254740991,
+                          "minimum": -9007199254740991,
+                          "type": "integer"
+                        },
+                        "warning": {
+                          "enum": [
+                            "ok",
+                            "warning",
+                            "exhausted"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "balance",
+                        "monthlyGrant",
+                        "warning"
+                      ],
+                      "type": "object"
+                    },
+                    "entitlements": {
+                      "items": {
+                        "properties": {
+                          "feature": {
+                            "enum": [
+                              "connected_accounts",
+                              "personas",
+                              "daily_posts",
+                              "daily_videos",
+                              "ai_credits_month",
+                              "team_members",
+                              "manual_library",
+                              "video_pipeline",
+                              "voice_clone",
+                              "crm",
+                              "api_access",
+                              "white_label"
+                            ],
+                            "type": "string"
+                          },
+                          "kind": {
+                            "enum": [
+                              "count",
+                              "daily",
+                              "monthly",
+                              "flag"
+                            ],
+                            "type": "string"
+                          },
+                          "limit": {
+                            "anyOf": [
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "remaining": {
+                            "anyOf": [
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "used": {
+                            "anyOf": [
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "feature",
+                          "kind",
+                          "limit",
+                          "used",
+                          "remaining"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "plan": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "name"
+                      ],
+                      "type": "object"
+                    },
+                    "subscription": {
+                      "anyOf": [
+                        {
+                          "properties": {
+                            "cancelAtPeriodEnd": {
+                              "type": "boolean"
+                            },
+                            "currentPeriodEnd": {
+                              "format": "date-time",
+                              "type": "string"
+                            },
+                            "status": {
+                              "enum": [
+                                "trialing",
+                                "active",
+                                "past_due",
+                                "paused",
+                                "cancelled",
+                                "expired"
+                              ],
+                              "type": "string"
+                            },
+                            "trialEndsAt": {
+                              "anyOf": [
+                                {
+                                  "format": "date-time",
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "status",
+                            "currentPeriodEnd",
+                            "cancelAtPeriodEnd",
+                            "trialEndsAt"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "workspaceId",
+                    "plan",
+                    "subscription",
+                    "entitlements",
+                    "credits"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Plan, entitlements and credit balance of the active workspace",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/v1/consents": {
+      "get": {
+        "operationId": "privacy.consentStatus",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "accepted": {
+                      "items": {
+                        "properties": {
+                          "acceptedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "document": {
+                            "enum": [
+                              "terms",
+                              "privacy",
+                              "kvkk_aydinlatma",
+                              "kvkk_acik_riza_marketing",
+                              "kvkk_acik_riza_voice",
+                              "kvkk_acik_riza_likeness",
+                              "cookies",
+                              "distance_sale",
+                              "aup",
+                              "ai_processing"
+                            ],
+                            "type": "string"
+                          },
+                          "version": {
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "document",
+                          "version",
+                          "acceptedAt"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "optional": {
+                      "additionalProperties": {
+                        "enum": [
+                          "granted",
+                          "not_granted",
+                          "outdated"
+                        ],
+                        "type": "string"
+                      },
+                      "propertyNames": {
+                        "enum": [
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "object"
+                    },
+                    "pending": {
+                      "items": {
+                        "enum": [
+                          "terms",
+                          "privacy",
+                          "kvkk_aydinlatma",
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies",
+                          "distance_sale",
+                          "aup",
+                          "ai_processing"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "published": {
+                      "additionalProperties": {
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                        "type": "string"
+                      },
+                      "propertyNames": {
+                        "enum": [
+                          "terms",
+                          "privacy",
+                          "kvkk_aydinlatma",
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies",
+                          "distance_sale",
+                          "aup",
+                          "ai_processing"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "pending",
+                    "accepted",
+                    "optional",
+                    "published"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Legal documents accepted / pending for the current operator",
+        "tags": [
+          "privacy"
+        ]
+      },
+      "post": {
+        "operationId": "privacy.acceptConsents",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "accept": {
+                    "items": {
+                      "properties": {
+                        "document": {
+                          "enum": [
+                            "terms",
+                            "privacy",
+                            "kvkk_aydinlatma",
+                            "kvkk_acik_riza_marketing",
+                            "kvkk_acik_riza_voice",
+                            "kvkk_acik_riza_likeness",
+                            "cookies",
+                            "distance_sale",
+                            "aup",
+                            "ai_processing"
+                          ],
+                          "type": "string"
+                        },
+                        "version": {
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "document",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 20,
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "accept"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "accepted": {
+                      "items": {
+                        "properties": {
+                          "acceptedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "document": {
+                            "enum": [
+                              "terms",
+                              "privacy",
+                              "kvkk_aydinlatma",
+                              "kvkk_acik_riza_marketing",
+                              "kvkk_acik_riza_voice",
+                              "kvkk_acik_riza_likeness",
+                              "cookies",
+                              "distance_sale",
+                              "aup",
+                              "ai_processing"
+                            ],
+                            "type": "string"
+                          },
+                          "version": {
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "document",
+                          "version",
+                          "acceptedAt"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "optional": {
+                      "additionalProperties": {
+                        "enum": [
+                          "granted",
+                          "not_granted",
+                          "outdated"
+                        ],
+                        "type": "string"
+                      },
+                      "propertyNames": {
+                        "enum": [
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "object"
+                    },
+                    "pending": {
+                      "items": {
+                        "enum": [
+                          "terms",
+                          "privacy",
+                          "kvkk_aydinlatma",
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies",
+                          "distance_sale",
+                          "aup",
+                          "ai_processing"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "published": {
+                      "additionalProperties": {
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                        "type": "string"
+                      },
+                      "propertyNames": {
+                        "enum": [
+                          "terms",
+                          "privacy",
+                          "kvkk_aydinlatma",
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies",
+                          "distance_sale",
+                          "aup",
+                          "ai_processing"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "pending",
+                    "accepted",
+                    "optional",
+                    "published"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Record acceptance of legal documents at their published version",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/v1/consents/withdraw": {
+      "post": {
+        "operationId": "privacy.withdrawConsent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "document": {
+                    "enum": [
+                      "kvkk_acik_riza_marketing",
+                      "kvkk_acik_riza_voice",
+                      "kvkk_acik_riza_likeness",
+                      "cookies"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "document"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "accepted": {
+                      "items": {
+                        "properties": {
+                          "acceptedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "document": {
+                            "enum": [
+                              "terms",
+                              "privacy",
+                              "kvkk_aydinlatma",
+                              "kvkk_acik_riza_marketing",
+                              "kvkk_acik_riza_voice",
+                              "kvkk_acik_riza_likeness",
+                              "cookies",
+                              "distance_sale",
+                              "aup",
+                              "ai_processing"
+                            ],
+                            "type": "string"
+                          },
+                          "version": {
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "document",
+                          "version",
+                          "acceptedAt"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "optional": {
+                      "additionalProperties": {
+                        "enum": [
+                          "granted",
+                          "not_granted",
+                          "outdated"
+                        ],
+                        "type": "string"
+                      },
+                      "propertyNames": {
+                        "enum": [
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "object"
+                    },
+                    "pending": {
+                      "items": {
+                        "enum": [
+                          "terms",
+                          "privacy",
+                          "kvkk_aydinlatma",
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies",
+                          "distance_sale",
+                          "aup",
+                          "ai_processing"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "published": {
+                      "additionalProperties": {
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                        "type": "string"
+                      },
+                      "propertyNames": {
+                        "enum": [
+                          "terms",
+                          "privacy",
+                          "kvkk_aydinlatma",
+                          "kvkk_acik_riza_marketing",
+                          "kvkk_acik_riza_voice",
+                          "kvkk_acik_riza_likeness",
+                          "cookies",
+                          "distance_sale",
+                          "aup",
+                          "ai_processing"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "pending",
+                    "accepted",
+                    "optional",
+                    "published"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Withdraw an optional consent (KVKK explicit consent, cookies)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
     "/v1/health": {
       "get": {
         "operationId": "system.health",

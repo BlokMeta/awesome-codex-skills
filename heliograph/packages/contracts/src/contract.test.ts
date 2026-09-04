@@ -6,6 +6,8 @@ describe('contract', () => {
     expect(contract.system.health['~orpc'].route?.path).toBe('/v1/health');
     expect(contract.system.configHealth['~orpc'].route?.path).toBe('/v1/health/config');
     expect(contract.identity.me['~orpc'].route?.path).toBe('/v1/me');
+    expect(contract.billing.entitlements['~orpc'].route?.path).toBe('/v1/billing/entitlements');
+    expect(contract.privacy.acceptConsents['~orpc'].route?.method).toBe('POST');
   });
 
   it('health response requires the stale-config counter (ADR-0011)', () => {
