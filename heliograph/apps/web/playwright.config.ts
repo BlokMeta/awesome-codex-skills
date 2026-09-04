@@ -42,6 +42,7 @@ export default defineConfig({
         HG_DATABASE_URL: 'pglite://',
         HG_DB_AUTO_MIGRATE: 'true',
         HG_APP_SECRET: 'e2e-secret-e2e-secret-e2e-secret-0123456789',
+        HG_ENCRYPTION_MASTER_KEY: 'ZTJlLW1hc3Rlci1rZXktZTJlLW1hc3Rlci1rZXktMDE=',
         HG_PUBLIC_API_URL: apiUrl,
         HG_PUBLIC_WEB_URL: webUrl,
         HG_API_PORT: String(API_PORT),

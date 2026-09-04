@@ -4,6 +4,7 @@
  * file — modules use their own schema through their own repositories.
  */
 export * from '../modules/billing/infrastructure/schema.js';
+export * from '../modules/channel/infrastructure/schema.js';
 export * from '../modules/config/infrastructure/schema.js';
 export * from '../modules/identity/infrastructure/schema.js';
 export * from '../modules/persona/infrastructure/schema.js';

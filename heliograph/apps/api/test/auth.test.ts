@@ -9,6 +9,7 @@ import { seedEntries } from '../src/modules/config/infrastructure/seed.js';
 import { DrizzleMembershipRepository } from '../src/modules/identity/infrastructure/drizzle-membership.repository.js';
 import { LogEmailSender } from '../src/modules/identity/infrastructure/log-email-sender.js';
 import { testIdentityOptions } from './support/auth.js';
+import { testChannelOptions } from './support/channel.js';
 import { createTestDatabase } from './support/db.js';
 import { TestClient } from './support/http.js';
 import { totpFromUri } from './support/totp.js';
@@ -22,7 +23,11 @@ const password = 'correct horse battery staple';
 beforeAll(async () => {
   handle = await createTestDatabase();
   await new DrizzlePolicyRepository(handle.db).seedIfMissing(seedEntries(new Date()));
-  app = await createApp({ db: handle.db, identity: testIdentityOptions(email) });
+  app = await createApp({
+    db: handle.db,
+    identity: testIdentityOptions(email),
+    channel: testChannelOptions(),
+  });
   await app.init();
   await app.getHttpAdapter().getInstance().ready();
 });

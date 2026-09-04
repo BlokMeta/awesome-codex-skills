@@ -199,6 +199,1115 @@
         ]
       }
     },
+    "/v1/channels": {
+      "get": {
+        "operationId": "channel.list",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "default": 25,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "allowEmptyValue": true,
+            "allowReserved": true,
+            "in": "query",
+            "name": "personaId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "properties": {
+                          "capabilities": {
+                            "additionalProperties": {},
+                            "properties": {
+                              "comments": {
+                                "default": "none",
+                                "type": "string"
+                              },
+                              "dm": {
+                                "default": "none",
+                                "type": "string"
+                              },
+                              "insights": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "string"
+                                  }
+                                ],
+                                "default": false
+                              },
+                              "publish": {
+                                "default": [],
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "createdAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "externalAccountId": {
+                            "type": "string"
+                          },
+                          "handle": {
+                            "type": "string"
+                          },
+                          "health": {
+                            "enum": [
+                              "ok",
+                              "token_expiring",
+                              "token_expired",
+                              "rate_limited",
+                              "restricted",
+                              "banned"
+                            ],
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "lastError": {
+                            "anyOf": [
+                              {
+                                "properties": {
+                                  "at": {
+                                    "format": "date-time",
+                                    "type": "string"
+                                  },
+                                  "code": {
+                                    "type": "string"
+                                  },
+                                  "message": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "code",
+                                  "message",
+                                  "at"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "lastSyncAt": {
+                            "anyOf": [
+                              {
+                                "format": "date-time",
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "personaId": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "platform": {
+                            "enum": [
+                              "instagram",
+                              "threads",
+                              "x",
+                              "youtube",
+                              "tiktok",
+                              "telegram"
+                            ],
+                            "type": "string"
+                          },
+                          "scopes": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "tokenExpiresAt": {
+                            "anyOf": [
+                              {
+                                "format": "date-time",
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "updatedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "workspaceId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "workspaceId",
+                          "personaId",
+                          "platform",
+                          "externalAccountId",
+                          "handle",
+                          "displayName",
+                          "scopes",
+                          "capabilities",
+                          "health",
+                          "tokenExpiresAt",
+                          "lastSyncAt",
+                          "lastError",
+                          "createdAt",
+                          "updatedAt"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ],
+                      "type": "object"
+                    },
+                    "page": {
+                      "properties": {
+                        "hasMore": {
+                          "type": "boolean"
+                        },
+                        "limit": {
+                          "maximum": 9007199254740991,
+                          "minimum": -9007199254740991,
+                          "type": "integer"
+                        },
+                        "nextCursor": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "prevCursor": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "nextCursor",
+                        "prevCursor",
+                        "limit",
+                        "hasMore"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "page",
+                    "meta"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Connected channels of the active workspace",
+        "tags": [
+          "channel"
+        ]
+      }
+    },
+    "/v1/channels/{id}": {
+      "delete": {
+        "operationId": "channel.disconnect",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "not": {}
+                    },
+                    {
+                      "not": {}
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Disconnect and destroy the stored credential",
+        "tags": [
+          "channel"
+        ]
+      },
+      "get": {
+        "operationId": "channel.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "capabilities": {
+                      "additionalProperties": {},
+                      "properties": {
+                        "comments": {
+                          "default": "none",
+                          "type": "string"
+                        },
+                        "dm": {
+                          "default": "none",
+                          "type": "string"
+                        },
+                        "insights": {
+                          "anyOf": [
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "default": false
+                        },
+                        "publish": {
+                          "default": [],
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "externalAccountId": {
+                      "type": "string"
+                    },
+                    "handle": {
+                      "type": "string"
+                    },
+                    "health": {
+                      "enum": [
+                        "ok",
+                        "token_expiring",
+                        "token_expired",
+                        "rate_limited",
+                        "restricted",
+                        "banned"
+                      ],
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "lastError": {
+                      "anyOf": [
+                        {
+                          "properties": {
+                            "at": {
+                              "format": "date-time",
+                              "type": "string"
+                            },
+                            "code": {
+                              "type": "string"
+                            },
+                            "message": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "message",
+                            "at"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "lastSyncAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "personaId": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "platform": {
+                      "enum": [
+                        "instagram",
+                        "threads",
+                        "x",
+                        "youtube",
+                        "tiktok",
+                        "telegram"
+                      ],
+                      "type": "string"
+                    },
+                    "scopes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "tokenExpiresAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "personaId",
+                    "platform",
+                    "externalAccountId",
+                    "handle",
+                    "displayName",
+                    "scopes",
+                    "capabilities",
+                    "health",
+                    "tokenExpiresAt",
+                    "lastSyncAt",
+                    "lastError",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Channel detail",
+        "tags": [
+          "channel"
+        ]
+      },
+      "patch": {
+        "operationId": "channel.update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "personaId": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "personaId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "capabilities": {
+                      "additionalProperties": {},
+                      "properties": {
+                        "comments": {
+                          "default": "none",
+                          "type": "string"
+                        },
+                        "dm": {
+                          "default": "none",
+                          "type": "string"
+                        },
+                        "insights": {
+                          "anyOf": [
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "default": false
+                        },
+                        "publish": {
+                          "default": [],
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "externalAccountId": {
+                      "type": "string"
+                    },
+                    "handle": {
+                      "type": "string"
+                    },
+                    "health": {
+                      "enum": [
+                        "ok",
+                        "token_expiring",
+                        "token_expired",
+                        "rate_limited",
+                        "restricted",
+                        "banned"
+                      ],
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "lastError": {
+                      "anyOf": [
+                        {
+                          "properties": {
+                            "at": {
+                              "format": "date-time",
+                              "type": "string"
+                            },
+                            "code": {
+                              "type": "string"
+                            },
+                            "message": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "message",
+                            "at"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "lastSyncAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "personaId": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "platform": {
+                      "enum": [
+                        "instagram",
+                        "threads",
+                        "x",
+                        "youtube",
+                        "tiktok",
+                        "telegram"
+                      ],
+                      "type": "string"
+                    },
+                    "scopes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "tokenExpiresAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "personaId",
+                    "platform",
+                    "externalAccountId",
+                    "handle",
+                    "displayName",
+                    "scopes",
+                    "capabilities",
+                    "health",
+                    "tokenExpiresAt",
+                    "lastSyncAt",
+                    "lastError",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Assign the channel to a persona (null = unassigned)",
+        "tags": [
+          "channel"
+        ]
+      }
+    },
+    "/v1/channels/{id}/test": {
+      "post": {
+        "operationId": "channel.test",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "detail": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "handle": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "health": {
+                      "enum": [
+                        "ok",
+                        "token_expiring",
+                        "token_expired",
+                        "rate_limited",
+                        "restricted",
+                        "banned"
+                      ],
+                      "type": "string"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "handle",
+                    "health",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Make a real read call with the stored credential",
+        "tags": [
+          "channel"
+        ]
+      }
+    },
+    "/v1/channels/oauth/{platform}/start": {
+      "post": {
+        "operationId": "channel.startOAuth",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "platform",
+            "required": true,
+            "schema": {
+              "enum": [
+                "instagram",
+                "threads",
+                "x",
+                "youtube",
+                "tiktok"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "personaId": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "state": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "format": "uri",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "state"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Begin an OAuth connection; the browser is sent to `url`",
+        "tags": [
+          "channel"
+        ]
+      }
+    },
+    "/v1/channels/platforms": {
+      "get": {
+        "operationId": "channel.platforms",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "available": {
+                      "items": {
+                        "enum": [
+                          "instagram",
+                          "threads",
+                          "x",
+                          "youtube",
+                          "tiktok",
+                          "telegram"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "available"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Connectable platforms",
+        "tags": [
+          "channel"
+        ]
+      }
+    },
+    "/v1/channels/telegram": {
+      "post": {
+        "operationId": "channel.connectTelegram",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "botToken": {
+                    "maxLength": 200,
+                    "minLength": 20,
+                    "type": "string"
+                  },
+                  "personaId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "botToken"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "capabilities": {
+                      "additionalProperties": {},
+                      "properties": {
+                        "comments": {
+                          "default": "none",
+                          "type": "string"
+                        },
+                        "dm": {
+                          "default": "none",
+                          "type": "string"
+                        },
+                        "insights": {
+                          "anyOf": [
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "default": false
+                        },
+                        "publish": {
+                          "default": [],
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "externalAccountId": {
+                      "type": "string"
+                    },
+                    "handle": {
+                      "type": "string"
+                    },
+                    "health": {
+                      "enum": [
+                        "ok",
+                        "token_expiring",
+                        "token_expired",
+                        "rate_limited",
+                        "restricted",
+                        "banned"
+                      ],
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "lastError": {
+                      "anyOf": [
+                        {
+                          "properties": {
+                            "at": {
+                              "format": "date-time",
+                              "type": "string"
+                            },
+                            "code": {
+                              "type": "string"
+                            },
+                            "message": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "message",
+                            "at"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "lastSyncAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "personaId": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "platform": {
+                      "enum": [
+                        "instagram",
+                        "threads",
+                        "x",
+                        "youtube",
+                        "tiktok",
+                        "telegram"
+                      ],
+                      "type": "string"
+                    },
+                    "scopes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "tokenExpiresAt": {
+                      "anyOf": [
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "updatedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "personaId",
+                    "platform",
+                    "externalAccountId",
+                    "handle",
+                    "displayName",
+                    "scopes",
+                    "capabilities",
+                    "health",
+                    "tokenExpiresAt",
+                    "lastSyncAt",
+                    "lastError",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "summary": "Connect a Telegram bot by token (validated with getMe)",
+        "tags": [
+          "channel"
+        ]
+      }
+    },
     "/v1/consents": {
       "get": {
         "operationId": "privacy.consentStatus",

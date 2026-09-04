@@ -1,5 +1,7 @@
 export * from './billing/entitlement.js';
 export * from './billing/ports.js';
+export * from './channel/channel.js';
+export * from './channel/ports.js';
 export * from './config/policy-entry.js';
 export * from './config/ports.js';
 export * from './identity/membership.js';

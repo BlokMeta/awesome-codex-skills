@@ -502,6 +502,9 @@ msgstr "Complete the missing steps before starting."
 msgid "errors.persona.invalidTransition"
 msgstr "Cannot move this persona from {from} to {to}."
 
+msgid "errors.persona.notFound"
+msgstr "Persona not found."
+
 msgid "errors.identity.notAMember"
 msgstr "You are not a member of this workspace."
 
@@ -531,6 +534,24 @@ msgstr "Invalid credit amount."
 
 msgid "errors.channel.quotaExceeded"
 msgstr "{channel} has no publishing quota left until {resetAt}."
+
+msgid "errors.channel.notFound"
+msgstr "Channel not found."
+
+msgid "errors.channel.providerNotConfigured"
+msgstr "{platform} is not enabled on this deployment yet."
+
+msgid "errors.channel.providerRejected"
+msgstr "{platform} rejected the request: {detail}"
+
+msgid "errors.channel.oauthStateInvalid"
+msgstr "This connection link is invalid or has expired. Start again."
+
+msgid "errors.channel.oauthDenied"
+msgstr "Permission was not granted on the platform ({reason})."
+
+msgid "errors.channel.connectedElsewhere"
+msgstr "@{handle} is already connected to another workspace."
 
 msgid "errors.validation.past"
 msgstr "This time is in the past."

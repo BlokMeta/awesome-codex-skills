@@ -18,6 +18,6 @@ import { PersonaController } from './interface/persona.controller.js';
     },
     PersonaService,
   ],
-  exports: [PersonaService],
+  exports: [PersonaService, PERSONA_REPOSITORY],
 })
 export class PersonaModule {}

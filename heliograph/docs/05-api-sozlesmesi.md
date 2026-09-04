@@ -81,8 +81,7 @@ Yanıt:
 | billing | `GET /billing/entitlements` (plan, haklar, kullanım, kredi) — **canlı**; checkout/webhook M1.6 |
 | privacy | `GET /consents`, `POST /consents` (kabul), `POST /consents/withdraw` — **canlı**; silme/dışa aktarma M2.8 |
 | persona | `GET /personas` (cursor), `POST /personas` (201, taslak), `GET/PATCH /personas/{id}` (her sihirbaz adımı; `reason` ile sürümlenir), `POST /personas/{id}/{activate,pause,archive}` — **canlı**; `Idempotency-Key` M1.4'te |
-| personas | `GET/POST /personas`, `GET/PATCH /personas/{id}`, `POST /personas/{id}:activate`, `:pause`, `GET /personas/{id}/health` |
-| channels | `GET /channels`, `POST /channels/oauth/{platform}:start`, `/callback`, `PATCH /channels/{id}`, `POST /channels/{id}:refresh`, `GET /channels/{id}/quota` |
+| channel | `GET /channels/platforms` (bu kurulumda bağlanabilir platformlar), `GET /channels` (cursor, `personaId` filtresi), `GET /channels/{id}`, `POST /channels/oauth/{platform}/start` → `{url,state}`, `GET /channels/oauth/{platform}/callback` (**public**, tarayıcıyı `web/channels?connected=…` ya da `?error=<code>&platform=…` adresine 302 ile yollar), `POST /channels/telegram` (201, bot token → getMe), `PATCH /channels/{id}` (persona ata), `POST /channels/{id}/test` (gerçek okuma çağrısı, sağlığı günceller), `DELETE /channels/{id}` (204, kimlik bilgisi yok edilir) — **canlı**; `GET /channels/{id}/quota` M2.6 |
 | trends | `GET /trends/clusters` (sayfalı, skor sıralı), `GET /trends/clusters/{id}`, `POST /briefs` (manuel brief) |
 | briefs / drafts | `GET /briefs`, `GET /briefs/{id}`, `POST /briefs/{id}:regenerate` |
 | assets | `GET /assets/{id}`, `GET /assets/{id}/preview` |

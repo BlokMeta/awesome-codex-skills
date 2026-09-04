@@ -7,6 +7,8 @@ const STATUS_BY_CODE: Record<string, number> = {
   'billing.insufficient_credits': 429,
   'identity.not_a_member': 403,
   'identity.forbidden': 403,
+  'channel.provider_not_configured': 503,
+  'channel.provider_rejected': 502,
 };
 
 const ORPC_CODE: Record<number, string> = {
@@ -14,6 +16,8 @@ const ORPC_CODE: Record<number, string> = {
   409: 'CONFLICT',
   422: 'UNPROCESSABLE_CONTENT',
   429: 'TOO_MANY_REQUESTS',
+  502: 'BAD_GATEWAY',
+  503: 'SERVICE_UNAVAILABLE',
 };
 
 const problemOf = (e: DomainError) => ({

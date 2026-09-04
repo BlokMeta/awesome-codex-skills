@@ -13,6 +13,8 @@ CREATE TYPE "public"."credit_reason" AS ENUM('plan_grant', 'purchase', 'usage', 
 CREATE TYPE "public"."plan_interval" AS ENUM('month', 'year');--> statement-breakpoint
 CREATE TYPE "public"."subscription_provider" AS ENUM('paddle', 'polar', 'iyzico', 'apple', 'google', 'manual');--> statement-breakpoint
 CREATE TYPE "public"."subscription_status" AS ENUM('trialing', 'active', 'past_due', 'paused', 'cancelled', 'expired');--> statement-breakpoint
+CREATE TYPE "public"."channel_health" AS ENUM('ok', 'token_expiring', 'token_expired', 'rate_limited', 'restricted', 'banned');--> statement-breakpoint
+CREATE TYPE "public"."platform" AS ENUM('instagram', 'threads', 'x', 'youtube', 'tiktok', 'telegram');--> statement-breakpoint
 CREATE TYPE "public"."policy_scope" AS ENUM('global', 'platform', 'workspace');--> statement-breakpoint
 CREATE TYPE "public"."invitation_status" AS ENUM('pending', 'accepted', 'rejected', 'canceled');--> statement-breakpoint
 CREATE TYPE "public"."membership_role" AS ENUM('owner', 'admin', 'editor', 'viewer');--> statement-breakpoint
@@ -87,6 +89,52 @@ CREATE TABLE "usage_records" (
 );
 --> statement-breakpoint
 ALTER TABLE "usage_records" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
+CREATE TABLE "channels" (
+	"id" text PRIMARY KEY NOT NULL,
+	"workspace_id" text NOT NULL,
+	"persona_id" text,
+	"platform" "platform" NOT NULL,
+	"external_account_id" text NOT NULL,
+	"handle" text NOT NULL,
+	"display_name" text DEFAULT '' NOT NULL,
+	"credential_id" text NOT NULL,
+	"scopes" jsonb DEFAULT '[]'::jsonb NOT NULL,
+	"capabilities" jsonb NOT NULL,
+	"health" "channel_health" DEFAULT 'ok' NOT NULL,
+	"token_expires_at" timestamp with time zone,
+	"last_sync_at" timestamp with time zone,
+	"last_error" jsonb,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE "channels" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
+CREATE TABLE "credentials" (
+	"id" text PRIMARY KEY NOT NULL,
+	"workspace_id" text NOT NULL,
+	"kind" text NOT NULL,
+	"ciphertext" "bytea" NOT NULL,
+	"wrapped_dek" "bytea" NOT NULL,
+	"key_version" integer NOT NULL,
+	"expires_at" timestamp with time zone,
+	"rotated_at" timestamp with time zone,
+	"revoked_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE "credentials" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
+CREATE TABLE "oauth_states" (
+	"state" text PRIMARY KEY NOT NULL,
+	"workspace_id" text NOT NULL,
+	"operator_id" text NOT NULL,
+	"platform" "platform" NOT NULL,
+	"persona_id" text,
+	"code_verifier" text,
+	"expires_at" timestamp with time zone NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE "oauth_states" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
 CREATE TABLE "feature_flags" (
 	"id" text PRIMARY KEY NOT NULL,
 	"key" text NOT NULL,
@@ -287,6 +335,7 @@ CREATE TABLE "erasure_requests" (
 ALTER TABLE "erasure_requests" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
 ALTER TABLE "plan_entitlements" ADD CONSTRAINT "plan_entitlements_plan_id_plans_id_fk" FOREIGN KEY ("plan_id") REFERENCES "public"."plans"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_plan_id_plans_id_fk" FOREIGN KEY ("plan_id") REFERENCES "public"."plans"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "channels" ADD CONSTRAINT "channels_credential_id_credentials_id_fk" FOREIGN KEY ("credential_id") REFERENCES "public"."credentials"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "auth_accounts" ADD CONSTRAINT "auth_accounts_operator_id_operators_id_fk" FOREIGN KEY ("operator_id") REFERENCES "public"."operators"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "invitations" ADD CONSTRAINT "invitations_workspace_id_workspaces_id_fk" FOREIGN KEY ("workspace_id") REFERENCES "public"."workspaces"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "invitations" ADD CONSTRAINT "invitations_inviter_id_operators_id_fk" FOREIGN KEY ("inviter_id") REFERENCES "public"."operators"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -301,6 +350,11 @@ CREATE INDEX "credit_ledger_workspace_at_idx" ON "credit_ledger" USING btree ("w
 CREATE UNIQUE INDEX "plans_code_unique" ON "plans" USING btree ("code");--> statement-breakpoint
 CREATE INDEX "subscriptions_workspace_created_idx" ON "subscriptions" USING btree ("workspace_id","created_at");--> statement-breakpoint
 CREATE INDEX "usage_records_workspace_feature_at_idx" ON "usage_records" USING btree ("workspace_id","feature","at");--> statement-breakpoint
+CREATE UNIQUE INDEX "channels_platform_account_unique" ON "channels" USING btree ("platform","external_account_id");--> statement-breakpoint
+CREATE INDEX "channels_workspace_created_idx" ON "channels" USING btree ("workspace_id","created_at","id");--> statement-breakpoint
+CREATE INDEX "channels_persona_idx" ON "channels" USING btree ("persona_id");--> statement-breakpoint
+CREATE INDEX "credentials_workspace_idx" ON "credentials" USING btree ("workspace_id");--> statement-breakpoint
+CREATE INDEX "oauth_states_expires_idx" ON "oauth_states" USING btree ("expires_at");--> statement-breakpoint
 CREATE UNIQUE INDEX "policy_entries_target_version_unique" ON "policy_entries" USING btree ("key","scope",coalesce("scope_id", ''),"version");--> statement-breakpoint
 CREATE INDEX "policy_entries_key_idx" ON "policy_entries" USING btree ("key");--> statement-breakpoint
 CREATE UNIQUE INDEX "auth_accounts_issuer_account_unique" ON "auth_accounts" USING btree ("issuer","account_id");--> statement-breakpoint
@@ -325,6 +379,9 @@ CREATE INDEX "erasure_requests_due_idx" ON "erasure_requests" USING btree ("comp
 CREATE POLICY "credit_ledger_tenant_isolation" ON "credit_ledger" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
 CREATE POLICY "subscriptions_tenant_isolation" ON "subscriptions" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
 CREATE POLICY "usage_records_tenant_isolation" ON "usage_records" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
+CREATE POLICY "channels_tenant_isolation" ON "channels" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
+CREATE POLICY "credentials_tenant_isolation" ON "credentials" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
+CREATE POLICY "oauth_states_tenant_isolation" ON "oauth_states" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
 CREATE POLICY "policy_entries_scope_visibility" ON "policy_entries" AS PERMISSIVE FOR ALL TO "hg_app" USING (scope <> 'workspace' OR scope_id = current_setting('hg.workspace_id', true)) WITH CHECK (scope <> 'workspace' OR scope_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
 CREATE POLICY "invitations_tenant_isolation" ON "invitations" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint
 CREATE POLICY "memberships_tenant_isolation" ON "memberships" AS PERMISSIVE FOR ALL TO "hg_app" USING (workspace_id = current_setting('hg.workspace_id', true)) WITH CHECK (workspace_id = current_setting('hg.workspace_id', true));--> statement-breakpoint

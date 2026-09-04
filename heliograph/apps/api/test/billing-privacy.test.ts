@@ -13,6 +13,7 @@ import { seedPlans } from '../src/modules/billing/infrastructure/seed.js';
 import { DrizzlePolicyRepository } from '../src/modules/config/infrastructure/drizzle-policy.repository.js';
 import { seedEntries } from '../src/modules/config/infrastructure/seed.js';
 import { testIdentityOptions } from './support/auth.js';
+import { testChannelOptions } from './support/channel.js';
 import { createTestDatabase } from './support/db.js';
 import { TestClient } from './support/http.js';
 
@@ -26,7 +27,11 @@ beforeAll(async () => {
   handle = await createTestDatabase();
   await new DrizzlePolicyRepository(handle.db).seedIfMissing(seedEntries(new Date()));
   await seedPlans(new DrizzlePlanRepository(handle.db));
-  app = await createApp({ db: handle.db, identity: testIdentityOptions() });
+  app = await createApp({
+    db: handle.db,
+    identity: testIdentityOptions(),
+    channel: testChannelOptions(),
+  });
   await app.init();
   await app.getHttpAdapter().getInstance().ready();
   client = new TestClient(app);

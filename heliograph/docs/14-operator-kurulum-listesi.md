@@ -26,7 +26,7 @@ Sıra önemli: **A → B → C** en uzun süren inceleme süreçlerini erkenden 
 2. **Uygulama oluştur** → "Other" → "Business" tipi → ad: Heliograph.
 3. **Instagram ürünü ekle** → "Instagram API with Instagram Login" → App ID / App Secret al.
 4. **Threads ürünü ekle** → ayrı Threads App ID / Secret verir.
-5. Geri dönüş URL'leri: `https://api.<alan>/v1/channels/oauth/instagram/callback` ve `.../threads/callback` (yerel için `http://localhost:4000/...` da ekle).
+5. Geri dönüş URL'leri: `https://api.<alan>/v1/channels/oauth/instagram/callback` ve `.../threads/callback` (yerel için `http://localhost:4000/...` da ekle). Uygulama bu adresi `HG_PUBLIC_API_URL` + `/v1/channels/oauth/<platform>/callback` olarak üretir; birebir aynı olmalı.
 6. İzinler (scopes): Instagram: `instagram_business_basic, instagram_business_content_publish, instagram_business_manage_comments, instagram_business_manage_messages`. Threads: `threads_basic, threads_content_publish, threads_manage_replies, threads_read_replies, threads_manage_insights`.
 7. **Kendi hesapların için (başlangıç):** App Dashboard → Roles → "Instagram Testers" / "Threads Testers" olarak her persona hesabını ekle; hesaptan daveti kabul et. Bu aşamada App Review gerekmez.
 7b. **Başka kullanıcılara hizmet için (SaaS, M1.9):** **Advanced Access** → App Review (her izin için ekran kaydı + kullanım açıklaması) + **Business Verification** (şirket belgeleri: vergi levhası/ticaret sicil, adres kanıtı, alan adı e-postası). Uygulama ayarlarında **Privacy Policy URL**, **Terms URL**, **Data Deletion Callback URL** (`https://api.<alan>/webhooks/meta/data-deletion`) zorunlu. Yıllık **Data Protection Assessment** anketi gelir; runbook'u ben hazırlarım, sen cevaplarsın. Süre: 2–6 hafta.
@@ -62,14 +62,14 @@ Sıra önemli: **A → B → C** en uzun süren inceleme süreçlerini erkenden 
 4. **Ödeme:** Şubat 2026'dan beri yeni geliştiriciler için **kullanım başına ödeme**. Kart ekle, başlangıç kredisi yükle (50–100 $ yeterli; post başına ~0,015 $, linkli ~0,20 $ ⚠).
 5. Her persona X hesabında **Settings → Your account → Account information → Automation** → "Automated" etiketini aç ve yöneten hesap olarak kendi ana hesabını göster (kural gereği).
 6. İsteğe bağlı: AI üretimi otomatik yanıtlar için X'e yazılı ön onay başvurusu (Developer Portal üzerinden destek talebi). Onay gelene kadar yanıtlar panelde senin tıklamanla gider.
-- **Env 🔐:** `HG_X_CLIENT_ID`, `HG_X_CLIENT_SECRET`
+- **Env 🔐:** `HG_X_CLIENT_ID`, `HG_X_CLIENT_SECRET` (gizli anahtar yalnızca token uç noktasında HTTP Basic olarak gider; scope listesi `platform.oauth[x]` config'inden okunur)
 
 ### A7. Telegram 🟢
 1. Telegram'da **@BotFather** → `/newbot` → bot adı ve kullanıcı adı → **bot token**.
 2. `/setprivacy` → Disable (grup mesajlarını görebilsin, yorum yanıtı için).
 3. Her persona için: bir **kanal** aç, botu **yönetici** yap (mesaj gönderme izni); kanala bağlı bir **tartışma grubu** oluştur ve botu oraya da ekle.
 4. Kendi alarm kanalın için ikinci bot (veya aynı bot): sana kritik alarmları DM atacak. Bota `/start` yaz; chat id'yi uygulama otomatik yakalar.
-- **Env 🔐:** `HG_TELEGRAM_BOT_TOKEN`, `HG_TELEGRAM_ALERT_BOT_TOKEN` (aynı olabilir), `HG_TELEGRAM_ALERT_CHAT_ID` (uygulama ilk `/start`'ta gösterir)
+- **Env 🔐:** `HG_TELEGRAM_ALERT_BOT_TOKEN` (alarm botu), `HG_TELEGRAM_ALERT_CHAT_ID` (uygulama ilk `/start`'ta gösterir). Persona botlarının token'ları env'e yazılmaz: panelde **Kanallar → Telegram bağla** ile girilir, `getMe` ile doğrulanır ve şifreli saklanır (çok kiracılı; her çalışma alanı kendi botunu bağlar).
 
 ### A8. Apple ve Google Play (mobil uygulama mağazaları) 🟡 ⏳
 - **Apple Developer Program:** https://developer.apple.com/programs → 99 $/yıl, kimlik doğrulama 1–3 gün. Gerekli: Apple ID, iki faktör, kart. (Bireysel hesap yeter; şirket için D-U-N-S.)

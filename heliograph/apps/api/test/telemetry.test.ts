@@ -11,6 +11,7 @@ import { seedEntries } from '../src/modules/config/infrastructure/seed.js';
 import { DrizzleMembershipRepository } from '../src/modules/identity/infrastructure/drizzle-membership.repository.js';
 import { readTelemetryOptions, startTelemetry, type Telemetry } from '../src/telemetry.js';
 import { testIdentityOptions } from './support/auth.js';
+import { testChannelOptions } from './support/channel.js';
 import { createTestDatabase } from './support/db.js';
 
 const spans = new InMemorySpanExporter();
@@ -30,6 +31,7 @@ beforeAll(async () => {
   app = await createApp({
     db: handle.db,
     identity: testIdentityOptions(),
+    channel: testChannelOptions(),
     fastifyOtelPlugin: telemetry.fastifyPlugin,
   });
   await app.init();

@@ -10,6 +10,10 @@ describe('contract', () => {
     expect(contract.privacy.acceptConsents['~orpc'].route?.method).toBe('POST');
     expect(contract.persona.update['~orpc'].route?.path).toBe('/v1/personas/{id}');
     expect(contract.persona.create['~orpc'].route?.successStatus).toBe(201);
+    expect(contract.channel.startOAuth['~orpc'].route?.path).toBe(
+      '/v1/channels/oauth/{platform}/start',
+    );
+    expect(contract.channel.disconnect['~orpc'].route?.method).toBe('DELETE');
   });
 
   it('health response requires the stale-config counter (ADR-0011)', () => {

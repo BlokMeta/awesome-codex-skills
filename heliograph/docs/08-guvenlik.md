@@ -19,7 +19,8 @@ Hedef seviye: OWASP ASVS **L2**; mobil için OWASP MASVS-L1 + R (kurcalama diren
 
 ## 3. Gizli bilgi ve token yönetimi
 
-- Platform OAuth token'ları ve sağlayıcı API anahtarları **zarf şifreleme** ile (veri anahtarı AES-256-GCM, veri anahtarı KMS/Vault transit ile sarılı). Düz metin yalnızca bellek içinde, kullanım anında.
+- Platform OAuth token'ları ve sağlayıcı API anahtarları **zarf şifreleme** ile (veri anahtarı AES-256-GCM, veri anahtarı KMS/Vault transit ile sarılı). Düz metin yalnızca bellek içinde, kullanım anında. Uygulama: `apps/api/src/modules/channel/infrastructure/envelope.ts` — kimlik bilgisi başına rastgele DEK, `KeyWrapper` arayüzü; ilk sürüm `MasterKeyWrapper` (`HG_ENCRYPTION_MASTER_KEY`, 32 bayt base64, `key_version=1`), KMS sarmalayıcı aynı arayüzü uygular ve `key_version` ile yan yana yaşar. `CredentialStore.reveal` düz metnin tek çıkış noktasıdır; disconnect satırı siler.
+- OAuth `state` 32 bayt rastgele, 10 dk ömürlü, tek kullanımlık (`oauth_states`, `DELETE … RETURNING` ile tüketilir); PKCE (S256) TikTok/YouTube/X için zorunlu; callback oturumsuzdur ve sonucu yalnızca web'e 302 ile taşır.
 - Loglarda maskeleme: `pino` redact yolları (`*.token`, `*.accessToken`, `authorization`, `*.apiKey`).
 - Panelde anahtarlar yalnızca son 4 karakter; "bağlantıyı dene" düğmesi gerçek çağrı yapar.
 - Rotasyon: token yenileme Temporal cron ile süreden 24 saat önce; başarısızlıkta `ChannelUnhealthy` + alarm.

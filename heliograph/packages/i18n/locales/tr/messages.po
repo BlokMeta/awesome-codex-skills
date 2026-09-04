@@ -502,6 +502,9 @@ msgstr "Başlamadan önce eksik adımları tamamla."
 msgid "errors.persona.invalidTransition"
 msgstr "Bu persona {from} durumundan {to} durumuna geçirilemez."
 
+msgid "errors.persona.notFound"
+msgstr "Persona bulunamadı."
+
 msgid "errors.identity.notAMember"
 msgstr "Bu çalışma alanının üyesi değilsiniz."
 
@@ -531,6 +534,24 @@ msgstr "Geçersiz kredi miktarı."
 
 msgid "errors.channel.quotaExceeded"
 msgstr "{channel} için {resetAt} tarihine kadar yayın kotası kalmadı."
+
+msgid "errors.channel.notFound"
+msgstr "Kanal bulunamadı."
+
+msgid "errors.channel.providerNotConfigured"
+msgstr "{platform} bu kurulumda henüz etkin değil."
+
+msgid "errors.channel.providerRejected"
+msgstr "{platform} isteği reddetti: {detail}"
+
+msgid "errors.channel.oauthStateInvalid"
+msgstr "Bu bağlantı linki geçersiz ya da süresi dolmuş. Yeniden başlat."
+
+msgid "errors.channel.oauthDenied"
+msgstr "Platformda izin verilmedi ({reason})."
+
+msgid "errors.channel.connectedElsewhere"
+msgstr "@{handle} zaten başka bir çalışma alanına bağlı."
 
 msgid "errors.validation.past"
 msgstr "Bu zaman geçmişte kalıyor."

@@ -280,6 +280,7 @@ export const messages = {
         'errors.persona.invalidTransition',
         'Cannot move this persona from {from} to {to}.',
       ),
+      notFound: m('errors.persona.notFound', 'Persona not found.'),
     },
     identity: {
       notAMember: m('errors.identity.notAMember', 'You are not a member of this workspace.'),
@@ -307,6 +308,27 @@ export const messages = {
       quotaExceeded: m(
         'errors.channel.quotaExceeded',
         '{channel} has no publishing quota left until {resetAt}.',
+      ),
+      notFound: m('errors.channel.notFound', 'Channel not found.'),
+      providerNotConfigured: m(
+        'errors.channel.providerNotConfigured',
+        '{platform} is not enabled on this deployment yet.',
+      ),
+      providerRejected: m(
+        'errors.channel.providerRejected',
+        '{platform} rejected the request: {detail}',
+      ),
+      oauthStateInvalid: m(
+        'errors.channel.oauthStateInvalid',
+        'This connection link is invalid or has expired. Start again.',
+      ),
+      oauthDenied: m(
+        'errors.channel.oauthDenied',
+        'Permission was not granted on the platform ({reason}).',
+      ),
+      connectedElsewhere: m(
+        'errors.channel.connectedElsewhere',
+        '@{handle} is already connected to another workspace.',
       ),
     },
     validation: {

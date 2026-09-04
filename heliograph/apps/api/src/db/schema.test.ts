@@ -54,7 +54,8 @@ describe('schema invariants', () => {
         expect(cfg.primaryKeys.length, `${name}: composite primary key`).toBe(1);
         continue;
       }
-      expect(pk.name, name).toBe('id');
+      // oauth_states is keyed by the random OAuth `state` itself (single use, then deleted).
+      expect(pk.name, name).toBe(cfg.name === 'oauth_states' ? 'state' : 'id');
       expect(pk.dataType, name).toBe('string');
     }
   });

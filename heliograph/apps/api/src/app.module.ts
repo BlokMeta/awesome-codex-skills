@@ -8,6 +8,7 @@ import { ulid } from 'ulid';
 import type { Database } from './db/client.js';
 import { DatabaseModule } from './db/database.module.js';
 import { BillingModule } from './modules/billing/billing.module.js';
+import { ChannelModule, type ChannelModuleOptions } from './modules/channel/channel.module.js';
 import { IdentityModule, type IdentityModuleOptions } from './modules/identity/identity.module.js';
 import { PersonaModule } from './modules/persona/persona.module.js';
 import { PrivacyModule } from './modules/privacy/privacy.module.js';
@@ -19,6 +20,7 @@ export interface AppOptions {
   /** Cron jobs (staleness watcher) are off in tests and one-off CLIs. */
   readonly schedule?: boolean;
   readonly identity?: IdentityModuleOptions;
+  readonly channel?: ChannelModuleOptions;
   /** Fastify OpenTelemetry plugin from startTelemetry(); null when telemetry is off. */
   readonly fastifyOtelPlugin?: FastifyPluginCallback | null;
   /** Allowed browser origins (web app URL); empty in tests and CLIs. */
@@ -61,6 +63,18 @@ export class AppModule {
         BillingModule,
         PrivacyModule,
         PersonaModule,
+        ChannelModule.forRoot({
+          // OAuth callbacks and the post-connect redirect use the same public URLs as auth.
+          ...(opts.identity?.authConfig
+            ? {
+                urls: {
+                  apiUrl: opts.identity.authConfig.apiUrl,
+                  webUrl: opts.identity.authConfig.webUrl,
+                },
+              }
+            : {}),
+          ...opts.channel,
+        }),
       ],
     };
   }

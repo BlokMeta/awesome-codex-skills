@@ -28,13 +28,17 @@ persona_versions (id, workspace_id, persona_id, snapshot JSONB, changed_by, reas
 ## 3. channel
 
 ```sql
-channels (id, workspace_id, persona_id, platform ENUM, external_account_id, handle, display_name,
-  credential_id, scopes[], capabilities JSONB, quota_state JSONB,
+channels (id, workspace_id, persona_id NULL, platform ENUM, external_account_id, handle, display_name,
+  credential_id → credentials, scopes JSONB, capabilities JSONB (bağlanma anındaki `platform.capabilities`),
   health ENUM('ok','token_expiring','token_expired','rate_limited','restricted','banned'),
-  last_sync_at, last_error JSONB, UNIQUE(platform, external_account_id))
-credentials (id, workspace_id, kind, ciphertext BYTEA, wrapped_dek BYTEA, key_version, expires_at, rotated_at)
-quota_ledger (id, channel_id, kind, amount, window_start, window_end, source)   -- kota harcama kaydı
+  token_expires_at, last_sync_at, last_error JSONB {code,message,at}, UNIQUE(platform, external_account_id))  -- canlı (M1.2)
+credentials (id, workspace_id, kind 'oauth:<platform>'|'bot_token:telegram', ciphertext BYTEA, wrapped_dek BYTEA,
+  key_version, expires_at, rotated_at, revoked_at)   -- canlı; zarf şifreleme (docs/08 §3); disconnect satırı siler
+oauth_states (state PK, workspace_id, operator_id, platform, persona_id, code_verifier, expires_at)   -- canlı; 10 dk, tek kullanımlık (callback DELETE … RETURNING ile tüketir)
+quota_ledger (id, channel_id, kind, amount, window_start, window_end, source)   -- kota harcama kaydı (M2.6)
 ```
+
+`UNIQUE(platform, external_account_id)` kiracılar arası geçerlidir: aynı platform hesabı iki çalışma alanına bağlanamaz; kontrol `withoutTenant('channel.duplicate_account_guard')` ile yapılır ve `channel.connected_elsewhere` döner.
 
 ## 4. trend
 
