@@ -1,5 +1,7 @@
 import { type DynamicModule, Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
+import { trace } from '@opentelemetry/api';
+import type { FastifyPluginCallback } from 'fastify';
 import { LoggerModule } from 'nestjs-pino';
 import { ulid } from 'ulid';
 import type { Database } from './db/client.js';
@@ -12,6 +14,8 @@ export interface AppOptions {
   /** Cron jobs (staleness watcher) are off in tests and one-off CLIs. */
   readonly schedule?: boolean;
   readonly identity?: IdentityModuleOptions;
+  /** Fastify OpenTelemetry plugin from startTelemetry(); null when telemetry is off. */
+  readonly fastifyOtelPlugin?: FastifyPluginCallback | null;
 }
 
 @Module({})
@@ -24,6 +28,11 @@ export class AppModule {
           pinoHttp: {
             level: process.env['HG_LOG_LEVEL'] ?? 'info',
             genReqId: (req) => (req.headers['x-request-id'] as string | undefined) ?? ulid(),
+            // Correlate every log line with the active trace (docs/09 §1).
+            mixin: () => {
+              const ctx = trace.getActiveSpan()?.spanContext();
+              return ctx ? { traceId: ctx.traceId, spanId: ctx.spanId } : {};
+            },
             redact: {
               paths: [
                 'req.headers.authorization',

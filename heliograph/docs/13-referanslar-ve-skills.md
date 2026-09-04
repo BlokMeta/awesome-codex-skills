@@ -110,6 +110,7 @@ Karar: **Kullan** = doğrudan bağımlılık; **Uyarlayarak al** = kodu/deseni k
 | Entegrasyon test veritabanı | `@electric-sql/pglite` (Postgres WASM, Apache-2.0) + CI'da gerçek Postgres | Kullan | ADR-0014; RLS ve roller dahil aynı semantik |
 | ORM, migration, RLS politikaları | drizzle-orm + drizzle-kit (`pgPolicy`, `enableRLS`) | Kullan | ADR-0004, ADR-0014 |
 | Cron (süreç içi) | `@nestjs/schedule` | Kullan | Yalnızca hafif gözcüler (bayatlık); dış etkili işler Temporal |
+| İzleme | `@opentelemetry/sdk-node` + `@fastify/otel` + `instrumentation-undici` (OTLP/HTTP) | Kullan | ESM'de modül-yamalayan enstrümantasyonlar yerine Fastify eklentisi + diagnostics_channel; `instrumentation-pg` postgres.js'i desteklemez, DB span'leri elle |
 | E-posta şablonları | react-email | Kullan | MIT |
 | Takvim/sürükle-bırak | `@dnd-kit`, `date-fns`/`@internationalized/date` | Kullan | – |
 | Sanallaştırılmış liste/tablo | TanStack Virtual/Table | Kullan | – |

@@ -6,6 +6,8 @@
 - **Loglar:** `pino` JSON; alanlar: `ts, level, msg, requestId, workflowId, workspaceId, personaId, channelId, module, code`. İnsan okunur metin yalnızca `msg`. Seviye: `debug` yerel, `info` prod; `warn` beklenen başarısızlık, `error` beklenmeyen.
 - **Metrikler:** Prometheus; RED (rate, errors, duration) her uç nokta ve activity için; iş metrikleri aşağıda.
 
+**Uygulama (M0.9):** `apps/api/src/telemetry.ts` — `HG_OTEL_EXPORTER_OTLP_ENDPOINT` verilince NodeSDK başlar (OTLP/HTTP trace + metrik, 30 sn push); yoksa kapalı, sıfır maliyet. İstek span'leri `@fastify/otel` eklentisinden (ESM'de loader hook gerekmez), dış HTTP çağrıları `instrumentation-undici`'den, veritabanı transaction'ları `withWorkspace/withoutTenant` içindeki elle `db.transaction` span'inden (`hg.tenant_scope`, `hg.workspace_id`, `hg.reason` nitelikleri). pino satırlarına `traceId/spanId` mixin ile eklenir. İş metrikleri `meter()` ile `hg_*` adıyla; ilk örnek `hg_config_stale_keys{level}` (bayatlık gözcüsü). Testte bellek içi exporter'lar seam olarak enjekte edilir (`test/telemetry.test.ts`).
+
 ## 2. İş metrikleri (Grafana "Signal Desk" panosu)
 
 | Metrik | Tür | Neden |

@@ -12,6 +12,7 @@ export async function createApp(opts: AppOptions): Promise<NestFastifyApplicatio
     { bufferLogs: true },
   );
   app.useLogger(app.get(Logger));
+  if (opts.fastifyOtelPlugin) await app.register(opts.fastifyOtelPlugin);
   mountAuth(app);
   app.enableShutdownHooks();
   return app;
