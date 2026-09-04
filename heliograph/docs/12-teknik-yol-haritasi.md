@@ -8,8 +8,8 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 
 - [x] **M0.1 Monorepo iskeleti** — pnpm workspaces + Turborepo; `packages/config` (tsconfig, biome, dependency-cruiser, vitest); `pnpm check` yeşil boş projede.
   - KK: `pnpm i && pnpm check` < 2 dk; boundaries kuralı örnek ihlalde kırılıyor.
-- [~] **M0.2 Yerel ortam** (compose hazır; `pnpm dev` api'yi başlatıyor; web/mobil M1'de) — docker-compose: postgres+pgvector, redis, temporal (dev server), otel-collector, grafana, minio; `pnpm dev` tek komut.
-- [~] **M0.3 CI `pr-check`** (lint/typecheck/test/boundaries/knip/openapi-diff/gitleaks canlı; e2e, a11y, perf, güvenlik taramaları uygulamalarla birlikte) — 17 kapının iskeleti (bazıları boş geçer); Turborepo remote cache.
+- [~] **M0.2 Yerel ortam** (compose hazır; `pnpm dev` api'yi açılışta migrate + tohum ile başlatıyor (`HG_DB_AUTO_MIGRATE`); web/mobil M1'de) — docker-compose: postgres+pgvector, redis, temporal (dev server), otel-collector, grafana, minio; `pnpm dev` tek komut.
+- [~] **M0.3 CI `pr-check`** (lint/typecheck/test (Postgres 16 servisi)/boundaries/knip/openapi-diff/migration-diff/gitleaks canlı; e2e, a11y, perf, güvenlik taramaları uygulamalarla birlikte) — 17 kapının iskeleti (bazıları boş geçer); Turborepo remote cache.
 - [x] **M0.4 Contracts paketi** (oRPC + Zod 4 → `openapi.json`; Prism/Spectral M0.3'te) — Zod → OpenAPI 3.1 → tipli istemci üretimi; Spectral; Prism mock sunucusu.
   - KK: `pnpm contracts:gen` deterministik (diff yok); örnek `GET /v1/health`.
 - [x] **M0.5 Domain paketi iskeleti** — `Result`, `DomainError`, `Clock`, `Rng`, `Id` yardımcıları; ilk aggregate (`Persona`) + property-based test.
@@ -18,11 +18,11 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [ ] **M0.8 Auth** — operatör kayıt/giriş, passkey + TOTP, oturum rotasyonu, RLS; e2e "giriş".
 - [~] **M0.9 Gözlemlenebilirlik temeli** (pino + requestId + redact hazır; OTel ve Grafana panosu sırada) — pino + OTel + requestId; Grafana panosu boş ama bağlı.
 - [x] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).
-- [~] **M0.11 Config modülü (ADR-0011)** (domain + ConfigService (TTL önbellek, invalidate) + bellek içi depo + seed + `/v1/health/config` hazır; Drizzle deposu ve bayatlık cron'u M1'de) — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
+- [x] **M0.11 Config modülü (ADR-0011)** (domain + ConfigService (TTL önbellek, invalidate) + Drizzle `policy_entries` deposu (RLS'li workspace override) + idempotent tohum + `/v1/health/config` + saatlik bayatlık gözcüsü (`StalenessWatcher` → `StaleAlertSink`, şimdilik log; M1.4'te bildirim); "sabit yasak" lint kuralı M1'de) — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
   - KK: `verified_at` eşiği aşınca alarm testi (FakeClock); Instagram limit doğrulayıcı fixture testi.
 - [~] **M0.13 Billing çekirdeği** (domain: assertEntitlement, credit ledger hazır) — `plans`, `plan_entitlements`, `EntitlementService.assert`, `credit_ledger`, `usage_records` → kredi düşümü; sağlayıcı yok (manual plan ile başlar).
 - [~] **M0.14 Privacy çekirdeği** (domain: consent modeli hazır — `ai_processing` dahil) — `consent_records` (metin sürümü kabulü), hesap silme (30 gün), veri dışa aktarma, Meta Data Deletion Callback uç noktası + onay kodu sayfası, herkese açık silme web sayfası (Play).
-- [~] **M0.12 Kiracı modeli** (domain: rol/izin matrisi, authorize, changeRole hazır)
+- [~] **M0.12 Kiracı modeli** (domain: rol/izin matrisi, authorize, changeRole; Drizzle `workspaces/operators/memberships/invitations` + RLS + `withWorkspace` + çapraz kiracı testleri hazır; ADR-0014. Kalan: `Authorizer` portu ve HTTP katmanında kiracı bağlamı (M0.8 auth ile))
 
 ## M1 — Persona ve kanal (Hafta 3–4)
 

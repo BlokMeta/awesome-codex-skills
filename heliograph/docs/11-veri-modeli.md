@@ -1,6 +1,6 @@
 # 11 — Veri Modeli
 
-Tüm tablolar: `id ULID PK`, `workspace_id`, `created_at`, `updated_at`, gerektiğinde `deleted_at` (soft delete yalnızca kullanıcı görünür varlıklarda). RLS: `workspace_id = current_setting('hg.workspace_id')`. Şema sahipliği modül başınadır; başka modül tabloya dokunmaz.
+Tüm tablolar: `id ULID PK`, `workspace_id`, `created_at`, `updated_at`, gerektiğinde `deleted_at` (soft delete yalnızca kullanıcı görünür varlıklarda). RLS: `workspace_id = current_setting('hg.workspace_id', true)`, politikalar `hg_app` rolüne bağlı, transaction başında `SET LOCAL ROLE hg_app` (ADR-0014). `policy_entries` için politika: `scope <> 'workspace' OR scope_id = <kiracı>`. Şema sahipliği modül başınadır; başka modül tabloya dokunmaz. Migration'lar `apps/api/drizzle/` altında; ilk migration `hg_app` rolünü ve GRANT'leri kurar.
 
 ## 1. identity
 

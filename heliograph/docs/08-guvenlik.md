@@ -12,7 +12,8 @@ Hedef seviye: OWASP ASVS **L2**; mobil için OWASP MASVS-L1 + R (kurcalama diren
 
 ## 2. Yetkilendirme
 
-- RBAC: `owner, editor, viewer`; kaynak bazlı: her sorgu `workspace_id`; Postgres RLS ikinci hat.
+- RBAC: `owner, admin, editor, viewer` (izin matrisi `packages/domain/identity/membership.ts`); kaynak bazlı: her sorgu `workspace_id`; Postgres RLS ikinci hat.
+- RLS uygulanışı (ADR-0014): kiracı transaction'ı `SET LOCAL ROLE hg_app` + `SET LOCAL hg.workspace_id` ile açılır; `hg_app` NOLOGIN/NOBYPASSRLS bir roldür, tabloların sahibi değildir, dolayısıyla politikalar her zaman uygulanır. Yönetilen Postgres'te bağlanan rol superuser olmamalıdır (superuser RLS'i atlar).
 - Yetki kontrolü application katmanında `Authorizer` portu ile; testte her use-case için "yetkisiz" senaryosu zorunlu.
 - Ayarlar (sağlayıcı anahtarları, bütçeler) yalnızca `owner`.
 

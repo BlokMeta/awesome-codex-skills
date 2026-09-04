@@ -8,7 +8,7 @@ Hedef: Her değişiklik, üretime çıkmadan önce **otomatik** olarak "10/10" k
 |---|---|---|---|---|
 | Birim (domain, saf fonksiyonlar, hook'lar) | Vitest (+ fast-check property-based) | %90 satır, %85 dal | ms | %65 |
 | Bileşen (UI) | Vitest + Testing Library (web), RNTL (mobil) + Storybook interaction tests | Her public bileşen | ms–s | %15 |
-| Entegrasyon (application + infrastructure) | Vitest + Testcontainers (Postgres, Redis), Temporal test env | Her use-case, her repository | s | %12 |
+| Entegrasyon (application + infrastructure) | Vitest + PGlite (varsayılan) / gerçek Postgres (`HG_TEST_DATABASE_URL`, CI); Redis/Temporal için Testcontainers (M1) | Her use-case, her repository; her kiracı tablosu için "başka workspace'i göremez/yazamaz" senaryosu | s | %12 |
 | Contract | OpenAPI şeması ↔ gerçek yanıt (Spectral + schema assert), adapter ↔ platform sandbox kayıtları (recorded fixtures) | Her uç nokta, her adaptör | s | %5 |
 | E2E | Playwright (web), Maestro (mobil) | 12 kritik akış | dk | %3 |
 
@@ -40,7 +40,7 @@ Hedef: Her değişiklik, üretime çıkmadan önce **otomatik** olarak "10/10" k
 | 5 | i18n | `i18n:check` (eksik/kullanılmayan mesaj) | 0 eksik tüm dillerde |
 | 6 | Birim + bileşen | Vitest | kapsam eşikleri paket başına `vitest.config` |
 | 7 | Mutasyon (domain) | Stryker | ≥ %70 (haftalık, main) |
-| 8 | Entegrasyon | Vitest + Testcontainers | yeşil |
+| 8 | Entegrasyon | Vitest + PGlite ve CI'da Postgres 16 servisi (ADR-0014) | yeşil |
 | 9 | Contract | Spectral (OpenAPI lint) + schema assert | 0 |
 | 10 | Güvenlik | gitleaks, Semgrep, `pnpm audit --prod`, Trivy (image), CodeQL | 0 yüksek/kritik |
 | 11 | E2E web | Playwright (Chromium + WebKit) | yeşil, flaky quarantine yasak |

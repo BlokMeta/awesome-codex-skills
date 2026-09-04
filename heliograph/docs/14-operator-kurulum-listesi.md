@@ -114,6 +114,7 @@ Kendi sesin için: ElevenLabs'te **Professional Voice Clone** (Creator planında
 | C7 | **Temporal** | Self-host (compose) varsayılan; Temporal Cloud istersen | https://cloud.temporal.io | 🟢 self-host | `HG_TEMPORAL_ADDRESS`, `HG_TEMPORAL_NAMESPACE`, (Cloud: `HG_TEMPORAL_API_KEY`) |
 | C8 | **Argos** (opsiyonel) | Görsel regresyon | https://argos-ci.com → GitHub app | 🟢 5K ekran/ay | `ARGOS_TOKEN` (CI) |
 | C9 | **Turborepo remote cache** (opsiyonel) | CI hızlandırma | Vercel hesabı → token | 🟢 | `TURBO_TOKEN`, `TURBO_TEAM` (CI) |
+| C10 | **Postgres 16 + pgvector** (VPS'te compose ile gelir; yönetilen istersen Neon/Supabase/Hetzner Managed) | Ana veritabanı | Yönetilen serviste: bir veritabanı + **superuser olmayan, tabloların sahibi** bir rol oluştur; `pgvector` uzantısını aç. `hg_app` rolünü ve GRANT'leri ilk migration kendisi kurar (ADR-0014); bağlanan rolün `CREATEROLE` yetkisi olmalı (Neon/Supabase varsayılanı yeterli, RDS'de `rds_superuser`). Prod'da `HG_DB_AUTO_MIGRATE=false`, migration CI/CD adımı | 🟢 self-host; yönetilen 0–25 $/ay | `HG_DATABASE_URL` |
 
 Uygulamanın kendi ürettiği gizli bilgiler (sen üret, bir kez, `openssl rand -base64 48`):
 `HG_APP_SECRET` (oturum/JWT imzası), `HG_ENCRYPTION_MASTER_KEY` (token zarf şifreleme; **kaybedersen tüm kanal bağlantıları yeniden yapılır**, yedekle), `HG_META_WEBHOOK_VERIFY_TOKEN`, `HG_WEBHOOK_SIGNING_SECRET`.

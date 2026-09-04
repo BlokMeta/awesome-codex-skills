@@ -17,3 +17,4 @@ Yeni karar: `NNNN-kebab-baslik.md`, şablon: Bağlam / Karar / Sonuçlar (altern
 | 0011 | Dinamik yapılandırma ve bayat veri yok |
 | 0012 | Çok kiracılı SaaS, paylaşımlı platform uygulamaları, token emaneti |
 | 0013 | Faturalama: MoR (Paddle/Polar) + IAP (RevenueCat), haklar tek kaynaktan |
+| 0014 | RLS `SET LOCAL ROLE hg_app` ile; entegrasyon testleri PGlite + gerçek Postgres |

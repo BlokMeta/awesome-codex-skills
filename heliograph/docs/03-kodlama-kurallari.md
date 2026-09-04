@@ -52,7 +52,10 @@ Bkz. `01-mimari.md` §5. Ek kurallar:
 
 ## 6. Veri erişimi
 
-- Drizzle şemaları `apps/api/src/modules/<ctx>/infrastructure/schema.ts`; modül dışından import yasak.
+- Drizzle şemaları `apps/api/src/modules/<ctx>/infrastructure/schema.ts`; modül dışından import yasak. Tek istisna `apps/api/src/db/schema.ts`: yalnızca drizzle-kit ve migration koşucusu için tüm modül şemalarını toplar; uygulama kodu onu import etmez.
+- Kiracı kapsamındaki her sorgu `withWorkspace(db, workspaceId, fn)` içinde çalışır (`SET LOCAL ROLE hg_app` + `hg.workspace_id`); kiracılar arası işlemler `withoutTenant(db, reason, fn)` ile ve gerekçeli (ADR-0014).
+- `workspace_id` kolonu olan tablo = `.enableRLS()` + `pgPolicy(..., { to: 'hg_app' })`; `src/db/schema.test.ts` bunu zorlar.
+- Şema değişti → `pnpm --filter @heliograph/api db:generate --name <ad>`; üretilen SQL commit'lenir, elle düzenleme yalnızca veri taşıma adımları için.
 - Her sorgu `workspace_id` filtreli (RLS ek güvence).
 - N+1 yasak; liste uç noktaları tek sorgu + cursor.
 - Migration'lar geri alınabilir ve **genişlet → taşı → daralt** (expand/migrate/contract) düzeninde; kolon silme ayrı sürümde.

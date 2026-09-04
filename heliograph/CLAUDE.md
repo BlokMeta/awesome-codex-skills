@@ -86,5 +86,7 @@ pnpm lint && pnpm typecheck # Biome + tsc --noEmit
 pnpm check                  # lint + typecheck + test + boundaries + knip + i18n:check
 pnpm contracts:gen          # OpenAPI ve istemci üretimi
 pnpm i18n:extract           # mesaj çıkarımı, eksik çeviri raporu
-pnpm db:migrate             # Drizzle migration
+pnpm --filter @heliograph/api db:generate --name <ad>   # şema → migration SQL (commit'lenir)
+pnpm --filter @heliograph/api db:migrate                # migration uygula (HG_DATABASE_URL)
+pnpm --filter @heliograph/api db:seed                   # config tohumu (idempotent)
 ```

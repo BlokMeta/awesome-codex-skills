@@ -105,7 +105,10 @@ Karar: **Kullan** = doğrudan bağımlılık; **Uyarlayarak al** = kodu/deseni k
 | UI primitifleri | shadcn (Base UI), Radix ikonları, Lucide | Kullan | MIT |
 | Tasarım token pipeline | Style Dictionary, Tokens Studio | Kullan | – |
 | i18n çıkarım/derleme | Lingui CLI | Kullan | – |
-| Mock/test | MSW, Prism, faker, Testcontainers, Maestro, Playwright, Storybook | Kullan | – |
+| Mock/test | MSW, Prism, faker, Testcontainers (Redis/Temporal), Maestro, Playwright, Storybook | Kullan | – |
+| Entegrasyon test veritabanı | `@electric-sql/pglite` (Postgres WASM, Apache-2.0) + CI'da gerçek Postgres | Kullan | ADR-0014; RLS ve roller dahil aynı semantik |
+| ORM, migration, RLS politikaları | drizzle-orm + drizzle-kit (`pgPolicy`, `enableRLS`) | Kullan | ADR-0004, ADR-0014 |
+| Cron (süreç içi) | `@nestjs/schedule` | Kullan | Yalnızca hafif gözcüler (bayatlık); dış etkili işler Temporal |
 | E-posta şablonları | react-email | Kullan | MIT |
 | Takvim/sürükle-bırak | `@dnd-kit`, `date-fns`/`@internationalized/date` | Kullan | – |
 | Sanallaştırılmış liste/tablo | TanStack Virtual/Table | Kullan | – |
@@ -124,7 +127,7 @@ Karar: **Kullan** = doğrudan bağımlılık; **Uyarlayarak al** = kodu/deseni k
 |---|---|---|
 | GitHub MCP (bu oturumda var) | PR, issue, CI | Kullanılıyor |
 | Playwright MCP / `webapp-testing` skill | UI doğrulama, ekran görüntüsü | M2'den itibaren |
-| Postgres MCP (ör. `crystaldba/postgres-mcp`) | Şema/sorgu inceleme, indeks önerisi | M0.11'de değerlendir |
+| Postgres MCP (ör. `crystaldba/postgres-mcp`) | Şema/sorgu inceleme, indeks önerisi | M2'de (sorgu sayısı artınca) |
 | Context7 MCP | Güncel kütüphane dokümanı (oRPC, Expo, Lingui sürüm farkları) | Kur |
 | Sentry MCP | Hata triage | M2 |
 | Temporal CLI + UI | Workflow inceleme | Compose'da |
