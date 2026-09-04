@@ -8,7 +8,7 @@
       "entry": ["config.ts"]
     },
     "packages/tokens": {
-      "entry": ["scripts/*.ts", "src/index.ts"],
+      "entry": ["scripts/*.ts"],
       "project": ["src/**/*.ts", "scripts/**/*.ts"]
     },
     "packages/i18n": {
@@ -16,7 +16,7 @@
       "project": ["src/**/*.ts", "scripts/**/*.ts"]
     },
     "packages/contracts": {
-      "entry": ["src/index.ts", "scripts/*.ts"],
+      "entry": ["scripts/*.ts"],
       "project": ["src/**/*.ts", "scripts/**/*.ts"]
     },
     "apps/api": {
