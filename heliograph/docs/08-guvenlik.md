@@ -4,11 +4,11 @@ Hedef seviye: OWASP ASVS **L2**; mobil için OWASP MASVS-L1 + R (kurcalama diren
 
 ## 1. Kimlik doğrulama
 
-- Operatör girişi: e-posta + parola (argon2id) + zorunlu ikinci faktör (TOTP veya **passkey/WebAuthn**; passkey tercih). Mobilde biyometrik kilit (LocalAuthentication) uygulama açılışında.
-- Oturum: access token 15 dk (JWT, `ES256`), refresh 30 gün rotasyonlu; refresh çalınması tespiti (aile iptali).
-- Web: HttpOnly + Secure + SameSite=Lax cookie; CSRF için double-submit token yalnızca cookie tabanlı mutasyonlarda.
-- Mobil: token'lar `expo-secure-store` (Keychain/Keystore); asla AsyncStorage.
-- Brute force: IP + hesap bazlı yavaşlatma, 10 denemede kilit + e-posta.
+- Operatör girişi: e-posta + parola (better-auth varsayılanı **scrypt**, OWASP uyumlu; argon2id'e geçiş better-auth `password.hash` ile mümkündür) + ikinci faktör: TOTP (yedek kodlarla, 10 hatalı denemede 15 dk kilit) veya **passkey/WebAuthn** (rpID = web alan adı). Zorunlu 2FA politikası M1.7 onboarding'de (`config`: `auth.require_second_factor`). Mobilde biyometrik kilit (LocalAuthentication) uygulama açılışında.
+- Oturum (ADR-0007, 2026-09-04 düzeltmesi): JWT değil, **veritabanı oturumu** (`sessions` tablosu, 30 gün, 1 günde bir uzatma, `freshAge` 1 gün hassas işlemler için). Oturum listesi/iptali better-auth `list-sessions` / `revoke-session(s)` ile; cookie önbelleği kapalı, iptal anında etkili.
+- Web: HttpOnly + Secure (prod) + SameSite=Lax `hg.session_token` cookie'si; better-auth Origin/`trustedOrigins` denetimi CSRF'e karşı (web URL + mobil şema).
+- Mobil: `set-auth-token` başlığındaki Bearer token `expo-secure-store` (Keychain/Keystore); asla AsyncStorage. `@better-auth/expo` derin bağlantı ve çerez köprüsü.
+- Brute force: better-auth rate limit (prod'da açık; IP bazlı, `/sign-in/email` için daha sıkı pencere) + 2FA kilidi; hesap bazlı e-posta uyarısı M1.4 bildirim modülüyle.
 
 ## 2. Yetkilendirme
 

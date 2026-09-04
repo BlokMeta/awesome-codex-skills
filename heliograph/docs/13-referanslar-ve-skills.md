@@ -94,7 +94,8 @@ Karar: **Kullan** = doğrudan bağımlılık; **Uyarlayarak al** = kodu/deseni k
 
 | Problem | Çözüm | Karar | Not |
 |---|---|---|---|
-| Kimlik, passkey, 2FA, organizasyon | better-auth | Kullan | ADR-0007 |
+| Kimlik, passkey, 2FA, organizasyon | better-auth 1.7 + `@better-auth/passkey`, `@better-auth/expo` | Kullan | ADR-0007; organization eklentisi kendi tablolarımıza eşlendi |
+| better-auth ↔ NestJS köprüsü | `@thallesp/nestjs-better-auth` | Yalnızca referans | Express-öncelikli, Fastify "beta", body parser'ı kapatıyor; kendi 30 satırlık mount + guard (`auth.mount.ts`, `session.guard.ts`) |
 | API sözleşmesi + OpenAPI + istemci | oRPC | Kullan | ADR-0003 |
 | Durable workflow | Temporal | Kullan | ADR-0002 |
 | Video montaj, altyazı animasyonu, TikTok tarzı caption şablonları | Remotion + resmi `remotion-dev/templates` (tiktok, captions, audiogram) | Kullan / Uyarlayarak al | Şablonlar MIT; şirket lisansı kuralı |

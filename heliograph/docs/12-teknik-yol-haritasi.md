@@ -15,14 +15,14 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 - [x] **M0.5 Domain paketi iskeleti** — `Result`, `DomainError`, `Clock`, `Rng`, `Id` yardımcıları; ilk aggregate (`Persona`) + property-based test.
 - [x] **M0.6 i18n paketi** (Lingui runtime, elle id'li mesajlar, Intl biçimleyiciler, pseudo, .po codec, `i18n:check`; SWC/Metro entegrasyonu uygulamalarla) — `tr`, `en`, `en-x-pseudo`; extract/check betikleri; lint kuralı ham string.
 - [~] **M0.7 UI paketi çekirdeği** (token'lar: DTCG JSON → CSS değişkenleri + TS teması, WCAG kontrast testleri hazır; bileşenler ve Storybook sırada) — token'lar (Style Dictionary), yazı tipleri, `Button/Input/List/Sheet` web + RN; Storybook (web + RN); axe.
-- [ ] **M0.8 Auth** — operatör kayıt/giriş, passkey + TOTP, oturum rotasyonu, RLS; e2e "giriş".
+- [x] **M0.8 Auth** — better-auth Fastify'a mount (`/v1/auth/*`), e-posta+parola kayıt/giriş, e-posta doğrulama, TOTP (yedek kodlar) + passkey, organization eklentisi → `workspaces/memberships/invitations` (davet akışı, rol matrisi `ac/roles`), bearer (mobil) + expo, global `SessionGuard` + `@Public()` + RFC 9457 filtre, `GET /v1/me`; e2e testler (kayıt, giriş, 2FA, davet, passkey seçenekleri, bearer, çıkış). Kalan: passkey tarayıcı e2e (Playwright, M1.5/M2), zorunlu 2FA politikası (M1.7).
 - [~] **M0.9 Gözlemlenebilirlik temeli** (pino + requestId + redact hazır; OTel ve Grafana panosu sırada) — pino + OTel + requestId; Grafana panosu boş ama bağlı.
 - [x] **M0.10 ADR-0001…0010** yazıldı (`docs/adr/`).
 - [x] **M0.11 Config modülü (ADR-0011)** (domain + ConfigService (TTL önbellek, invalidate) + Drizzle `policy_entries` deposu (RLS'li workspace override) + idempotent tohum + `/v1/health/config` + saatlik bayatlık gözcüsü (`StalenessWatcher` → `StaleAlertSink`, şimdilik log; M1.4'te bildirim); "sabit yasak" lint kuralı M1'de) — `policy_entries`, `ConfigService`, tohum verisi (platform limitleri, fiyatlar, modeller, saklama süreleri), bayatlık gözcüsü cron'u, `GET /v1/health/config`, lint kuralı "sabit yasak".
   - KK: `verified_at` eşiği aşınca alarm testi (FakeClock); Instagram limit doğrulayıcı fixture testi.
 - [~] **M0.13 Billing çekirdeği** (domain: assertEntitlement, credit ledger hazır) — `plans`, `plan_entitlements`, `EntitlementService.assert`, `credit_ledger`, `usage_records` → kredi düşümü; sağlayıcı yok (manual plan ile başlar).
 - [~] **M0.14 Privacy çekirdeği** (domain: consent modeli hazır — `ai_processing` dahil) — `consent_records` (metin sürümü kabulü), hesap silme (30 gün), veri dışa aktarma, Meta Data Deletion Callback uç noktası + onay kodu sayfası, herkese açık silme web sayfası (Play).
-- [~] **M0.12 Kiracı modeli** (domain: rol/izin matrisi, authorize, changeRole; Drizzle `workspaces/operators/memberships/invitations` + RLS + `withWorkspace` + çapraz kiracı testleri hazır; ADR-0014. Kalan: `Authorizer` portu ve HTTP katmanında kiracı bağlamı (M0.8 auth ile))
+- [~] **M0.12 Kiracı modeli** (domain: rol/izin matrisi, authorize, changeRole; Drizzle `workspaces/operators/memberships/invitations` + RLS + `withWorkspace` + çapraz kiracı testleri hazır; ADR-0014. Kalan: `Authorizer` portu; kiracı bağlamı `session.activeOrganizationId` ile hazır, ilk kiracı uç noktasıyla (M1.1) `@CurrentWorkspace()` gelir)
 
 ## M1 — Persona ve kanal (Hafta 3–4)
 

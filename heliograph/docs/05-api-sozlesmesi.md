@@ -53,8 +53,11 @@ Yanıt:
 
 ## 5. Kimlik ve yetki
 
-- Oturum: HttpOnly cookie (web), Bearer token (mobil), kısa ömürlü access + rotasyonlu refresh.
-- Yetki: RBAC (`owner, editor, viewer`) + kaynak sahipliği (`workspaceId`). Kontrol application katmanında, decorator ile değil.
+- Kimlik uçları better-auth tarafından `/v1/auth/*` altında sunulur (ADR-0007): `sign-up/email`, `sign-in/email`, `sign-out`, `get-session`, `verify-email`, `two-factor/*`, `passkey/*`, `organization/*` (create, set-active, invite-member, accept-invitation, has-permission…). Bu uçlar oRPC sözleşmesinin dışındadır; OpenAPI'leri better-auth `openAPI` eklentisiyle ayrı üretilir (M1).
+- Oturum: veritabanı oturumu; web'de HttpOnly `hg.session_token` cookie'si, mobilde `set-auth-token` başlığından alınan Bearer token (SecureStore). Oturum önbelleği yok: iptal ve çalışma alanı değişimi bir sonraki istekte görünür (kural 13).
+- Kiracı bağlamı: `session.activeOrganizationId` = aktif `workspaceId`; her kiracı uç noktası bunu `withWorkspace` ile RLS'e taşır.
+- Yetki: RBAC (`owner, admin, editor, viewer`; `packages/domain/identity`) + kaynak sahipliği (`workspaceId`). Aynı matris better-auth `ac/roles` olarak da tanımlıdır (`access-control.ts`, drift testi ile). Kontrol application katmanında.
+- Korumalı uç noktalar `SessionGuard` (global) ile; `@Public()` yalnızca health, webhook ve hukuki sayfalar için. Oturumsuz istek → `401 application/problem+json` (`code: auth.unauthenticated`).
 - Rate limit: kullanıcı başına 600 istek/dk; yanıt başlıkları `RateLimit-*` (IETF taslağı).
 
 ## 6. Gerçek zamanlı
@@ -73,8 +76,8 @@ Yanıt:
 
 | Kaynak | Uç noktalar |
 |---|---|
-| auth | `POST /auth/login`, `/auth/2fa`, `/auth/refresh`, `/auth/logout` |
-| workspaces | `GET /workspaces/me` |
+| auth | better-auth: `POST /auth/sign-up/email`, `/auth/sign-in/email`, `/auth/sign-out`, `GET /auth/get-session`, `/auth/verify-email`, `POST /auth/two-factor/{enable,verify-totp,disable}`, `/auth/passkey/*`, `POST /auth/organization/{create,set-active,invite-member,accept-invitation,has-permission}` |
+| identity | `GET /me` (operatör + üyelikler + aktif çalışma alanı) — **canlı** |
 | personas | `GET/POST /personas`, `GET/PATCH /personas/{id}`, `POST /personas/{id}:activate`, `:pause`, `GET /personas/{id}/health` |
 | channels | `GET /channels`, `POST /channels/oauth/{platform}:start`, `/callback`, `PATCH /channels/{id}`, `POST /channels/{id}:refresh`, `GET /channels/{id}/quota` |
 | trends | `GET /trends/clusters` (sayfalı, skor sıralı), `GET /trends/clusters/{id}`, `POST /briefs` (manuel brief) |
