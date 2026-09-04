@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import '@heliograph/tokens/css';
-@import '@heliograph/ui/styles.css';
+@import "tailwindcss";
+@import "@heliograph/tokens/css";
+@import "@heliograph/ui/styles.css";
 
 /* Tailwind is layout-only here; colours, type and spacing come from the --hg-* tokens (docs/07). */
 @theme {
