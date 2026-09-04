@@ -57,14 +57,28 @@ const MAP: Record<string, string> = {
   Z: 'Ž',
 };
 
-const PLACEHOLDER = /(\{[^}]*\}|<[^>]+>)/g;
+const LETTER = /[A-Za-z]/;
 
+/**
+ * Transforms letters only at brace depth 0 and outside tags, so ICU arguments, plural/select
+ * keywords (`one`, `other`, `=0`) and nested option text stay valid for the compiler.
+ */
 export function pseudoLocalize(message: string, expansion = 0.4): string {
-  const parts = message.split(PLACEHOLDER);
-  const out = parts
-    .map((part, i) => (i % 2 === 1 ? part : part.replace(/[A-Za-z]/g, (ch) => MAP[ch] ?? ch)))
-    .join('');
-  const letters = message.replace(PLACEHOLDER, '').replace(/[^A-Za-z]/g, '').length;
-  const pad = '~'.repeat(Math.ceil(letters * expansion));
-  return `[${out}${pad}]`;
+  let depth = 0;
+  let inTag = false;
+  let letters = 0;
+  let out = '';
+  for (const ch of message) {
+    if (ch === '{') depth += 1;
+    else if (ch === '}') depth = Math.max(0, depth - 1);
+    else if (ch === '<') inTag = true;
+    else if (ch === '>') inTag = false;
+    if (depth === 0 && !inTag && LETTER.test(ch)) {
+      letters += 1;
+      out += MAP[ch] ?? ch;
+    } else {
+      out += ch;
+    }
+  }
+  return `[${out}${'~'.repeat(Math.ceil(letters * expansion))}]`;
 }

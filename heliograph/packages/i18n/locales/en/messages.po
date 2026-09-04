@@ -31,6 +31,186 @@ msgstr "{count, plural, =0 {Nothing waiting} one {# item waiting} other {# items
 msgid "review.gate.passed"
 msgstr "Passed {passed} of {total} checks"
 
+msgid "auth.signIn.title"
+msgstr "Sign in"
+
+msgid "auth.signUp.title"
+msgstr "Create your account"
+
+msgid "auth.field.email"
+msgstr "Email"
+
+msgid "auth.field.password"
+msgstr "Password"
+
+msgid "auth.field.passwordHint"
+msgstr "At least 10 characters"
+
+msgid "auth.field.name"
+msgstr "Name"
+
+msgid "auth.action.signIn"
+msgstr "Sign in"
+
+msgid "auth.action.signUp"
+msgstr "Create account"
+
+msgid "auth.action.signOut"
+msgstr "Sign out"
+
+msgid "auth.signIn.noAccount"
+msgstr "No account yet?"
+
+msgid "auth.signUp.haveAccount"
+msgstr "Already have an account?"
+
+msgid "auth.error.invalidCredentials"
+msgstr "Email or password is wrong."
+
+msgid "auth.error.emailTaken"
+msgstr "An account with this email already exists."
+
+msgid "auth.error.generic"
+msgstr "Something went wrong. Please try again."
+
+msgid "auth.twoFactor.title"
+msgstr "Second factor"
+
+msgid "auth.twoFactor.hint"
+msgstr "Enter the 6-digit code from your authenticator app."
+
+msgid "auth.twoFactor.code"
+msgstr "Code"
+
+msgid "auth.twoFactor.verify"
+msgstr "Verify"
+
+msgid "auth.twoFactor.invalid"
+msgstr "That code is not valid."
+
+msgid "auth.verifyEmail.title"
+msgstr "Check your inbox"
+
+msgid "auth.verifyEmail.body"
+msgstr "We sent a verification link to {email}. Open it to activate your account."
+
+msgid "consent.title"
+msgstr "Before we start"
+
+msgid "consent.intro"
+msgstr "Please review and accept the documents below. You can withdraw optional consents at any time in Settings."
+
+msgid "consent.action.acceptAll"
+msgstr "Accept and continue"
+
+msgid "consent.action.read"
+msgstr "Read"
+
+msgid "consent.doc.terms"
+msgstr "Terms of Service"
+
+msgid "consent.doc.privacy"
+msgstr "Privacy Policy"
+
+msgid "consent.doc.aup"
+msgstr "Acceptable Use Policy"
+
+msgid "consent.doc.aiProcessing"
+msgstr "Permission to process my content with third-party AI providers"
+
+msgid "consent.doc.kvkkAydinlatma"
+msgstr "KVKK privacy notice"
+
+msgid "consent.doc.distanceSale"
+msgstr "Distance sales agreement"
+
+msgid "consent.doc.cookies"
+msgstr "Cookie policy"
+
+msgid "consent.doc.kvkkAcikRizaMarketing"
+msgstr "Explicit consent for marketing communication"
+
+msgid "consent.doc.kvkkAcikRizaVoice"
+msgstr "Explicit consent for voice cloning"
+
+msgid "consent.doc.kvkkAcikRizaLikeness"
+msgstr "Explicit consent for using my likeness"
+
+msgid "workspace.create.title"
+msgstr "Create your workspace"
+
+msgid "workspace.create.intro"
+msgstr "A workspace holds your personas, connected accounts and team."
+
+msgid "workspace.field.name"
+msgstr "Workspace name"
+
+msgid "workspace.field.slug"
+msgstr "URL name"
+
+msgid "workspace.field.slugHint"
+msgstr "Lowercase letters, numbers and dashes"
+
+msgid "workspace.action.create"
+msgstr "Create workspace"
+
+msgid "workspace.action.switch"
+msgstr "Switch workspace"
+
+msgid "workspace.label.active"
+msgstr "Active"
+
+msgid "workspace.label.role"
+msgstr "{role, select, owner {Owner} admin {Admin} editor {Editor} viewer {Viewer} other {Member}}"
+
+msgid "today.title"
+msgstr "Today"
+
+msgid "today.welcome"
+msgstr "Welcome, {name}"
+
+msgid "today.empty"
+msgstr "Nothing is scheduled yet. Create a persona and connect a channel to light the first signal."
+
+msgid "today.plan"
+msgstr "Plan: {plan}"
+
+msgid "today.credits"
+msgstr "{balance, plural, =0 {No media credits} one {# media credit} other {# media credits}}"
+
+msgid "nav.today"
+msgstr "Today"
+
+msgid "nav.queue"
+msgstr "Queue"
+
+msgid "nav.calendar"
+msgstr "Calendar"
+
+msgid "nav.trends"
+msgstr "Trends"
+
+msgid "nav.inbox"
+msgstr "Inbox"
+
+msgid "nav.deals"
+msgstr "Deals"
+
+msgid "nav.library"
+msgstr "Library"
+
+msgid "nav.analytics"
+msgstr "Analytics"
+
+msgid "nav.settings"
+msgstr "Settings"
+
+msgid "nav.language"
+msgstr "Language"
+
+msgid "nav.skipToContent"
+msgstr "Skip to content"
+
 msgid "errors.persona.invalidTransition"
 msgstr "Cannot move this persona from {from} to {to}."
 

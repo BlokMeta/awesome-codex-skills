@@ -7,10 +7,11 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./catalogs/*": "./catalogs/*.json"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc -b && tsx scripts/build-catalogs.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --coverage",
     "i18n:check": "tsx scripts/check.ts"

@@ -1,13 +1,8 @@
-import { PGlite } from '@electric-sql/pglite';
-import { drizzle } from 'drizzle-orm/pglite';
-import { migrate } from 'drizzle-orm/pglite/migrator';
 import {
+  createPgliteDatabase,
   createPostgresDatabase,
-  type Database,
   type DatabaseHandle,
-  MIGRATIONS_FOLDER,
 } from '../../src/db/client.js';
-import * as schema from '../../src/db/schema.js';
 
 /**
  * Integration tests run against real Postgres semantics either way: an in-process PGlite
@@ -16,22 +11,9 @@ import * as schema from '../../src/db/schema.js';
  */
 export async function createTestDatabase(): Promise<DatabaseHandle> {
   const url = process.env['HG_TEST_DATABASE_URL'];
-  const handle = url ? await isolatedPostgres(url) : await pglite();
+  const handle = url ? await isolatedPostgres(url) : await createPgliteDatabase();
   await handle.migrate();
   return handle;
-}
-
-async function pglite(): Promise<DatabaseHandle> {
-  const client = new PGlite();
-  const db = drizzle(client, { schema, casing: 'snake_case' }) as unknown as Database;
-  return {
-    db,
-    migrate: () =>
-      migrate(db as unknown as Parameters<typeof migrate>[0], {
-        migrationsFolder: MIGRATIONS_FOLDER,
-      }),
-    close: () => client.close(),
-  };
 }
 
 async function isolatedPostgres(url: string): Promise<DatabaseHandle> {

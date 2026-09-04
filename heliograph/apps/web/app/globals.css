@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+@import '@heliograph/tokens/css';
+@import '@heliograph/ui/styles.css';
+
+/* Tailwind is layout-only here; colours, type and spacing come from the --hg-* tokens (docs/07). */
+@theme {
+  --color-ground: var(--hg-ground);
+  --color-surface: var(--hg-surface);
+  --color-surface2: var(--hg-surface2);
+  --color-ink: var(--hg-ink);
+  --color-ink2: var(--hg-ink2);
+  --color-ink3: var(--hg-ink3);
+  --color-line: var(--hg-line);
+  --color-tide: var(--hg-tide);
+  --color-tide-soft: var(--hg-tide-soft);
+  --color-flash: var(--hg-flash);
+  --color-flash-ink: var(--hg-flash-ink);
+  --color-good: var(--hg-good);
+  --color-warn: var(--hg-warn);
+  --color-critical: var(--hg-critical);
+  --font-display: var(--hg-font-display);
+  --font-body: var(--hg-font-body);
+  --font-mono: var(--hg-font-mono);
+}
+
+html,
+body {
+  min-block-size: 100%;
+  background: var(--hg-ground);
+  color: var(--hg-ink);
+  font-family: var(--hg-font-body);
+  font-size: var(--hg-font-size-md);
+  line-height: var(--hg-line-height-md);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--hg-font-display);
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: var(--hg-size-focus-ring) solid var(--hg-tide);
+  outline-offset: 2px;
+}
+
+.hg-skip-link {
+  position: absolute;
+  inset-block-start: -100px;
+  inset-inline-start: var(--hg-space-4);
+  padding: var(--hg-space-3) var(--hg-space-4);
+  background: var(--hg-flash);
+  color: var(--hg-flash-ink);
+  border-radius: var(--hg-radius-sm);
+  z-index: 100;
+}
+.hg-skip-link:focus {
+  inset-block-start: var(--hg-space-4);
+}

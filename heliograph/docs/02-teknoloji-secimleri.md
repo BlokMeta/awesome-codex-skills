@@ -67,7 +67,7 @@ Sürümler npm kayıt defterinden ve resmi sürüm notlarından alınmıştır (
 |---|---|
 | `packages/tokens` | DTCG JSON → küçük kendi üreticimiz (`scripts/build.ts`) → CSS değişkenleri (web) + TS tema (Unistyles); Tokens Studio/Figma senkronu gerekirse Style Dictionary 5'e geçilir |
 | `packages/ui` | Web: Base UI (headless) + token değişkenleriyle yazılmış düz CSS (`styles.css`, `data-*` varyantları; Tailwind yalnızca uygulamalarda sayfa düzeni için); RN: Unistyles ile yazılmış eş bileşenler; **aynı props arayüzü (`@heliograph/ui/props`), iki uygulama**; Storybook 10 (web) + Storybook RN 10 (cihaz + RN-Web-Vite); testler Vitest + jsdom + Testing Library + `vitest-axe` |
-| `packages/i18n` | **Lingui 6** (ICU, `.po` kataloglar, SWC eklentisi Next'te, Metro transformer Expo'da, pseudo-locale yerleşik) |
+| `packages/i18n` | **Lingui 6** (ICU, `.po` kataloglar, pseudo-locale yerleşik). Kataloglar paket build'inde `catalogs/<locale>.json` olarak **önceden derlenir** ve uygulamalar düz JSON import eder — Next'te SWC/loader, Expo'da Metro transformer gerekmez; mesaj id'leri elle verildiği için makro da yok |
 | `packages/contracts` | oRPC contract + Zod 4; `openapi.json` çıktısı; Prism mock; Pact contract testleri |
 | `packages/domain` | Saf TS; fast-check property-based testler |
 | `packages/adapters` | Platform sürücüleri + LLM/TTS/görsel/video sağlayıcı sürücüleri |
@@ -112,3 +112,6 @@ Ayrıntı ve fiyatlar: `../../research/sosyal-medya-otomasyon-yol-haritasi.md` �
 - `pnpm catalog:` ile tüm workspace'te tek sürüm; Renovate haftalık, minor otomatik merge (CI yeşilse), major PR ile.
 - Expo SDK yükseltmesi çeyrekte bir, `expo-upgrade` skill'i ile; RN sürümü Expo'nun pinlediği.
 - Vitest 5, Prisma 8, Turborepo 3, NativeWind 5, Tamagui 3: **beklemede**; GA + 1 ay sonra değerlendirilir.
+
+
+**Not (api çalıştırma):** Nest uygulaması tsx ile çalışmaz (tsx ESM yükleyicisi `@nestjs/core`'u CJS kopyasından ayrı örnekler, DI sınıf kimlikleri eşleşmez). Dev ve e2e derlenmiş çıktıyı kullanır: `pnpm --filter @heliograph/api dev` = `tsc -b --watch` + `node --watch dist/main.js`.

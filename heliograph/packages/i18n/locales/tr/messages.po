@@ -31,6 +31,186 @@ msgstr "{count, plural, =0 {Bekleyen yok} one {# öğe bekliyor} other {# öğe 
 msgid "review.gate.passed"
 msgstr "{total} kontrolden {passed} tanesi geçti"
 
+msgid "auth.signIn.title"
+msgstr "Giriş yap"
+
+msgid "auth.signUp.title"
+msgstr "Hesabını oluştur"
+
+msgid "auth.field.email"
+msgstr "E-posta"
+
+msgid "auth.field.password"
+msgstr "Parola"
+
+msgid "auth.field.passwordHint"
+msgstr "En az 10 karakter"
+
+msgid "auth.field.name"
+msgstr "Ad"
+
+msgid "auth.action.signIn"
+msgstr "Giriş yap"
+
+msgid "auth.action.signUp"
+msgstr "Hesap oluştur"
+
+msgid "auth.action.signOut"
+msgstr "Çıkış yap"
+
+msgid "auth.signIn.noAccount"
+msgstr "Hesabın yok mu?"
+
+msgid "auth.signUp.haveAccount"
+msgstr "Zaten hesabın var mı?"
+
+msgid "auth.error.invalidCredentials"
+msgstr "E-posta veya parola hatalı."
+
+msgid "auth.error.emailTaken"
+msgstr "Bu e-postayla bir hesap zaten var."
+
+msgid "auth.error.generic"
+msgstr "Bir şeyler ters gitti. Lütfen tekrar dene."
+
+msgid "auth.twoFactor.title"
+msgstr "İkinci faktör"
+
+msgid "auth.twoFactor.hint"
+msgstr "Doğrulayıcı uygulamandaki 6 haneli kodu gir."
+
+msgid "auth.twoFactor.code"
+msgstr "Kod"
+
+msgid "auth.twoFactor.verify"
+msgstr "Doğrula"
+
+msgid "auth.twoFactor.invalid"
+msgstr "Bu kod geçerli değil."
+
+msgid "auth.verifyEmail.title"
+msgstr "Gelen kutunu kontrol et"
+
+msgid "auth.verifyEmail.body"
+msgstr "{email} adresine bir doğrulama bağlantısı gönderdik. Hesabını etkinleştirmek için bağlantıyı aç."
+
+msgid "consent.title"
+msgstr "Başlamadan önce"
+
+msgid "consent.intro"
+msgstr "Lütfen aşağıdaki metinleri inceleyip kabul et. İsteğe bağlı rızaları Ayarlar'dan her zaman geri çekebilirsin."
+
+msgid "consent.action.acceptAll"
+msgstr "Kabul et ve devam et"
+
+msgid "consent.action.read"
+msgstr "Oku"
+
+msgid "consent.doc.terms"
+msgstr "Kullanım Şartları"
+
+msgid "consent.doc.privacy"
+msgstr "Gizlilik Politikası"
+
+msgid "consent.doc.aup"
+msgstr "Kabul Edilebilir Kullanım Politikası"
+
+msgid "consent.doc.aiProcessing"
+msgstr "İçeriğimin üçüncü taraf yapay zekâ sağlayıcılarıyla işlenmesine izin"
+
+msgid "consent.doc.kvkkAydinlatma"
+msgstr "KVKK aydınlatma metni"
+
+msgid "consent.doc.distanceSale"
+msgstr "Mesafeli satış sözleşmesi"
+
+msgid "consent.doc.cookies"
+msgstr "Çerez politikası"
+
+msgid "consent.doc.kvkkAcikRizaMarketing"
+msgstr "Pazarlama iletişimi için açık rıza"
+
+msgid "consent.doc.kvkkAcikRizaVoice"
+msgstr "Ses klonlama için açık rıza"
+
+msgid "consent.doc.kvkkAcikRizaLikeness"
+msgstr "Görüntümün kullanımı için açık rıza"
+
+msgid "workspace.create.title"
+msgstr "Çalışma alanını oluştur"
+
+msgid "workspace.create.intro"
+msgstr "Çalışma alanı personalarını, bağlı hesaplarını ve ekibini bir arada tutar."
+
+msgid "workspace.field.name"
+msgstr "Çalışma alanı adı"
+
+msgid "workspace.field.slug"
+msgstr "URL adı"
+
+msgid "workspace.field.slugHint"
+msgstr "Küçük harf, rakam ve tire"
+
+msgid "workspace.action.create"
+msgstr "Çalışma alanı oluştur"
+
+msgid "workspace.action.switch"
+msgstr "Çalışma alanı değiştir"
+
+msgid "workspace.label.active"
+msgstr "Etkin"
+
+msgid "workspace.label.role"
+msgstr "{role, select, owner {Sahip} admin {Yönetici} editor {Editör} viewer {İzleyici} other {Üye}}"
+
+msgid "today.title"
+msgstr "Bugün"
+
+msgid "today.welcome"
+msgstr "Hoş geldin, {name}"
+
+msgid "today.empty"
+msgstr "Henüz planlanmış bir şey yok. İlk sinyali yakmak için bir persona oluştur ve bir kanal bağla."
+
+msgid "today.plan"
+msgstr "Plan: {plan}"
+
+msgid "today.credits"
+msgstr "{balance, plural, =0 {Medya kredisi yok} one {# medya kredisi} other {# medya kredisi}}"
+
+msgid "nav.today"
+msgstr "Bugün"
+
+msgid "nav.queue"
+msgstr "Kuyruk"
+
+msgid "nav.calendar"
+msgstr "Takvim"
+
+msgid "nav.trends"
+msgstr "Trendler"
+
+msgid "nav.inbox"
+msgstr "Inbox"
+
+msgid "nav.deals"
+msgstr "Fırsatlar"
+
+msgid "nav.library"
+msgstr "Kütüphane"
+
+msgid "nav.analytics"
+msgstr "Analitik"
+
+msgid "nav.settings"
+msgstr "Ayarlar"
+
+msgid "nav.language"
+msgstr "Dil"
+
+msgid "nav.skipToContent"
+msgstr "İçeriğe atla"
+
 msgid "errors.persona.invalidTransition"
 msgstr "Bu persona {from} durumundan {to} durumuna geçirilemez."
 

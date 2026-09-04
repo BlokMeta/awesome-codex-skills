@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc -b",
     "typecheck": "tsc --noEmit",
-    "dev": "tsx watch src/main.ts",
-    "start": "node dist/main.js",
+    "dev": "node scripts/dev.mjs",
+    "start": "node --enable-source-maps dist/main.js",
     "test": "vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/cli.ts migrate",
@@ -42,7 +42,9 @@
     "@opentelemetry/instrumentation-undici": "catalog:",
     "@opentelemetry/resources": "catalog:",
     "@opentelemetry/semantic-conventions": "catalog:",
-    "@fastify/otel": "catalog:"
+    "@fastify/otel": "catalog:",
+    "@electric-sql/pglite": "catalog:",
+    "@fastify/cors": "catalog:"
   },
   "devDependencies": {
     "@heliograph/config": "workspace:*",
@@ -51,7 +53,6 @@
     "tsx": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:",
-    "@electric-sql/pglite": "catalog:",
     "drizzle-kit": "catalog:",
     "@opentelemetry/sdk-trace-base": "catalog:",
     "@opentelemetry/sdk-metrics": "catalog:"

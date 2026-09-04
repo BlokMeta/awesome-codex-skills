@@ -26,6 +26,7 @@ Süre tahminleri tek geliştirici + AI asistan içindir.
 
 ## M1 — Persona ve kanal (Hafta 3–4)
 
+- [x] **M1.0 Web iskeleti** — Next.js 16 (App Router, Turbopack, typed routes), `packages/ui` + token CSS + Tailwind (yalnızca düzen), Lingui (önceden derlenmiş kataloglar, cookie/Accept-Language ile dil), TanStack Query, oRPC tipli istemci, better-auth React istemcisi (organization/2FA/passkey); ekranlar: giriş, kayıt, 2FA, e-posta doğrulama, rıza kapısı, çalışma alanı oluşturma, Bugün (plan + kredi canlı), uygulama kabuğu (nav, dil, çıkış, çalışma alanı değiştirici); `proxy.ts` oturum kapısı; bileşen testleri (Testing Library + axe) ve Playwright e2e (kayıt → rıza → çalışma alanı → Bugün → çıkış → giriş, axe 0 ihlal) CI'da PGlite üstünde koşuyor.
 - [ ] **M1.1 Persona CRUD + sihirbaz (web)** — 6 adım, kaydet/devam; ses kitabı AI taslağı (`LlmWriter`); görsel kit önizleme.
   - KK: e2e "persona sihirbazı"; sahte dil ile taşma yok; RTL story.
 - [ ] **M1.2 Channel modülü** — OAuth başlatma/callback (Telegram bot token girişi, Threads, X, Instagram, YouTube; TikTok sandbox), zarf şifreleme, kabiliyet matrisi, kota durumu.

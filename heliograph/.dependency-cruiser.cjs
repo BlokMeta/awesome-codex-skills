@@ -63,7 +63,7 @@ module.exports = {
   ],
   options: {
     doNotFollow: { path: 'node_modules' },
-    exclude: { path: '(^|/)(dist|build|coverage|storybook-static)/' },
+    exclude: { path: '(^|/)(dist|build|coverage|storybook-static|\\.next)/' },
     tsPreCompilationDeps: true,
     tsConfig: { fileName: 'tsconfig.json' },
     enhancedResolveOptions: {

@@ -20,6 +20,8 @@ export interface AppOptions {
   readonly identity?: IdentityModuleOptions;
   /** Fastify OpenTelemetry plugin from startTelemetry(); null when telemetry is off. */
   readonly fastifyOtelPlugin?: FastifyPluginCallback | null;
+  /** Allowed browser origins (web app URL); empty in tests and CLIs. */
+  readonly corsOrigins?: string[];
 }
 
 @Module({})
