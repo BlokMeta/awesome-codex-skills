@@ -14,7 +14,8 @@ describe('color tokens', () => {
     for (const bg of [c.ground, c.surface, c.surface2]) {
       expect(contrastRatio(c.ink, bg)).toBeGreaterThanOrEqual(AA_TEXT);
       expect(contrastRatio(c.ink2, bg)).toBeGreaterThanOrEqual(AA_TEXT);
-      expect(contrastRatio(c.ink3, bg)).toBeGreaterThanOrEqual(AA_LARGE);
+      // ink3 carries 12px hints and metadata, so it must pass the normal-text threshold too
+      expect(contrastRatio(c.ink3, bg)).toBeGreaterThanOrEqual(AA_TEXT);
     }
   });
 

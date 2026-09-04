@@ -3,7 +3,7 @@
 import type { MeResponse } from '@heliograph/contracts';
 import { messages } from '@heliograph/i18n';
 import { Badge, Button } from '@heliograph/ui';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -36,6 +36,7 @@ export function AppShell({
 }) {
   const t = useT();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const me = useQuery({ queryKey: ['me'], queryFn: () => api.identity.me() });
 
   if (me.isError) {
@@ -107,6 +108,7 @@ export function AppShell({
             testID="sign-out"
             onPress={async () => {
               await authClient.signOut();
+              queryClient.clear();
               router.push('/sign-in');
               router.refresh();
             }}

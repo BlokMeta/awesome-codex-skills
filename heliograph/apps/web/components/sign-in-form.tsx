@@ -2,6 +2,7 @@
 
 import { messages } from '@heliograph/i18n';
 import { Button, TextInput } from '@heliograph/ui';
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type FormEvent, useState } from 'react';
@@ -12,6 +13,7 @@ export function SignInForm() {
   const t = useT();
   const router = useRouter();
   const params = useSearchParams();
+  const queryClient = useQueryClient();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | undefined>();
@@ -33,6 +35,7 @@ export function SignInForm() {
       router.push('/two-factor');
       return;
     }
+    queryClient.clear();
     router.push((params.get('next') as '/' | null) ?? '/');
     router.refresh();
   }

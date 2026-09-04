@@ -75,6 +75,10 @@ Hedef: Her değişiklik, üretime çıkmadan önce **otomatik** olarak "10/10" k
 11. Medya kütüphanesi yükleme + gün aşırı plan
 12. Dil değiştirme (tr ↔ en) tüm ekranlarda ham string yok
 
+### 6a. E2E (web) nasıl koşar
+
+`pnpm --filter @heliograph/web test:e2e` — Playwright, API'yi `HG_DATABASE_URL=pglite://` ile derlenmiş çıktıdan (`build && start`) ve web'i `next start` ile kendisi ayağa kaldırır; dış servis gerekmez. Web'in `HG_PUBLIC_API_URL=http://127.0.0.1:4100` ile derlenmiş olması gerekir (CI adımı bunu yapar). Kendi Chromium'unu kullanmak için `HG_E2E_CHROMIUM_PATH`. Akış: kayıt → rıza kapısı → çalışma alanı → Bugün → çıkış → hatalı parola → giriş; her ekranda axe (0 ihlal). Slug ve e-posta koşu başına benzersizdir (tekrar koşulara dayanıklı). Öğrenilen: TanStack Query önbelleği kimlik/çalışma alanı geçişlerinde temizlenir (`clear`/`removeQueries`), aksi hâlde eski veriyle yanlış yönlendirme olur (kural 13).
+
 ## 7. Mobil'e özel
 
 - RNTL ile bileşen; Maestro `.yaml` akışları `apps/mobile/e2e/`.

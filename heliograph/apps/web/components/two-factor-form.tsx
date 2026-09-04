@@ -2,6 +2,7 @@
 
 import { messages } from '@heliograph/i18n';
 import { Button, TextInput } from '@heliograph/ui';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { type FormEvent, useState } from 'react';
 import { authClient } from '@/lib/auth-client';
@@ -10,6 +11,7 @@ import { useT } from '@/lib/use-t';
 export function TwoFactorForm() {
   const t = useT();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | undefined>();
   const [busy, setBusy] = useState(false);
@@ -24,6 +26,7 @@ export function TwoFactorForm() {
       setError(t(messages.auth.twoFactorInvalid));
       return;
     }
+    queryClient.clear();
     router.push('/');
     router.refresh();
   }

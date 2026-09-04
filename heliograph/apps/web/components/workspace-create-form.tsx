@@ -2,6 +2,7 @@
 
 import { messages } from '@heliograph/i18n';
 import { Button, TextInput } from '@heliograph/ui';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { type FormEvent, useState } from 'react';
 import { authClient } from '@/lib/auth-client';
@@ -20,6 +21,7 @@ export const slugify = (s: string) =>
 export function WorkspaceCreateForm() {
   const t = useT();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
   const [touched, setTouched] = useState(false);
@@ -38,6 +40,10 @@ export function WorkspaceCreateForm() {
       return;
     }
     await authClient.organization.setActive({ organizationId: res.data.id });
+    // Drop cached reads so the shell waits for fresh data instead of acting on the old
+    // "no workspaces" snapshot (rule 13; invalidate alone still serves stale data first).
+    queryClient.removeQueries({ queryKey: ['me'] });
+    queryClient.removeQueries({ queryKey: ['entitlements'] });
     setBusy(false);
     router.push('/');
     router.refresh();

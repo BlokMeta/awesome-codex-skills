@@ -5,7 +5,8 @@ const password = 'correct horse battery staple';
 
 test.describe('onboarding: sign-up → consents → workspace → today → sign-out → sign-in', () => {
   test('a new operator reaches Today with a workspace and can sign back in', async ({ page }) => {
-    const email = `e2e-${Date.now()}@example.com`;
+    const stamp = Date.now().toString(36);
+    const email = `e2e-${stamp}@example.com`;
 
     await page.goto('/');
     await expect(page).toHaveURL(/\/sign-in\?next=%2F$/);
@@ -24,13 +25,13 @@ test.describe('onboarding: sign-up → consents → workspace → today → sign
     await page.getByTestId('accept').click();
 
     await expect(page).toHaveURL(/\/workspaces\/new$/);
-    await page.getByTestId('name').fill('Atölye E2E');
-    await expect(page.getByTestId('slug')).toHaveValue('atolye-e2e');
+    await page.getByTestId('name').fill(`Atölye E2E ${stamp}`);
+    await expect(page.getByTestId('slug')).toHaveValue(`atolye-e2e-${stamp}`);
     await page.getByTestId('submit').click();
 
     await expect(page).toHaveURL(/\/$/);
     await expect(page.getByTestId('welcome')).toHaveText('Hoş geldin, Ayşe E2E');
-    await expect(page.getByTestId('active-workspace')).toContainText('Atölye E2E');
+    await expect(page.getByTestId('active-workspace')).toContainText(`Atölye E2E ${stamp}`);
     await expect(page.getByTestId('plan')).toHaveText('Plan: Free');
     await expect(page.getByTestId('credits')).toHaveText('Medya kredisi yok');
     await expect(await new AxeBuilder({ page }).analyze()).toHaveProperty('violations', []);

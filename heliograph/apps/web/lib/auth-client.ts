@@ -14,6 +14,3 @@ export const authClient = createAuthClient({
   fetchOptions: { credentials: 'include' },
   plugins: [organizationClient(), twoFactorClient(), passkeyClient()],
 });
-
-export type AuthClient = typeof authClient;
-export const { useSession } = authClient;

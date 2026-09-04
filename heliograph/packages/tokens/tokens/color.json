@@ -3,36 +3,97 @@
   "color": {
     "$type": "color",
     "light": {
-      "ground": { "$value": "#F4F5F1", "$description": "Sayfa zemini (tuz; yeşil-gri eğilimli)" },
-      "surface": { "$value": "#FFFFFF" },
-      "surface2": { "$value": "#EBEEE9" },
-      "ink": { "$value": "#1A1D1B" },
-      "ink2": { "$value": "#4B514D" },
-      "ink3": { "$value": "#7C837E" },
-      "line": { "$value": "#D8DCD6" },
-      "tide": { "$value": "#1F4E5A", "$description": "Birincil eylem" },
-      "tideSoft": { "$value": "#DCE9EC" },
-      "flash": { "$value": "#F2B705", "$description": "Yalnızca canlı/dikkat" },
-      "flashInk": { "$value": "#3F2F00" },
-      "good": { "$value": "#2F855A" },
-      "warn": { "$value": "#B9730A" },
-      "critical": { "$value": "#B83A31" }
+      "ground": {
+        "$value": "#F4F5F1",
+        "$description": "Sayfa zemini (tuz; yeşil-gri eğilimli)"
+      },
+      "surface": {
+        "$value": "#FFFFFF"
+      },
+      "surface2": {
+        "$value": "#EBEEE9"
+      },
+      "ink": {
+        "$value": "#1A1D1B"
+      },
+      "ink2": {
+        "$value": "#4B514D"
+      },
+      "ink3": {
+        "$value": "#656C67",
+        "$description": "Yardımcı metin (ipucu, meta) — küçük punto için de AA (≥4.5:1 tüm zeminlerde)"
+      },
+      "line": {
+        "$value": "#D8DCD6"
+      },
+      "tide": {
+        "$value": "#1F4E5A",
+        "$description": "Birincil eylem"
+      },
+      "tideSoft": {
+        "$value": "#DCE9EC"
+      },
+      "flash": {
+        "$value": "#F2B705",
+        "$description": "Yalnızca canlı/dikkat"
+      },
+      "flashInk": {
+        "$value": "#3F2F00"
+      },
+      "good": {
+        "$value": "#2F855A"
+      },
+      "warn": {
+        "$value": "#B9730A"
+      },
+      "critical": {
+        "$value": "#B83A31"
+      }
     },
     "dark": {
-      "ground": { "$value": "#0E1213" },
-      "surface": { "$value": "#161B1C" },
-      "surface2": { "$value": "#1E2426" },
-      "ink": { "$value": "#E8EBE6" },
-      "ink2": { "$value": "#AEB6B0" },
-      "ink3": { "$value": "#7C837E" },
-      "line": { "$value": "#263030" },
-      "tide": { "$value": "#7FC1CF" },
-      "tideSoft": { "$value": "#12343C" },
-      "flash": { "$value": "#FFC933" },
-      "flashInk": { "$value": "#0E1213" },
-      "good": { "$value": "#5CC48C" },
-      "warn": { "$value": "#E3A33B" },
-      "critical": { "$value": "#F07A70" }
+      "ground": {
+        "$value": "#0E1213"
+      },
+      "surface": {
+        "$value": "#161B1C"
+      },
+      "surface2": {
+        "$value": "#1E2426"
+      },
+      "ink": {
+        "$value": "#E8EBE6"
+      },
+      "ink2": {
+        "$value": "#AEB6B0"
+      },
+      "ink3": {
+        "$value": "#8A918C",
+        "$description": "Yardımcı metin — küçük punto için de AA"
+      },
+      "line": {
+        "$value": "#263030"
+      },
+      "tide": {
+        "$value": "#7FC1CF"
+      },
+      "tideSoft": {
+        "$value": "#12343C"
+      },
+      "flash": {
+        "$value": "#FFC933"
+      },
+      "flashInk": {
+        "$value": "#0E1213"
+      },
+      "good": {
+        "$value": "#5CC48C"
+      },
+      "warn": {
+        "$value": "#E3A33B"
+      },
+      "critical": {
+        "$value": "#F07A70"
+      }
     }
   }
 }

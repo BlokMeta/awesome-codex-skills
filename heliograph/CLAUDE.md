@@ -77,10 +77,10 @@ heliograph/
 
 ```
 pnpm i                      # kurulum
-pnpm dev                    # web + api + workers (Temporal dev server, Postgres, Redis docker-compose ile)
+pnpm dev                    # web + api (api derlenmiş çıktıdan: tsc watch + node --watch; Postgres/Redis compose ile — yoksa HG_DATABASE_URL=pglite:// ile sıfır kurulum)
 pnpm dev:mobile             # Expo dev client
 pnpm test                   # birim + entegrasyon
-pnpm test:e2e               # Playwright
+pnpm --filter @heliograph/web test:e2e   # Playwright (API PGlite üstünde otomatik ayağa kalkar; kendi Chromium'un için HG_E2E_CHROMIUM_PATH)
 pnpm test:mobile            # Maestro akışları
 pnpm lint && pnpm typecheck # Biome + tsc --noEmit
 pnpm check                  # lint + typecheck + test + boundaries + knip + i18n:check

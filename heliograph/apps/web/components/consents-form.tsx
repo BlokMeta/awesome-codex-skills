@@ -4,12 +4,13 @@ import type { ConsentStatus } from '@heliograph/contracts';
 import type { LegalDocument } from '@heliograph/domain';
 import { messages } from '@heliograph/i18n';
 import { Button } from '@heliograph/ui';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { api } from '@/lib/api';
 import { useT } from '@/lib/use-t';
 
-export const LEGAL_LINKS: Record<string, string> = {
+const LEGAL_LINKS: Record<string, string> = {
   terms: '/legal/terms',
   privacy: '/legal/privacy',
   aup: '/legal/aup',
@@ -23,13 +24,16 @@ export const LEGAL_LINKS: Record<string, string> = {
 export function ConsentsForm({ onDone }: { onDone?: () => void }) {
   const t = useT();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const status = useQuery({ queryKey: ['consents'], queryFn: () => api.privacy.consentStatus() });
   const accept = useMutation({
     mutationFn: (s: ConsentStatus) =>
       api.privacy.acceptConsents({
         accept: s.pending.map((document) => ({ document, version: s.published[document] ?? '' })),
       }),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Rule 13: the cached status must not lag behind what the server just recorded.
+      queryClient.setQueryData(['consents'], data);
       if (onDone) onDone();
       else {
         router.push('/');
@@ -38,11 +42,13 @@ export function ConsentsForm({ onDone }: { onDone?: () => void }) {
     },
   });
   const s = status.data;
-  if (!s) return null;
-  if (s.pending.length === 0) {
-    onDone?.();
-    return null;
-  }
+  const nothingPending = s !== undefined && s.pending.length === 0;
+  useEffect(() => {
+    if (!nothingPending) return;
+    if (onDone) onDone();
+    else router.replace('/');
+  }, [nothingPending, onDone, router]);
+  if (!s || nothingPending) return null;
   const docLabel = (d: LegalDocument) => t(messages.consent.doc[d]);
   return (
     <form

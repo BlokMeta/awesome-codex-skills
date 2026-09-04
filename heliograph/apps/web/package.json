@@ -45,6 +45,7 @@
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:",
-    "vitest-axe": "catalog:"
+    "vitest-axe": "catalog:",
+    "postcss": "^8.5.0"
   }
 }

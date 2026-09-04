@@ -17,7 +17,7 @@ Kaçınılanlar (yaygın AI-görünümlü kalıplar): krem zemin + serif + terra
 | `surface-2` | `#EBEEE9` | `#1E2426` | Girintili alanlar, kod |
 | `ink` | `#1A1D1B` | `#E8EBE6` | Birincil metin |
 | `ink-2` | `#4B514D` | `#AEB6B0` | İkincil metin |
-| `ink-3` | `#7C837E` | `#7C837E` | Etiket, yer tutucu |
+| `ink-3` | `#656C67` | `#8A918C` | Etiket, yer tutucu, ipucu — küçük puntoda da AA (≥4,5:1 tüm zeminlerde; 2026-09-04 axe bulgusuyla koyulaştırıldı) |
 | `line` | `#D8DCD6` | `#263030` | Ayırıcı |
 | `tide` | `#1F4E5A` | `#7FC1CF` | Birincil eylem, bağlantı, seçili durum |
 | `tide-soft` | `#DCE9EC` | `#12343C` | Seçili satır zemini |
